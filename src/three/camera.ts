@@ -7,7 +7,7 @@ const cameraRotX = new SmoothValue(0)
 const cameraRotY = new SmoothValue(0)
 
 export function initCamera() {
-    camera.position.z = 2
+    camera.position.set(0, 1, 0)
     camera.fov = 60
     setCameraAspectFromWindow()
 }
@@ -35,6 +35,4 @@ onPointerMove.subscribe(e => {
 
 onResize.subscribe(() => {
     setCameraAspectFromWindow()
-
-    console.log('hi')
 })
