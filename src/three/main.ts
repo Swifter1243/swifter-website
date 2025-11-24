@@ -1,5 +1,5 @@
 import { initCamera } from "./camera";
-import { THREE } from "./deps";
+import { THREE } from "../deps";
 import { initRenderer } from "./renderer";
 import { initScene } from "./scene";
 import { initWindow } from "./window";

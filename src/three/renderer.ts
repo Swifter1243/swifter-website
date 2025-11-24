@@ -1,4 +1,4 @@
-import { THREE } from "./deps";
+import { BokehPass, EffectComposer, FXAAPass, OutputPass, RenderPass, THREE, UnrealBloomPass } from "../deps";
 import { camera, renderer, scene } from "./main";
 import { Invokable } from "../utilities/invokable";
 import { onResize } from "./window";
@@ -9,12 +9,24 @@ export function initRenderer() {
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setAnimationLoop(render);
+
     document.body.appendChild(renderer.domElement);
+
+    const composer = new EffectComposer(renderer)
+
+    composer.addPass(new RenderPass(scene, camera))
+    composer.addPass(new BokehPass(scene, camera, {
+        focus: 2,
+        aperture: 0.0001,
+        maxblur: 0.002
+    }))
+    composer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.5, 0.5, 0.2))
+    composer.addPass(new OutputPass())
     
     const clock = new THREE.Clock()
     
     function render() {
-      renderer.render(scene, camera);
+      composer.render()
       const deltaTime = clock.getDelta()
       onRender.invoke(deltaTime)
     }
