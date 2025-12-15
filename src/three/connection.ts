@@ -20,7 +20,7 @@ export class Connection {
     }
 
     private getGeometry() {
-        return new THREE.TubeGeometry( this.curve, 20, 0.01, 4 )
+        return new THREE.TubeGeometry( this.curve, 20, 0.005, 4 )
     }
 
     private update() {
@@ -44,7 +44,7 @@ export class Connection {
         this.endTangent = endTangent
         
         this.updateControlPoints()
-        this.curve = new THREE.CubicBezierCurve3(startPos, this.startControlPoint, endPos, this.endControlPoint)
+        this.curve = new THREE.CubicBezierCurve3(startPos, this.startControlPoint, this.endControlPoint, endPos)
 
         const material = new THREE.MeshBasicMaterial({ color: '#ffffff' })
         this.mesh = new THREE.Mesh( this.getGeometry(), material )

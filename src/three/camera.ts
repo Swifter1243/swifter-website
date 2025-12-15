@@ -7,8 +7,8 @@ const cameraRotX = new SmoothValue(0)
 const cameraRotY = new SmoothValue(0)
 
 export function initCamera() {
-    camera.position.set(0, 0, 5)
-    camera.fov = 60
+    camera.position.set(0, 1, 5)
+    camera.fov = 40
     camera.far = 100
     setCameraAspectFromWindow()
 }
