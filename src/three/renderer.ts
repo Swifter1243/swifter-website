@@ -33,5 +33,6 @@ export function initRenderer() {
 
     onResize.subscribe(() => {
         renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight)
     })
 }
