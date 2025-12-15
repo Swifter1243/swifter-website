@@ -7,7 +7,7 @@ const cameraRotX = new SmoothValue(0)
 const cameraRotY = new SmoothValue(0)
 
 export function initCamera() {
-    camera.position.set(0, 1, 2)
+    camera.position.set(0, 0, 5)
     camera.fov = 60
     camera.far = 100
     setCameraAspectFromWindow()
@@ -17,6 +17,7 @@ function setCameraAspectFromWindow() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 }
+
 
 onRender.subscribe(deltaTime => {
     cameraRotX.step(deltaTime)

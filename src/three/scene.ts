@@ -1,22 +1,17 @@
-import { FontLoader, TextGeometry, THREE } from "../deps";
+import { FontLoader, THREE } from "../deps";
+import { Connection } from "./connection";
 import { scene } from "./main";
+import { onRender } from "./renderer";
 
 export async function initScene() {
-    const loader = new FontLoader()
-    const font = await loader.loadAsync('helvetiker_regular.typeface.json')
+    const startPoint = new THREE.Vector3()
+    const startTangent = new THREE.Vector3(0, 1, 0)
 
-    const textMaterial = new THREE.MeshPhysicalMaterial()
-    const textGeometry = new TextGeometry('Hello!', {
-        font: font,
-        size: 0.5,
-        depth: 0.1,
-    })
+    for (let i = 0; i < 20; i++) {
+        const endDir = new THREE.Vector3(0, 1, 0).randomDirection()
+        const endPoint = new THREE.Vector3().addScaledVector(endDir, 1)
 
-    for (let z = 0; z >= -100; z -= 2) {
-        const textMesh = new THREE.Mesh(textGeometry, textMaterial)
-        textMesh.position.set(0, 0, z)
-        textMesh.rotateZ(z * 0.04)
-        scene.add(textMesh)
+        const connection = new Connection(scene, startPoint, startTangent, endPoint, endDir)
     }
 
     const dirLight = new THREE.DirectionalLight(0xffffff, 1)
