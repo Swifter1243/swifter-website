@@ -4,10 +4,13 @@ import type { IModel } from "./model/abstract/model";
 import { Arrangement } from "./model/project/arrangement";
 import { ArrangementNode } from "./model/project/arrangement_node";
 import { Model } from "./model/project/model";
+import { View } from "./view/view";
 
 export function initMVC() {
     const model = createModel()
     const controller = createController(model)
+    const view = createView(controller)
+    controller.initialize()
 }
 
 function createModel(): IModel {
@@ -23,4 +26,10 @@ function createModel(): IModel {
 
 function createController(model: IModel): Controller {
     return new Controller(model)
+}
+
+function createView(controller: Controller): View {
+    const view = new View(controller)
+    view.initialize()
+    return view
 }
