@@ -1,12 +1,16 @@
+import { Controller } from "./controller/controller";
 import type { IArrangement } from "./model/abstract/arrangement";
+import type { IModel } from "./model/abstract/model";
 import { Arrangement } from "./model/project/arrangement";
 import { ArrangementNode } from "./model/project/arrangement_node";
+import { Model } from "./model/project/model";
 
 export function initMVC() {
     const model = createModel()
+    const controller = createController(model)
 }
 
-function createModel(): IArrangement {
+function createModel(): IModel {
     const root = new Arrangement()
 
     const skillsArrangement = new Arrangement()
@@ -14,5 +18,9 @@ function createModel(): IArrangement {
     
     root.AddNode(skillsNode)
 
-    return root
+    return new Model(root)
+}
+
+function createController(model: IModel): Controller {
+    return new Controller(model)
 }
