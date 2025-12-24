@@ -14,12 +14,13 @@ export function initMVC() {
 }
 
 function createModel(): IModel {
-    const root = new Arrangement()
+    const rootArrangement = new Arrangement()
+    const root = new ArrangementNode(rootArrangement, "Root")
 
     const skillsArrangement = new Arrangement()
     const skillsNode = new ArrangementNode(skillsArrangement, "Skills")
     
-    root.AddNode(skillsNode)
+    rootArrangement.AddNode(skillsNode)
 
     return new Model(root)
 }

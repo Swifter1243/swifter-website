@@ -1,18 +1,19 @@
 import type { IArrangement } from "../abstract/arrangement";
 import type { IModel } from "../abstract/model";
+import type { INode } from "../abstract/node";
 
 export class Model implements IModel {
-    private rootArrangement: IArrangement
+    private rootNode: INode
 
-    constructor(rootArrangement: IArrangement) {
-        this.rootArrangement = rootArrangement
+    constructor(rootNode: INode) {
+        this.rootNode = rootNode
     }
 
-    GetRootArrangement(): IArrangement {
-        return this.rootArrangement
+    getRootNode(): INode {
+        return this.rootNode
     }
 
-    PathToArrangement(path: string): IArrangement | undefined {
+    pathToArrangement(path: string): IArrangement | undefined {
         throw new Error("Method not implemented.")
     }
 }

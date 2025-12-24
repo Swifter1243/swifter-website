@@ -1,5 +1,5 @@
 import type { IArrangement } from "../abstract/arrangement";
-import type { INode } from "../abstract/node";
+import type { INode, NODE_TYPE } from "../abstract/node";
 
 export class ArrangementNode implements INode {
     private arrangement: IArrangement
@@ -15,5 +15,8 @@ export class ArrangementNode implements INode {
     }
     GetName(): string {
         return this.name
+    }
+    GetType(): NODE_TYPE {
+        return 'Arrangement'
     }
 }

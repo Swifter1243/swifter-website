@@ -1,5 +1,5 @@
 import type { IDocument } from "../abstract/document";
-import type { INode } from "../abstract/node";
+import type { INode, NODE_TYPE } from "../abstract/node";
 
 export class DocumentNode implements INode {
     private document: IDocument
@@ -15,5 +15,8 @@ export class DocumentNode implements INode {
     }
     GetName(): string {
         return this.name
+    }
+    GetType(): NODE_TYPE {
+        return 'Document'
     }
 }

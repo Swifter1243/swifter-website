@@ -1,6 +1,7 @@
 import type { IArrangement } from "./arrangement";
+import type { INode } from "./node";
 
 export interface IModel {
-    GetRootArrangement(): IArrangement
-    PathToArrangement(path: string): IArrangement | undefined
+    getRootNode(): INode
+    pathToArrangement(path: string): IArrangement | undefined
 }
