@@ -1,4 +1,4 @@
-import { THREE } from "../deps";
+import { THREE } from "../../deps";
 import { onRender } from "./renderer";
 
 export class Connection {

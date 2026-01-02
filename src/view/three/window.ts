@@ -1,4 +1,4 @@
-import { Invokable } from "../utilities/invokable";
+import { Invokable } from "../../utilities/invokable";
 
 export const onResize = new Invokable<[]>()
 export const onPointerMove = new Invokable<[PointerEvent]>()

@@ -1,5 +1,5 @@
 import { initMVC } from "./initialize";
-import { initThree } from "./three/main";
+import { initThree } from './view/three/main'
 
 initThree()
 initMVC()

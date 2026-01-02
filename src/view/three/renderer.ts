@@ -1,6 +1,6 @@
-import { BokehPass, EffectComposer, FXAAPass, OutputPass, RenderPass, THREE, UnrealBloomPass } from "../deps";
+import { BokehPass, EffectComposer, FXAAPass, OutputPass, RenderPass, THREE, UnrealBloomPass } from "../../deps";
 import { camera, renderer, scene } from "./main";
-import { Invokable } from "../utilities/invokable";
+import { Invokable } from "../../utilities/invokable";
 import { onResize } from "./window";
 
 export const onRender = new Invokable<[number]>();

@@ -1,7 +1,7 @@
-import { THREE } from "../deps"
-import { randomRange } from "../utilities/math"
+import { THREE } from "../../deps"
+import { randomRange } from "../../utilities/math"
 import { Connection } from "./connection"
-import { scene } from "./main"
+import { scene } from "../three/main"
 
 const goldenRatioSquared = Math.pow((1 + Math.sqrt(5)) / 2, 2)
 

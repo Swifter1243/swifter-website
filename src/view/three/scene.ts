@@ -1,4 +1,4 @@
-import { THREE } from "../deps";
+import { THREE } from "../../deps";
 import { scene } from "./main";
 
 export async function initScene() {

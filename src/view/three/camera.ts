@@ -1,6 +1,6 @@
-import { camera } from "./main";
+import { camera } from "../three/main";
 import { onRender } from "./renderer";
-import { SmoothValue } from "../utilities/smooth_value";
+import { SmoothValue } from "../../utilities/smooth_value";
 import { onPointerMove, onResize } from "./window";
 
 const cameraRotX = new SmoothValue(0)
