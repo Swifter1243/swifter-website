@@ -1,36 +1,28 @@
-import { Controller } from "./controller/controller";
-import type { IArrangement } from "./model/abstract/arrangement";
-import type { IModel } from "./model/abstract/model";
-import { Arrangement } from "./model/project/arrangement";
-import { ArrangementNode } from "./model/project/arrangement_node";
-import { Model } from "./model/project/model";
-import { View } from "./view/view";
+import { DirectoryNode } from "./model/directory_node"
+import type { INode } from "./model/node"
+import { Navigation } from "./navigation/navigation"
+import { View } from "./view/view"
 
 export function initMVC() {
-    const model = createModel()
-    const controller = createController(model)
-    const view = createView(controller)
-    controller.initialize()
+    const rootNode = createRootNode()
+    const navigation = createNavigation(rootNode)
+    const view = createView(navigation)
+    navigation.initialize()
 }
 
-function createModel(): IModel {
-    const rootArrangement = new Arrangement()
-    const root = new ArrangementNode(rootArrangement, "Root")
+function createRootNode(): INode {
+    const rootNode = new DirectoryNode()
+    rootNode.addNode('skills', new DirectoryNode())
 
-    const skillsArrangement = new Arrangement()
-    const skillsNode = new ArrangementNode(skillsArrangement, "Skills")
-    
-    rootArrangement.AddNode(skillsNode)
-
-    return new Model(root)
+    return rootNode
 }
 
-function createController(model: IModel): Controller {
-    return new Controller(model)
+function createNavigation(rootNode: INode): Navigation {
+    return new Navigation(rootNode)
 }
 
-function createView(controller: Controller): View {
-    const view = new View(controller)
+function createView(navigation: Navigation): View {
+    const view = new View(navigation)
     view.initialize()
     return view
 }
