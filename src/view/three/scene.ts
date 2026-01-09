@@ -7,11 +7,16 @@ export async function initScene() {
     dirLight.setRotationFromEuler(new THREE.Euler(0, 20, 0))
 
     const interactableA = new Interactable(1)
-    const interactableB = new Interactable(1)
 
     scene.add(interactableA.mesh)
-    scene.add(interactableB.mesh)
-    interactableB.mesh.position.y = 1
+
+    interactableA.onHoverStart.subscribe(() => {
+        interactableA.mesh.scale.setScalar(1.1)
+    })
+
+    interactableA.onHoverEnd.subscribe(() => {
+        interactableA.mesh.scale.setScalar(1)
+    })
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.6))
     scene.add(dirLight)
