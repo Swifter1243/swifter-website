@@ -3,7 +3,7 @@ import { THREE } from "../../deps";
 import { initRenderer } from "./renderer";
 import { initScene } from "./scene";
 import { initWindow } from "./window";
-import { initInput } from "../input";
+import { initInteractables } from "./interactable";
 
 export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera();
@@ -14,5 +14,5 @@ export function initThree() {
     initCamera()
     initRenderer()
     initWindow()
-    initInput()
+    initInteractables()
 }

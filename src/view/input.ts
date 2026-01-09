@@ -1,77 +1,78 @@
-import { THREE } from "../deps";
 import { Invokable } from "../utilities/invokable";
-import { Interactable, interactables } from "./three/interactable";
-import { camera } from "./three/main";
-import { onRender } from "./three/renderer";
 
 export const onDragStart = new Invokable()
 export const onDragEnd = new Invokable()
 export const onDragMove = new Invokable()
 
-let currentX = 0
-let currentY = 0
+export const onHoverStart = new Invokable()
+export const onHoverEnd = new Invokable()
 
-let isPointerDown = false
-let downX = 0
-let downY = 0
+export const onClick = new Invokable()
 
-let isDragging = false
-let isHovering = false
+export const inputState = {
+    currentX: 0,
+    currentY: 0,
+
+    isPointerDown: false,
+    downX: 0,
+    downY: 0,
+
+    isDragging: false,
+    isHovering: false,
+}
 
 const DRAG_DISTANCE_THRESHOLD = 6
-
-const raycaster = new THREE.Raycaster()
-let hoveredInteractable: Interactable | undefined = undefined
 
 export function initInput() {
     document.addEventListener('pointermove', onPointerMove, false)
     document.addEventListener('pointerup', onPointerUp, false)
     document.addEventListener('pointerdown', onPointerDown, false)
     document.addEventListener('pointercancel', onPointerCancel, false)
-    onRender.subscribe(onHoverUpdate)
 }
 
 function onPointerMove(e: PointerEvent) {
-    if (e.pointerType === 'mouse') {
-        isHovering = true
+    if (e.pointerType === 'mouse' && !inputState.isHovering) {
+        onHoverStart.invoke()
+        inputState.isHovering = true
     }
 
-    currentX = e.clientX
-    currentY = e.clientY
+    inputState.currentX = e.clientX
+    inputState.currentY = e.clientY
 
-    if (isPointerDown && !isDragging) {
-        const deltaX = downX - currentX
-        const deltaY = downY - currentY
+    if (inputState.isPointerDown && !inputState.isDragging) {
+        const deltaX = inputState.downX - inputState.currentX
+        const deltaY = inputState.downY - inputState.currentY
         const dragDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
 
         if (dragDistance > DRAG_DISTANCE_THRESHOLD) {
-            isDragging = true
+            inputState.isDragging = true
             onDragStart.invoke()
         }
     }
 
-    if (isDragging) {
+    if (inputState.isDragging) {
         onDragMove.invoke()
     }
 }
 
 function onPointerDown(e: PointerEvent) {
-    if (e.pointerType !== 'mouse') {
-        isHovering = true
+    if (e.pointerType !== 'mouse' && !inputState.isHovering) {
+        inputState.isHovering = true
+        onHoverStart.invoke()
     }
 
-    downX = e.clientX
-    downY = e.clientY
+    inputState.downX = e.clientX
+    inputState.downY = e.clientY
 }
 
 function onPointerUp(e: PointerEvent) {
-    if (e.pointerType !== 'mouse' && isHovering) {
-        clearHoveredInteractable()
-        isHovering = false
+    if (e.pointerType !== 'mouse' && inputState.isHovering) {
+        onHoverEnd.invoke()
+        inputState.isHovering = false
     }
 
-    if (!isDragging) {
-        onClick()
+    if (!inputState.isDragging) {
+        _onClick()
     }
 
     endPointerDown()
@@ -82,61 +83,14 @@ function onPointerCancel(_: PointerEvent) {
 }
 
 function endPointerDown() {
-    isPointerDown = false
+    inputState.isPointerDown = false
     
-    if (isDragging) {
-        isDragging = false
+    if (inputState.isDragging) {
+        inputState.isDragging = false
         onDragEnd.invoke()
     }
 }
 
-function onClick() {
-    const interactable = doRaycast(currentX, currentY)
-
-    if (interactable !== undefined) {
-        interactable.onClick.invoke()
-    }
-}
-
-function onHoverUpdate() {
-    if (!isHovering)
-        return
-
-    const interactable = doRaycast(currentX, currentY)
-
-    if (interactable !== undefined) {
-        if (hoveredInteractable !== interactable) {
-            interactable.onHoverStart.invoke()
-        }
-
-        if (hoveredInteractable !== undefined && interactable !== hoveredInteractable) {
-            clearHoveredInteractable()
-        }
-        
-        hoveredInteractable = interactable
-    }
-    else {
-        clearHoveredInteractable()
-    }
-}
-
-function clearHoveredInteractable() {
-    if (hoveredInteractable !== undefined) {
-        hoveredInteractable.onHoverEnd.invoke()
-        hoveredInteractable = undefined
-    }
-}
-
-function doRaycast(clientX: number, clientY: number): Interactable | undefined {
-    const uvX = (clientX / window.innerWidth) * 2 - 1
-    const uvY = -(clientY / window.innerHeight) * 2 + 1
-
-    raycaster.setFromCamera(new THREE.Vector2(uvX, uvY), camera)
-
-    const result = raycaster.intersectObjects([...interactables.keys()], false)
-
-    if (result.length > 0) {
-        const interactable = interactables.get(result[0].object)
-        return interactable
-    }
+function _onClick() {
+    onClick.invoke()
 }

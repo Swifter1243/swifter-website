@@ -1,8 +1,14 @@
 import { Object3D } from "three";
 import { THREE } from "../../deps";
 import { Invokable } from "../../utilities/invokable";
+import { onRender } from "./renderer";
+import { inputState, onClick, onHoverEnd } from "../input";
+import { camera } from "./main";
 
-export const interactables = new Map<Object3D, Interactable>()
+const interactables = new Map<Object3D, Interactable>()
+let hoveredInteractable: Interactable | undefined = undefined
+
+const raycaster = new THREE.Raycaster()
 
 export class Interactable {
     mesh: THREE.Mesh
@@ -18,5 +24,66 @@ export class Interactable {
 
     dispose() {
         interactables.delete(this.mesh)
+    }
+}
+
+export function initInteractables() {
+    onRender.subscribe(_onHoverUpdate)
+    onClick.subscribe(_onClick)
+    onHoverEnd.subscribe(_onHoverEnd)
+}
+
+function _onClick() {
+    const interactable = doRaycast(inputState.currentX, inputState.currentY)
+
+    if (interactable !== undefined) {
+        interactable.onClick.invoke()
+    }
+}
+
+function _onHoverUpdate() {
+    if (!inputState.isHovering)
+        return
+
+    const interactable = doRaycast(inputState.currentX, inputState.currentY)
+
+    if (interactable !== undefined) {
+        if (hoveredInteractable !== interactable) {
+            interactable.onHoverStart.invoke()
+        }
+
+        if (hoveredInteractable !== undefined && interactable !== hoveredInteractable) {
+            clearHoveredInteractable()
+        }
+        
+        hoveredInteractable = interactable
+    }
+    else {
+        clearHoveredInteractable()
+    }
+}
+
+function _onHoverEnd() {
+    clearHoveredInteractable()
+}
+
+function clearHoveredInteractable() {
+    if (hoveredInteractable !== undefined) {
+        hoveredInteractable.onHoverEnd.invoke()
+        hoveredInteractable = undefined
+    }
+}
+
+function doRaycast(clientX: number, clientY: number): Interactable | undefined {
+    const uvX = (clientX / window.innerWidth) * 2 - 1
+    const uvY = -(clientY / window.innerHeight) * 2 + 1
+
+    raycaster.setFromCamera(new THREE.Vector2(uvX, uvY), camera)
+
+    const result = raycaster.intersectObjects([...interactables.keys()], false)
+
+    if (result.length > 0) {
+        const interactable = interactables.get(result[0].object)
+        return interactable
     }
 }
