@@ -3,10 +3,10 @@ import { onRender } from "./renderer";
 
 export class Connection {
     readonly scene: THREE.Scene
-    readonly startPos: THREE.Vector3
-    readonly startTangent: THREE.Vector3
-    readonly endPos: THREE.Vector3
-    readonly endTangent: THREE.Vector3
+    readonly startPoint: THREE.Vector3
+    readonly startNormal: THREE.Vector3
+    readonly endPoint: THREE.Vector3
+    readonly endNormal: THREE.Vector3
     readonly mesh: THREE.Mesh
 
     private readonly curve: THREE.Curve<THREE.Vector3>
@@ -15,8 +15,8 @@ export class Connection {
     private readonly endControlPoint = new THREE.Vector3()
 
     private updateControlPoints() {
-        this.startControlPoint.addVectors(this.startPos, this.startTangent)
-        this.endControlPoint.addVectors(this.endPos, this.endTangent)
+        this.startControlPoint.addVectors(this.startPoint, this.startNormal)
+        this.endControlPoint.addVectors(this.endPoint, this.endNormal)
     }
 
     private getGeometry() {
@@ -32,19 +32,19 @@ export class Connection {
 
     constructor(
         scene: THREE.Scene,
-        startPos: THREE.Vector3,
-        startTangent: THREE.Vector3,
-        endPos: THREE.Vector3, 
-        endTangent: THREE.Vector3
+        startPoint: THREE.Vector3,
+        startNormal: THREE.Vector3,
+        endPoint: THREE.Vector3, 
+        endNormal: THREE.Vector3
     ) {
         this.scene = scene
-        this.startPos = startPos
-        this.startTangent = startTangent
-        this.endPos = endPos
-        this.endTangent = endTangent
+        this.startPoint = startPoint
+        this.startNormal = startNormal
+        this.endPoint = endPoint
+        this.endNormal = endNormal
         
         this.updateControlPoints()
-        this.curve = new THREE.CubicBezierCurve3(startPos, this.startControlPoint, this.endControlPoint, endPos)
+        this.curve = new THREE.CubicBezierCurve3(startPoint, this.startControlPoint, this.endControlPoint, endPoint)
 
         const material = new THREE.MeshBasicMaterial({ color: '#ffffff' })
         this.mesh = new THREE.Mesh( this.getGeometry(), material )

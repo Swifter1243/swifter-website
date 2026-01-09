@@ -18,6 +18,8 @@ export function initMVC() {
 function createRootNode(): INode {
     const rootNode = new DirectoryNode()
     rootNode.addNode('skills', new DirectoryNode())
+    rootNode.addNode('about me', new DirectoryNode())
+    rootNode.addNode('projects', new DirectoryNode())
 
     return rootNode
 }
