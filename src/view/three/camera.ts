@@ -1,8 +1,10 @@
-import { camera } from "../three/main";
+import { camera, scene } from "../three/main";
 import { onRender } from "./renderer";
 import { SmoothValue } from "../../utilities/smooth_value";
 import { onResize } from "../window";
 import { inputState, onDragMove, onDragStart } from "../input";
+import { THREE } from "../../deps";
+import { clamp } from "../../utilities/math";
 
 const cameraRotX = new SmoothValue(0, 7)
 const cameraRotY = new SmoothValue(0, 7)
@@ -11,7 +13,13 @@ let downRotX = 0
 let downRotY = 0
 
 export function initCamera() {
-    camera.position.set(0, 1, 5)
+    const pivot = new THREE.Object3D()
+    pivot.rotation.order = 'YXZ'
+    scene.add(pivot)
+
+    pivot.add(camera)
+    camera.position.set(0, 0, 5)
+
     camera.fov = 40
     camera.far = 100
     setCameraAspectFromWindow()
@@ -20,8 +28,8 @@ export function initCamera() {
         cameraRotX.step(deltaTime)
         cameraRotY.step(deltaTime)
 
-        camera.rotation.x = cameraRotX.current
-        camera.rotation.y = cameraRotY.current
+        pivot.rotation.x = cameraRotX.current
+        pivot.rotation.y = cameraRotY.current
     })
 
     onDragStart.subscribe(() => {
@@ -39,8 +47,10 @@ export function initCamera() {
         const deltaUVX = currentUVX - downUVX
         const deltaUVY = currentUVY - downUVY
 
-        cameraRotX.target = downRotX + deltaUVY * 0.7 // vertical
-        cameraRotY.target = downRotY + deltaUVX * 1.3 // horizontal
+        const aspect = window.innerWidth / window.innerHeight
+
+        cameraRotX.target = clamp(downRotX + deltaUVY * -2, -Math.PI / 2, Math.PI / 2) // vertical
+        cameraRotY.target = downRotY + deltaUVX * -2 * aspect // horizontal
     })
 
     onResize.subscribe(() => {

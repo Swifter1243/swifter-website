@@ -5,3 +5,7 @@ export function lerp(a: number, b: number, t: number) {
 export function randomRange(min: number, max: number) {
     return lerp(min, max, Math.random())
 }
+
+export function clamp(x: number, min: number, max: number) {
+    return Math.min(Math.max(x, min), max)
+}
