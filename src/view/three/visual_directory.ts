@@ -2,6 +2,7 @@ import { TextGeometry, THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { generateSunflowerArrangement } from "./arrangement";
 import { Connection } from "./connection";
+import { Label } from "./label";
 import { font, scene } from "./main";
 
 export class VisualDirectory {
@@ -21,7 +22,6 @@ export class VisualDirectory {
         const startPoint = new THREE.Vector3()
         const startNormal = new THREE.Vector3(0, 0.8, 0)
 
-        const textMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' })
         const textOffset = new THREE.Vector3(0, 0.1, 0)
 
         objects.forEach((o, i) => {
@@ -35,16 +35,8 @@ export class VisualDirectory {
             const connection = new Connection(scene, startPoint, startNormal, endPoint, endNormal)
             this.connections[name] = connection
 
-            font.then(f => {
-                const textGeometry = new TextGeometry(name, {
-                    font: f,
-                    size: 0.1,
-                    depth: 0.01,
-                })
-                const textMesh = new THREE.Mesh(textGeometry, textMaterial)
-                textMesh.position.copy(endPoint).add(textOffset)
-                scene.add(textMesh)
-            })
+            const label = new Label(scene, name)
+            label.parent.position.copy(endPoint).add(textOffset)
         })
     }
 }
