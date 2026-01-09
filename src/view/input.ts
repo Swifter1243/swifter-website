@@ -21,7 +21,7 @@ export const inputState = {
     isHovering: false,
 }
 
-const DRAG_DISTANCE_THRESHOLD = 6
+const DRAG_DISTANCE_THRESHOLD = 10
 
 export function initInput() {
     document.addEventListener('pointermove', onPointerMove, false)
@@ -56,6 +56,8 @@ function onPointerMove(e: PointerEvent) {
 }
 
 function onPointerDown(e: PointerEvent) {
+    inputState.isPointerDown = true
+
     if (e.pointerType !== 'mouse' && !inputState.isHovering) {
         inputState.isHovering = true
         onHoverStart.invoke()

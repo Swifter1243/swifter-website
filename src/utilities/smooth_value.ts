@@ -15,6 +15,10 @@ export class SmoothValue {
         return this.currentVal
     }
 
+    get target() {
+        return this.targetVal
+    }
+
     set target(value: number) {
         this.set(value)
     }

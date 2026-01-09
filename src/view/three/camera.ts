@@ -1,10 +1,14 @@
 import { camera } from "../three/main";
 import { onRender } from "./renderer";
 import { SmoothValue } from "../../utilities/smooth_value";
-import { onPointerMove, onResize } from "./window";
+import { onResize } from "../window";
+import { inputState, onDragMove, onDragStart } from "../input";
 
-const cameraRotX = new SmoothValue(0)
-const cameraRotY = new SmoothValue(0)
+const cameraRotX = new SmoothValue(0, 7)
+const cameraRotY = new SmoothValue(0, 7)
+
+let downRotX = 0
+let downRotY = 0
 
 export function initCamera() {
     camera.position.set(0, 1, 5)
@@ -20,12 +24,23 @@ export function initCamera() {
         camera.rotation.y = cameraRotY.current
     })
 
-    onPointerMove.subscribe(e => {
-        const uvX = e.clientX / window.innerWidth
-        const uvY = e.clientY / window.innerHeight
+    onDragStart.subscribe(() => {
+        downRotX = cameraRotX.target
+        downRotY = cameraRotY.target
+    })
 
-        cameraRotX.target = (uvY - 0.5) * 0.03
-        cameraRotY.target = (uvX - 0.5) * 0.03
+    onDragMove.subscribe(() => {
+        const downUVX = (inputState.downX / window.innerWidth) * 2 - 1
+        const downUVY = (inputState.downY / window.innerHeight) * 2 - 1
+
+        const currentUVX = (inputState.currentX / window.innerWidth) * 2 - 1
+        const currentUVY = (inputState.currentY / window.innerHeight) * 2 - 1
+
+        const deltaUVX = currentUVX - downUVX
+        const deltaUVY = currentUVY - downUVY
+
+        cameraRotX.target = downRotX + deltaUVY * 0.7 // vertical
+        cameraRotY.target = downRotY + deltaUVX * 1.3 // horizontal
     })
 
     onResize.subscribe(() => {
