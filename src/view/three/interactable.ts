@@ -6,7 +6,8 @@ export const interactables = new Map<Object3D, Interactable>()
 
 export class Interactable {
     mesh: THREE.Mesh
-    readonly onHover = new Invokable()
+    readonly onHoverStart = new Invokable()
+    readonly onHoverEnd = new Invokable()
     readonly onClick = new Invokable()
 
     constructor(radius: number) {

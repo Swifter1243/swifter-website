@@ -21,6 +21,7 @@ let isHovering = false
 const DRAG_DISTANCE_THRESHOLD = 6
 
 const raycaster = new THREE.Raycaster()
+let hoveredInteractable: Interactable | undefined = undefined
 
 export function initInput() {
     document.addEventListener('pointermove', onPointerMove, false)
@@ -64,7 +65,8 @@ function onPointerDown(e: PointerEvent) {
 }
 
 function onPointerUp(e: PointerEvent) {
-    if (e.pointerType !== 'mouse') {
+    if (e.pointerType !== 'mouse' && isHovering) {
+        clearHoveredInteractable()
         isHovering = false
     }
 
@@ -103,7 +105,25 @@ function onHoverUpdate() {
     const interactable = doRaycast(currentX, currentY)
 
     if (interactable !== undefined) {
-        interactable.onHover.invoke()
+        if (hoveredInteractable !== interactable) {
+            interactable.onHoverStart.invoke()
+        }
+
+        if (hoveredInteractable !== undefined && interactable !== hoveredInteractable) {
+            clearHoveredInteractable()
+        }
+        
+        hoveredInteractable = interactable
+    }
+    else {
+        clearHoveredInteractable()
+    }
+}
+
+function clearHoveredInteractable() {
+    if (hoveredInteractable !== undefined) {
+        hoveredInteractable.onHoverEnd.invoke()
+        hoveredInteractable = undefined
     }
 }
 
