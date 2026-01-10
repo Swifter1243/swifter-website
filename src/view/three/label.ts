@@ -11,7 +11,7 @@ export class Label implements IDisposable {
     textGeometry?: TextGeometry
     readonly parent: THREE.Object3D
 
-    constructor(parent: THREE.Object3D, text: string) {
+    constructor(parent: THREE.Object3D, text: string, size = 1) {
         this.parent = parent
 
         this.content = new THREE.Object3D()
@@ -20,8 +20,8 @@ export class Label implements IDisposable {
         font.then(f => {
             this.textGeometry = new TextGeometry(text, {
                 font: f,
-                size: 0.08,
-                depth: 0.01,
+                size,
+                depth: size * 0.1,
             })
             this.textGeometry.computeBoundingBox()
             this.textGeometry.center()

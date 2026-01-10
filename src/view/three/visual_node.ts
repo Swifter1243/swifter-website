@@ -17,7 +17,7 @@ export class VisualNode implements IDisposable {
     position: THREE.Vector3
     smoothedPosition: SmoothVec3
 
-    constructor(name: string, parent: THREE.Object3D, position: THREE.Vector3, normal: THREE.Vector3) {
+    constructor(name: string, parent: THREE.Object3D, position: THREE.Vector3, normal: THREE.Vector3, labelSize = 0.04) {
         this.parent = parent
         this.content = new THREE.Object3D()
         this.parent.add(this.content)
@@ -27,7 +27,7 @@ export class VisualNode implements IDisposable {
         
         this.interactable = new Interactable(0.4, this.content)
 
-        this.label = new Label(this.parent, name)
+        this.label = new Label(this.parent, name, labelSize)
         this.label.content.position.copy(position).add(textOffset)
 
         this.smoothedPosition = new SmoothVec3(0, 0, 0, randomRange(3, 5))

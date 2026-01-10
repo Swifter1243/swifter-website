@@ -1,7 +1,7 @@
 import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
-import { randomRange } from "../../utilities/math";
+import { lerp, randomRange } from "../../utilities/math";
 import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
 import { generateSunflowerArrangement } from "./arrangement";
 import { Connection } from "./connection";
@@ -69,7 +69,8 @@ export class VisualDirectory implements IDisposable {
             this.connections[key] = connection
             this.disposables.push(connection)
 
-            const visualNode = new VisualNode(entry[1].name, this.content, o.position, o.normal)
+            const labelSize = Math.max(0.03, lerp(0.4, 0.01, Math.exp(-nodeEntries.length * 0.4)))
+            const visualNode = new VisualNode(entry[1].name, this.content, o.position, o.normal, labelSize)
             this.visualNodes[key] = visualNode
             this.disposables.push(visualNode)
 
