@@ -54,8 +54,10 @@ export class VisualDirectory implements IDisposable {
             this.disposables.push(label)
             this.content.add(label.content)
 
-            const interactable = new Interactable(0.1, this.content)
+            const interactable = new Interactable(0.4, this.content)
             interactable.onClick.subscribe(() => this.onNodeClicked.invoke(key))
+            interactable.onHoverStart.subscribe(() => label.textMesh?.scale.setScalar(1.2))
+            interactable.onHoverEnd.subscribe(() => label.textMesh?.scale.setScalar(1.0))
             interactable.mesh.position.copy(endPoint)
             this.disposables.push(interactable)
             this.content.add(interactable.mesh)

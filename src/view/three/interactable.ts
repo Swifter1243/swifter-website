@@ -21,6 +21,7 @@ export class Interactable implements IDisposable {
     constructor(radius: number, parent: THREE.Object3D) {
         const geometry = new THREE.BoxGeometry(radius, radius, radius)
         this.mesh = new THREE.Mesh(geometry, undefined)
+        this.mesh.visible = false
         interactables.set(this.mesh, this)
 
         this.parent = parent
