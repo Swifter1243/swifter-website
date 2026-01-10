@@ -37,9 +37,15 @@ export class Label implements IDisposable {
 
     private update() {
         if (this.textMesh) {
-            const target = new THREE.Vector3()
-            camera.getWorldPosition(target)
-            this.textMesh.lookAt(target)
+            const camQ = new THREE.Quaternion()
+            const parentQ = new THREE.Quaternion()
+
+            camera.getWorldQuaternion(camQ)
+            if (this.textMesh.parent) {
+                this.textMesh.parent!.getWorldQuaternion(parentQ).invert()
+                camQ.premultiply(parentQ)
+                this.textMesh.quaternion.copy(camQ)
+            }
         }
     }
 
