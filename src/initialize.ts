@@ -1,7 +1,6 @@
-import { createRootNode } from "./model/create"
-import { DirectoryNode } from "./model/directory_node"
 import type { INode } from "./model/node"
 import { Navigation } from "./navigation/navigation"
+import { createRootNode } from "./nodes/create"
 import { View } from "./view/view"
 
 export function initMVC() {
