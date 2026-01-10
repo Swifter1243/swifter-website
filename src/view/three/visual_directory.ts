@@ -17,7 +17,8 @@ export class VisualDirectory implements IDisposable {
     visualNodes: Record<string, VisualNode> = {}
     disposables: IDisposable[] = []
     onNodeClicked = new Invokable<[string]>()
-    startNormal = new SmoothVec3(0, 0.8, 0) 
+    startNormal = new SmoothVec3(0, 0.8, 0, 0.2)
+    endNormals: Record<string, SmoothVec3> = {}
 
     stepFunction: (deltaTime: number) => void
 
@@ -44,9 +45,12 @@ export class VisualDirectory implements IDisposable {
             const key = entry[0]
 
             const endPoint = new THREE.Vector3()
-            const endNormal = new THREE.Vector3().addScaledVector(o.normal, -0.5)
+            const endNormal = new SmoothVec3(0, 0, 0, 0.5)
+            endNormal.copyImmediate(new THREE.Vector3().addScaledVector(o.normal, -0.1))
+            endNormal.copy(new THREE.Vector3().addScaledVector(o.normal, -0.5))
+            this.endNormals[key] = endNormal
 
-            const connection = new Connection(this.content, startPoint, this.startNormal.current, endPoint, endNormal)
+            const connection = new Connection(this.content, startPoint, this.startNormal.current, endPoint, endNormal.current)
             this.connections[key] = connection
             this.disposables.push(connection)
 
@@ -67,8 +71,10 @@ export class VisualDirectory implements IDisposable {
             const key = entry[0]
             const visualNode = entry[1]
             const connection = this.connections[key]
+            const endNormal = this.endNormals[key]
 
             visualNode.step(deltaTime)
+            endNormal.step(deltaTime)
             connection.step()
             connection.endPoint.copy(visualNode.smoothedPosition.current)
         })

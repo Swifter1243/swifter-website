@@ -24,13 +24,15 @@ export class SmoothNumber {
         this.set(value)
     }
 
-    set(value: number) {
+    set(value: number): SmoothNumber {
         this.targetVal = value
+        return this
     }
 
-    setImmediate(value: number) {
+    setImmediate(value: number): SmoothNumber {
         this.targetVal = value
         this.currentVal = value
+        return this
     }
 
     step(deltaTime: number) {
@@ -49,24 +51,41 @@ export class SmoothVec3 {
         this.x = new SmoothNumber(x, rate)
         this.y = new SmoothNumber(y, rate)
         this.z = new SmoothNumber(z, rate)
+        this.updateCurrent()
     }
 
     step(deltaTime: number) {
         this.x.step(deltaTime)
         this.y.step(deltaTime)
         this.z.step(deltaTime)
+        this.updateCurrent()
+    }
+
+    private updateCurrent() {
         this.current.set(this.x.current, this.y.current, this.z.current)
     }
 
-    set(x: number, y: number, z: number): void {
+    set(x: number, y: number, z: number): SmoothVec3 {
         this.x.set(x)
         this.y.set(y)
         this.z.set(z)
+        this.updateCurrent()
+        return this
     }
 
-    copy(vector: THREE.Vector3): void {
+    copy(vector: THREE.Vector3): SmoothVec3 {
         this.x.set(vector.x)
         this.y.set(vector.y)
         this.z.set(vector.z)
+        this.updateCurrent()
+        return this
+    }
+
+    copyImmediate(vector: THREE.Vector3): SmoothVec3 {
+        this.x.setImmediate(vector.x)
+        this.y.setImmediate(vector.y)
+        this.z.setImmediate(vector.z)
+        this.updateCurrent()
+        return this
     }
 }
