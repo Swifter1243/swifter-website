@@ -27,6 +27,11 @@ export class SmoothValue {
         this.targetVal = value
     }
 
+    setImmediate(value: number) {
+        this.targetVal = value
+        this.currentVal = value
+    }
+
     step(deltaTime: number) {
         const t = Math.exp(-this.rate * deltaTime)
         this.currentVal = lerp(this.targetVal, this.currentVal, t)

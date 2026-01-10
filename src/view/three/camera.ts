@@ -35,6 +35,8 @@ export function initCamera() {
     setCameraAspectFromWindow()
 
     onRender.subscribe(deltaTime => {
+        cameraRotY.target += deltaTime * 0.05
+
         cameraRotX.step(deltaTime)
         cameraRotY.step(deltaTime)
         pivotPosX.step(deltaTime)
