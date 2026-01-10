@@ -10,13 +10,14 @@ const cameraRotX = new SmoothNumber(0, 7)
 const cameraRotY = new SmoothNumber(0, 7)
 
 const pivotPos = new SmoothVec3(0, 0, 0, 5)
+export let pivotObject: THREE.Object3D | undefined = undefined
+
+export function setPivotObject(object?: THREE.Object3D) {
+    pivotObject = object
+}
 
 let downRotX = 0
 let downRotY = 0
-
-export function setPivotPos(x: number, y: number, z: number) {
-    pivotPos.set(x, y, z)
-}
 
 export function initCamera() {
     const pivot = new THREE.Object3D()
@@ -30,12 +31,20 @@ export function initCamera() {
     camera.far = 100
     setCameraAspectFromWindow()
 
+    const pivotWorldPos = new THREE.Vector3()
     onRender.subscribe(deltaTime => {
         cameraRotY.target += deltaTime * 0.05
 
         cameraRotX.step(deltaTime)
         cameraRotY.step(deltaTime)
         pivotPos.step(deltaTime)
+
+        if (pivotObject) {
+            pivotObject?.getWorldPosition(pivotWorldPos)
+            pivotPos.copy(pivotWorldPos)
+        } else {
+            pivotPos.set(0, 0, 0)
+        }
 
         pivot.position.copy(pivotPos.current)
         pivot.rotation.x = cameraRotX.current

@@ -15,6 +15,7 @@ export class VisualDirectory implements IDisposable {
     directoryNode: DirectoryNode
     content: THREE.Object3D
     parent: THREE.Object3D
+    pivot: THREE.Object3D
 
     connections: Record<string, Connection> = {}
     visualNodes: Record<string, VisualNode> = {}
@@ -31,8 +32,11 @@ export class VisualDirectory implements IDisposable {
     constructor(directoryNode: DirectoryNode, parent: THREE.Object3D) {
         this.directoryNode = directoryNode
         this.content = new THREE.Object3D()
+        this.pivot = new THREE.Object3D()
+        this.pivot.position.set(0, 1, 0)
         this.parent = parent
         parent.add(this.content)
+        this.content.add(this.pivot)
 
         this.generateObjects()
 
@@ -113,6 +117,7 @@ export class VisualDirectory implements IDisposable {
             disposable.dispose()
         }) 
 
+        this.content.remove(this.pivot)
         this.parent.remove(this.content)
         onRender.unsubscribe(this.stepFunction)
     }

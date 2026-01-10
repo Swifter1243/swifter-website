@@ -4,9 +4,9 @@ import type { INode } from "../model/node"
 import type { Navigation } from "../navigation/navigation"
 import { DirectoryView } from "./three/directory_view"
 import { PageView } from "./page_view"
-import { setPivotPos } from "./three/camera"
 import { BigFlower } from "./three/big_flower"
 import { scene } from "./three/main"
+import { setPivotObject } from "./three/camera"
 
 export class View {
     navigation: Navigation
@@ -57,8 +57,7 @@ export class View {
             const currentDirectoryView = this.directoryView.getCurrent()
             if (currentDirectoryView) {
                 const visualNode = currentDirectoryView.visualNodes[key]
-                const worldPos = currentDirectoryView.parent.localToWorld(visualNode.position)
-                setPivotPos(worldPos.x, worldPos.y, worldPos.z)
+                setPivotObject(visualNode.content)
             }
 
             this.pageView.openPage(newNode)
@@ -72,8 +71,7 @@ export class View {
         else if (this.currentNode instanceof PageNode) {
             const currentDirectoryView = this.directoryView.getCurrent()
             if (currentDirectoryView) {
-                const worldPos = currentDirectoryView.getWorldCenter()
-                setPivotPos(worldPos.x, worldPos.y, worldPos.z)
+                setPivotObject(currentDirectoryView.pivot)
             }
 
             this.pageView.closePage()
