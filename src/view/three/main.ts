@@ -22,5 +22,5 @@ export function initThree() {
 
 function initFont() {
     const loader = new FontLoader()
-    font = loader.loadAsync('helvetiker_regular.typeface.json')
+    font = loader.loadAsync('/helvetiker_regular.typeface.json')
 }

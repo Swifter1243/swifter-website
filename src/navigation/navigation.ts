@@ -8,6 +8,7 @@ export class Navigation {
 
     readonly onDescent = new Invokable()
     readonly onAscent = new Invokable<[string]>()
+    readonly onChange = new Invokable()
 
     constructor(rootNode: INode) {
         this.rootNode = rootNode
@@ -99,6 +100,10 @@ export class Navigation {
         const a = this.headerPath
         const b = path
 
+        if (a === b) {
+            return
+        }
+
         const maxCommonLength = Math.min(a.length, b.length)
         let commonLength = 0
 
@@ -121,5 +126,7 @@ export class Navigation {
             this.headerPath += `/${key}`
             this.onAscent.invoke(key)
         })
+
+        this.onChange.invoke()
     }
 }

@@ -16,6 +16,7 @@ export class View {
     currentNode: INode
 
     private rootSpawned = false
+    private dontPushState = false
 
     constructor(navigation: Navigation) {
         this.navigation = navigation
@@ -29,8 +30,20 @@ export class View {
     initialize() {
         this.navigation.onAscent.subscribe((key) => this.onAscent(key))
         this.navigation.onDescent.subscribe(() => this.onDescent())
+        this.navigation.onChange.subscribe(() => this.onChange())
 
         this.directoryView.initialize()
+
+        if (location.pathname !== '/') {
+            this.spawnRoot()
+            this.navigation.goToPath('.' + location.pathname)
+        }
+
+        window.addEventListener('popstate', _ => {
+            this.dontPushState = true
+            const url = '.' + location.pathname
+            this.navigation.goToPath(url)
+        })
     }
 
     private onAscent(key: string) {
@@ -67,6 +80,16 @@ export class View {
         }
 
         this.currentNode = this.navigation.grabCurrentNode()
+    }
+
+    private onChange() {
+        if (this.dontPushState) {
+            this.dontPushState = false
+            return
+        }
+
+        const url = this.navigation.headerPath === '.' ? '/' : this.navigation.headerPath.substring(1)
+        history.pushState(null, '', url)
     }
     
     private spawnRoot() {
