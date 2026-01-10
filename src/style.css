@@ -11,8 +11,9 @@ body {
 #page {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0);
-  transition: background-color 0.5s ease;
+  background-color: rgba(0,0,0,0.5);
+  transition: opacity 0.5s ease;
+  opacity: 0;
 }
 
 #page-panel {

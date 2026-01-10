@@ -14,10 +14,10 @@ export class PageView {
     openPage(node: PageNode): void {
         page.hidden = false
         pagePanel.style.transform = "translateY(50px)";
-        page.style.backgroundColor = "rgba(0,0,0,0)"
+        page.style.opacity = '0'
         page.getBoundingClientRect()
         pagePanel.style.transform = "translateY(0px)";
-        page.style.backgroundColor = "rgba(0,0,0,0.5)"
+        page.style.opacity = '1'
         pageContent.innerHTML = node.html
     }
 
