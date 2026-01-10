@@ -1,12 +1,11 @@
 import { Object3D } from "three";
-import { TextGeometry, THREE } from "../../deps";
+import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
 import { generateSunflowerArrangement, type ArrangedObject } from "./arrangement";
 import { Connection } from "./connection";
 import { Interactable } from "./interactable";
 import { Label } from "./label";
-import { font } from "./main";
 import type { IDisposable } from "./disposable";
 
 export class VisualDirectory implements IDisposable {
@@ -40,7 +39,6 @@ export class VisualDirectory implements IDisposable {
         objects.forEach((o, i) => {
             const entry = nodeEntries[i]
             const key = entry[0]
-            const node = entry[1]
             this.arrangedObjects[key] = o
 
             const endPoint = o.position
