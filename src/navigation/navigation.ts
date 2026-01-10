@@ -50,9 +50,8 @@ export class Navigation {
         if (nodes.length <= 1)
             return false
 
-        const newNodes = nodes.splice(nodes.length - 2)
-        const newPath = newNodes.join('/')
-        this.headerPath = newPath
+        nodes.pop()
+        this.headerPath = nodes.join('/')
         this.onDescent.invoke()
         return true
     }
@@ -90,6 +89,11 @@ export class Navigation {
     }
 
     goToPath(path: string) {
+        if (path === this.headerPath) {
+            this.descend()
+            return
+        }
+
         path = this.truncatePathToValidated(path)
 
         const a = this.headerPath
