@@ -9,24 +9,26 @@ body {
 }
 
 #page {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0,0,0,0.5);
-  transition: opacity 0.5s ease;
-  opacity: 0;
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	transition: opacity 0.5s ease;
+	opacity: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #page-panel {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: min(100%, 90vh);
-  margin: 0 auto;
-  transition: transform 0.5s ease; /* smooth animation */
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: min(100%, 90vh);
+	transition: transform 0.5s ease; /* smooth animation */
 }
 
 #page-content {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  min-height: 0;
+	flex: 1 1 auto;
+	overflow-y: auto;
+	min-height: 0;
 }

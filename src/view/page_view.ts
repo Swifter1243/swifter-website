@@ -22,6 +22,12 @@ export class PageView {
     }
 
     closePage(): void {
-        page.hidden = true
+        page.style.opacity = '0';
+        pagePanel.style.transform = "translateY(50px)";
+
+        setTimeout(() => {
+            page.hidden = true;
+            pagePanel.style.transform = "translateY(0px)";
+        }, 0.5 * 1000);
     }
 }
