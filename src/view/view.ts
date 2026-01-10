@@ -16,7 +16,7 @@ export class View {
     currentNode: INode
 
     private rootSpawned = false
-    private dontPushState = false
+    private dontPushURLHistory = false
 
     constructor(navigation: Navigation) {
         this.navigation = navigation
@@ -35,12 +35,13 @@ export class View {
         this.directoryView.initialize()
 
         if (location.pathname !== '/') {
+            this.dontPushURLHistory = true
             this.spawnRoot()
             this.navigation.goToPath('.' + location.pathname)
         }
 
         window.addEventListener('popstate', _ => {
-            this.dontPushState = true
+            this.dontPushURLHistory = true
             const url = '.' + location.pathname
             this.navigation.goToPath(url)
         })
@@ -81,8 +82,8 @@ export class View {
     }
 
     private onChange() {
-        if (this.dontPushState) {
-            this.dontPushState = false
+        if (this.dontPushURLHistory) {
+            this.dontPushURLHistory = false
             return
         }
 
