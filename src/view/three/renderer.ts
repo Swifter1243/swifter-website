@@ -15,7 +15,7 @@ export function initRenderer() {
     const composer = new EffectComposer(renderer)
 
     composer.addPass(new RenderPass(scene, camera))
-    composer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.5, 0.5, 0.2))
+    composer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.3, 0.5, 0.2))
     composer.addPass(new OutputPass())
     
     const clock = new THREE.Clock()
