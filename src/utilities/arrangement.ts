@@ -1,5 +1,5 @@
-import { THREE } from "../../deps"
-import { randomRange } from "../../utilities/math"
+import { THREE } from "../deps"
+import { randomRange } from "./math"
 
 const goldenRatioSquared = Math.pow((1 + Math.sqrt(5)) / 2, 2)
 

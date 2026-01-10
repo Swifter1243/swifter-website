@@ -3,7 +3,7 @@ import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
 import { lerp, randomRange } from "../../utilities/math";
 import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
-import { generateSunflowerArrangement } from "./arrangement";
+import { generateSunflowerArrangement } from "../../utilities/arrangement";
 import { Connection } from "./connection";
 import type { IDisposable } from "./disposable";
 import { onRender } from "./renderer";
