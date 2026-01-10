@@ -13,21 +13,21 @@ export class VisualNode implements IDisposable {
     interactable: Interactable
     label: Label
 
-    endPoint: THREE.Vector3
+    position: THREE.Vector3
 
-    constructor(key: string, parent: Object3D, endPoint: THREE.Vector3, endNormal: THREE.Vector3) {
+    constructor(key: string, parent: Object3D, position: THREE.Vector3, normal: THREE.Vector3) {
         this.parent = parent
         this.content = new Object3D()
         this.parent.add(this.content)
 
-        this.endPoint = endPoint
-        this.content.position.copy(this.endPoint) // Temp
-        alignLocalUp(this.content, endNormal)
+        this.position = position
+        this.content.position.copy(this.position) // Temp
+        alignLocalUp(this.content, normal)
         
         this.interactable = new Interactable(0.4, this.content)
 
         this.label = new Label(this.parent, key)
-        this.label.content.position.copy(endPoint).add(textOffset)
+        this.label.content.position.copy(position).add(textOffset)
     }
 
     dispose(): void {

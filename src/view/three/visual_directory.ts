@@ -2,7 +2,7 @@ import { Object3D, Vector3 } from "three";
 import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
-import { generateSunflowerArrangement, type ArrangedObject } from "./arrangement";
+import { generateSunflowerArrangement } from "./arrangement";
 import { Connection } from "./connection";
 import type { IDisposable } from "./disposable";
 import { VisualNode } from "./visual_node";
@@ -15,7 +15,6 @@ export class VisualDirectory implements IDisposable {
     connections: Record<string, Connection> = {}
     visualNodes: Record<string, VisualNode> = {}
     disposables: IDisposable[] = []
-    arrangedObjects: Record<string, ArrangedObject> = {} 
     onNodeClicked = new Invokable<[string]>()
 
     constructor(directoryNode: DirectoryNode, parent: Object3D) {
@@ -37,7 +36,6 @@ export class VisualDirectory implements IDisposable {
         objects.forEach((o, i) => {
             const entry = nodeEntries[i]
             const key = entry[0]
-            this.arrangedObjects[key] = o
 
             const endPoint = o.position
             const endNormal = new THREE.Vector3().addScaledVector(o.normal, -0.5)
@@ -46,7 +44,7 @@ export class VisualDirectory implements IDisposable {
             this.connections[key] = connection
             this.disposables.push(connection)
 
-            const visualNode = new VisualNode(key, this.content, endPoint, endNormal)
+            const visualNode = new VisualNode(key, this.content, o.position, o.normal)
             this.visualNodes[key] = visualNode
             this.disposables.push(visualNode)
 

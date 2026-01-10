@@ -1,6 +1,6 @@
+import type { Object3D } from "three"
 import { DirectoryNode } from "../../model/directory_node"
 import type { Navigation } from "../../navigation/navigation"
-import { alignLocalUp } from "../../utilities/three"
 import { setPivotPos } from "./camera"
 import { scene } from "./main"
 import { VisualDirectory } from "./visual_directory"
@@ -42,16 +42,15 @@ export class DirectoryView {
     }
 
     onAscent(newNode: DirectoryNode, key: string) {
-        const newDir = new VisualDirectory(newNode, scene)
+        let newParent: Object3D = scene
         const currentDir = this.getCurrent()
 
         if (currentDir) {
-            currentDir.content.add(newDir.content)
-
-            const object = currentDir.arrangedObjects[key]
-            newDir.content.position.copy(object.position)
-            alignLocalUp(newDir.content, object.normal)
+            const visualNode = currentDir.visualNodes[key]
+            newParent = visualNode.content
         }
+
+        const newDir = new VisualDirectory(newNode, newParent)
 
         this.add(newDir)
     }

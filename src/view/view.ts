@@ -43,8 +43,8 @@ export class View {
         else if (newNode instanceof PageNode) {
             const currentDirectoryView = this.directoryView.getCurrent()
             if (currentDirectoryView) {
-                const nodeObject = currentDirectoryView.arrangedObjects[key]
-                const worldPos = currentDirectoryView.parent.localToWorld(nodeObject.position)
+                const visualNode = currentDirectoryView.visualNodes[key]
+                const worldPos = currentDirectoryView.parent.localToWorld(visualNode.position)
                 setPivotPos(worldPos.x, worldPos.y, worldPos.z)
             }
 
