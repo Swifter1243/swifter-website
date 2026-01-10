@@ -65,7 +65,7 @@ export class VisualDirectory implements IDisposable {
             this.connections[key] = connection
             this.disposables.push(connection)
 
-            const visualNode = new VisualNode(key, this.content, o.position, o.normal)
+            const visualNode = new VisualNode(entry[1].name, this.content, o.position, o.normal)
             this.visualNodes[key] = visualNode
             this.disposables.push(visualNode)
 

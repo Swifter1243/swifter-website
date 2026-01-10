@@ -8,9 +8,6 @@ export function initMVC() {
     const navigation = createNavigation(rootNode)
     const view = createView(navigation)
     navigation.initialize()
-
-    navigation.onAscent.subscribe((p) => console.log(`ascended: ${p}`))
-    navigation.onDescent.subscribe(() => console.log('descended'))
 }
 
 function createNavigation(rootNode: INode): Navigation {

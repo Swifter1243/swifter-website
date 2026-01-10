@@ -12,12 +12,12 @@ export class PageView {
         pageClose.addEventListener('click', () => navigation.descend())
     }
 
-    openPage(node: PageNode, key: string): void {
+    openPage(node: PageNode): void {
         page.hidden = false
         pagePanel.style.transform = "translateY(0px)";
         page.style.opacity = '1'
         pageContent.innerHTML = node.html
-        pageTitle.textContent = key
+        pageTitle.textContent = node.name
     }
 
     closePage(): void {

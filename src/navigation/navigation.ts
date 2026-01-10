@@ -39,6 +39,7 @@ export class Navigation {
         if (currentNode instanceof DirectoryNode && currentNode.nodes[key] !== undefined) {
             this.headerPath += `/${key}`
             this.onAscent.invoke(key)
+            this.onChange.invoke()
             return true
         }
         
@@ -54,6 +55,7 @@ export class Navigation {
         nodes.pop()
         this.headerPath = nodes.join('/')
         this.onDescent.invoke()
+        this.onChange.invoke()
         return true
     }
 
