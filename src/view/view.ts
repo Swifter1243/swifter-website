@@ -4,7 +4,6 @@ import type { INode } from "../model/node"
 import type { Navigation } from "../navigation/navigation"
 import { DirectoryView } from "./three/directory_view"
 import { PageView } from "./page_view"
-import { Vector3 } from "three"
 import { setPivotPos } from "./three/camera"
 
 export class View {
