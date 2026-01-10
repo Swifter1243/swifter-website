@@ -1,25 +1,21 @@
 import { camera, scene } from "../three/main";
 import { onRender } from "./renderer";
-import { SmoothValue } from "../../utilities/smooth_value";
+import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
 import { onResize } from "../window";
 import { inputState, onDragMove, onDragStart } from "../input";
 import { THREE } from "../../deps";
 import { clamp } from "../../utilities/math";
 
-const cameraRotX = new SmoothValue(0, 7)
-const cameraRotY = new SmoothValue(0, 7)
+const cameraRotX = new SmoothNumber(0, 7)
+const cameraRotY = new SmoothNumber(0, 7)
 
-const pivotPosX = new SmoothValue(0, 5)
-const pivotPosY = new SmoothValue(0, 5)
-const pivotPosZ = new SmoothValue(0, 5)
+const pivotPos = new SmoothVec3(0, 0, 0, 5)
 
 let downRotX = 0
 let downRotY = 0
 
 export function setPivotPos(x: number, y: number, z: number) {
-    pivotPosX.set(x)
-    pivotPosY.set(y)
-    pivotPosZ.set(z)
+    pivotPos.set(x, y, z)
 }
 
 export function initCamera() {
@@ -39,11 +35,9 @@ export function initCamera() {
 
         cameraRotX.step(deltaTime)
         cameraRotY.step(deltaTime)
-        pivotPosX.step(deltaTime)
-        pivotPosY.step(deltaTime)
-        pivotPosZ.step(deltaTime)
+        pivotPos.step(deltaTime)
 
-        pivot.position.set(pivotPosX.current, pivotPosY.current, pivotPosZ.current)
+        pivot.position.copy(pivotPos.current)
         pivot.rotation.x = cameraRotX.current
         pivot.rotation.y = cameraRotY.current
     })

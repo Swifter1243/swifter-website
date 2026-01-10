@@ -1,6 +1,7 @@
 import { lerp } from "three/src/math/MathUtils.js"
+import { THREE } from "../deps"
 
-export class SmoothValue {
+export class SmoothNumber {
     private currentVal: number
     private targetVal: number
     rate: number
@@ -35,5 +36,37 @@ export class SmoothValue {
     step(deltaTime: number) {
         const t = Math.exp(-this.rate * deltaTime)
         this.currentVal = lerp(this.targetVal, this.currentVal, t)
+    }
+}
+
+export class SmoothVec3 {
+    private x: SmoothNumber
+    private y: SmoothNumber
+    private z: SmoothNumber
+    readonly current = new THREE.Vector3()
+
+    constructor(x = 0, y = 0, z = 0, rate = 3) {
+        this.x = new SmoothNumber(x, rate)
+        this.y = new SmoothNumber(y, rate)
+        this.z = new SmoothNumber(z, rate)
+    }
+
+    step(deltaTime: number) {
+        this.x.step(deltaTime)
+        this.y.step(deltaTime)
+        this.z.step(deltaTime)
+        this.current.set(this.x.current, this.y.current, this.z.current)
+    }
+
+    set(x: number, y: number, z: number): void {
+        this.x.set(x)
+        this.y.set(y)
+        this.z.set(z)
+    }
+
+    copy(vector: THREE.Vector3): void {
+        this.x.set(vector.x)
+        this.y.set(vector.y)
+        this.z.set(vector.z)
     }
 }
