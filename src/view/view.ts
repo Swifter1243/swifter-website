@@ -5,18 +5,25 @@ import type { Navigation } from "../navigation/navigation"
 import { DirectoryView } from "./three/directory_view"
 import { PageView } from "./page_view"
 import { setPivotPos } from "./three/camera"
+import { BigFlower } from "./three/big_flower"
+import { scene } from "./three/main"
 
 export class View {
     navigation: Navigation
     directoryView: DirectoryView
     pageView: PageView
+    bigFlower: BigFlower
     currentNode: INode
+
+    private rootSpawned = false
 
     constructor(navigation: Navigation) {
         this.navigation = navigation
         this.currentNode = this.navigation.grabCurrentNode()
         this.directoryView = new DirectoryView(navigation)
         this.pageView = new PageView(navigation)
+        this.bigFlower = new BigFlower(scene)
+        this.bigFlower.interactable.onClick.subscribe(() => this.spawnRoot())
     }
 
     initialize() {
@@ -60,5 +67,14 @@ export class View {
         }
 
         this.currentNode = this.navigation.grabCurrentNode()
+    }
+    
+    private spawnRoot() {
+        if (this.rootSpawned)
+            return
+
+        this.rootSpawned = true
+        this.bigFlower.bloom()
+        this.directoryView.spawnRoot()
     }
 }

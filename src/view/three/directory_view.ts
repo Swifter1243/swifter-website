@@ -14,6 +14,10 @@ export class DirectoryView {
     }
 
     initialize() {
+        
+    }
+
+    spawnRoot() {
         this.add(new VisualDirectory(this.navigation.rootNode as DirectoryNode, scene))
     }
 
