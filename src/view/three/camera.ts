@@ -9,8 +9,18 @@ import { clamp } from "../../utilities/math";
 const cameraRotX = new SmoothValue(0, 7)
 const cameraRotY = new SmoothValue(0, 7)
 
+const pivotPosX = new SmoothValue(0, 5)
+const pivotPosY = new SmoothValue(0, 5)
+const pivotPosZ = new SmoothValue(0, 5)
+
 let downRotX = 0
 let downRotY = 0
+
+export function setPivotPos(x: number, y: number, z: number) {
+    pivotPosX.set(x)
+    pivotPosY.set(y)
+    pivotPosZ.set(z)
+}
 
 export function initCamera() {
     const pivot = new THREE.Object3D()
@@ -27,7 +37,11 @@ export function initCamera() {
     onRender.subscribe(deltaTime => {
         cameraRotX.step(deltaTime)
         cameraRotY.step(deltaTime)
+        pivotPosX.step(deltaTime)
+        pivotPosY.step(deltaTime)
+        pivotPosZ.step(deltaTime)
 
+        pivot.position.set(pivotPosX.current, pivotPosY.current, pivotPosZ.current)
         pivot.rotation.x = cameraRotX.current
         pivot.rotation.y = cameraRotY.current
     })

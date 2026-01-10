@@ -1,6 +1,7 @@
 import { DirectoryNode } from "../../model/directory_node"
 import type { Navigation } from "../../navigation/navigation"
 import { alignLocalUp } from "../../utilities/three"
+import { setPivotPos } from "./camera"
 import { scene } from "./main"
 import { VisualDirectory } from "./visual_directory"
 
@@ -20,6 +21,16 @@ export class DirectoryView {
         const rootPath = this.navigation.headerPath
         dir.onNodeClicked.subscribe((key) => this.navigation.goToPath(`${rootPath}/${key}`))
         this.visualDirectories.push(dir)
+        this.onCurrentChanged()
+    }
+
+    onCurrentChanged(): void {
+        const current = this.getCurrent()
+
+        if (current) {
+            const worldCenter = current.getWorldCenter()
+            setPivotPos(worldCenter.x, worldCenter.y, worldCenter.z)
+        }
     }
 
     getCurrent(): VisualDirectory | undefined {
@@ -29,7 +40,6 @@ export class DirectoryView {
     onAscent(newNode: DirectoryNode, key: string) {
         const newDir = new VisualDirectory(newNode, scene)
         const currentDir = this.getCurrent()
-        this.add(newDir)
 
         if (currentDir) {
             currentDir.content.add(newDir.content)
@@ -38,9 +48,12 @@ export class DirectoryView {
             newDir.content.position.copy(object.position)
             alignLocalUp(newDir.content, object.normal)
         }
+
+        this.add(newDir)
     }
 
     onDescent(_: DirectoryNode) {
         this.visualDirectories.pop()?.dispose()
+        this.onCurrentChanged()
     }
 }

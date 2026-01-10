@@ -1,4 +1,4 @@
-import { Object3D } from "three";
+import { Object3D, Vector3 } from "three";
 import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
@@ -60,6 +60,12 @@ export class VisualDirectory implements IDisposable {
             this.disposables.push(interactable)
             this.content.add(interactable.mesh)
         })
+    }
+
+    getWorldCenter(): Vector3 {
+        const localPos = new THREE.Vector3(0, 1, 0)
+        const worldPos = this.content.localToWorld(localPos)
+        return worldPos
     }
 
     dispose() {
