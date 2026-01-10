@@ -5,7 +5,7 @@ import { PageNode } from "./page_node";
 export function createRootNode(): INode {
     const rootNode = new DirectoryNode()
     rootNode.addNode('skills', skills())
-    rootNode.addNode('about me', new PageNode('<h1>yeah big fun</h1>'))
+    rootNode.addNode('about me', new PageNode('<h1>yeah big fun</h1><button>ya</button>'.repeat(20)))
     rootNode.addNode('projects', new DirectoryNode())
 
     return rootNode

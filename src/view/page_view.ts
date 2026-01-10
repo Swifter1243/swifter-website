@@ -13,9 +13,6 @@ export class PageView {
 
     openPage(node: PageNode): void {
         page.hidden = false
-        pagePanel.style.transform = "translateY(50px)";
-        page.style.opacity = '0'
-        page.getBoundingClientRect()
         pagePanel.style.transform = "translateY(0px)";
         page.style.opacity = '1'
         pageContent.innerHTML = node.html
@@ -27,7 +24,6 @@ export class PageView {
 
         setTimeout(() => {
             page.hidden = true;
-            pagePanel.style.transform = "translateY(0px)";
         }, 0.5 * 1000);
     }
 }
