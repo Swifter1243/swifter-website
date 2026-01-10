@@ -11,7 +11,7 @@ function sunflowerTheta(n: number) {
     return (n * 2 * Math.PI) / goldenRatioSquared 
 }
 
-type ArrangedObject = {
+export type ArrangedObject = {
     position: THREE.Vector3,
     normal: THREE.Vector3
 }

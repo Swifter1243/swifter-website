@@ -1,3 +1,4 @@
+import { createRootNode } from "./model/create"
 import { DirectoryNode } from "./model/directory_node"
 import type { INode } from "./model/node"
 import { Navigation } from "./navigation/navigation"
@@ -11,17 +12,6 @@ export function initMVC() {
 
     navigation.onAscent.subscribe((p) => console.log(`ascended: ${p}`))
     navigation.onDescent.subscribe(() => console.log('descended'))
-
-    navigation.goToPath('./skills')
-}
-
-function createRootNode(): INode {
-    const rootNode = new DirectoryNode()
-    rootNode.addNode('skills', new DirectoryNode())
-    rootNode.addNode('about me', new DirectoryNode())
-    rootNode.addNode('projects', new DirectoryNode())
-
-    return rootNode
 }
 
 function createNavigation(rootNode: INode): Navigation {
