@@ -42,7 +42,7 @@ export class View {
                 setPivotPos(worldPos.x, worldPos.y, worldPos.z)
             }
 
-            this.pageView.openPage(newNode)
+            this.pageView.openPage(newNode, key)
         }
     }
 

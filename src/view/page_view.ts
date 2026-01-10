@@ -4,6 +4,7 @@ import type { Navigation } from "../navigation/navigation";
 const pageContent = document.getElementById('page-content')!
 const pagePanel = document.getElementById('page-panel')!
 const page = document.getElementById('page')!
+const pageTitle = document.getElementById('page-title')!
 
 export class PageView {
     constructor(navigation: Navigation) {
@@ -11,11 +12,12 @@ export class PageView {
         pageClose.addEventListener('click', () => navigation.descend())
     }
 
-    openPage(node: PageNode): void {
+    openPage(node: PageNode, key: string): void {
         page.hidden = false
         pagePanel.style.transform = "translateY(0px)";
         page.style.opacity = '1'
         pageContent.innerHTML = node.html
+        pageTitle.textContent = key
     }
 
     closePage(): void {

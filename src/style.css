@@ -4,7 +4,6 @@ body {
 	color: #fff;
 	font-family: Monospace;
 	font-size: 24px;
-	line-height: 24px;
 	overscroll-behavior: none;
 }
 
@@ -38,11 +37,27 @@ body {
 	padding: 20px;
 }
 
-#page-close {
+#page-top-bar {
 	height: 50px;
+	display: flex;
+	align-items: center;
+	background-color: rgba(99, 169, 173, 0.418);
+	border-radius: 5px;
+}
+
+#page-title {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+#page-close {
+	height: inherit;
 	display: flex;
     align-items: center;
     justify-content: center;
+	position: fixed;
+	flex-shrink: 0;
 }
 
 #page-content {
