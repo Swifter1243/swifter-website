@@ -4,9 +4,8 @@ import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
 import { generateSunflowerArrangement, type ArrangedObject } from "./arrangement";
 import { Connection } from "./connection";
-import { Interactable } from "./interactable";
-import { Label } from "./label";
 import type { IDisposable } from "./disposable";
+import { VisualNode } from "./visual_node";
 
 export class VisualDirectory implements IDisposable {
     directoryNode: DirectoryNode
@@ -14,6 +13,7 @@ export class VisualDirectory implements IDisposable {
     parent: Object3D
 
     connections: Record<string, Connection> = {}
+    visualNodes: Record<string, VisualNode> = {}
     disposables: IDisposable[] = []
     arrangedObjects: Record<string, ArrangedObject> = {} 
     onNodeClicked = new Invokable<[string]>()
@@ -34,8 +34,6 @@ export class VisualDirectory implements IDisposable {
         const startPoint = new THREE.Vector3()
         const startNormal = new THREE.Vector3(0, 0.8, 0)
 
-        const textOffset = new THREE.Vector3(0, 0.1, 0)
-
         objects.forEach((o, i) => {
             const entry = nodeEntries[i]
             const key = entry[0]
@@ -47,20 +45,14 @@ export class VisualDirectory implements IDisposable {
             const connection = new Connection(this.content, startPoint, startNormal, endPoint, endNormal)
             this.connections[key] = connection
             this.disposables.push(connection)
-            this.content.add(connection.mesh)
 
-            const label = new Label(this.content, key)
-            label.content.position.copy(endPoint).add(textOffset)
-            this.disposables.push(label)
-            this.content.add(label.content)
+            const visualNode = new VisualNode(key, this.content, endPoint, endNormal)
+            this.visualNodes[key] = visualNode
+            this.disposables.push(visualNode)
 
-            const interactable = new Interactable(0.4, this.content)
-            interactable.onClick.subscribe(() => this.onNodeClicked.invoke(key))
-            interactable.onHoverStart.subscribe(() => label.textMesh?.scale.setScalar(1.2))
-            interactable.onHoverEnd.subscribe(() => label.textMesh?.scale.setScalar(1.0))
-            interactable.mesh.position.copy(endPoint)
-            this.disposables.push(interactable)
-            this.content.add(interactable.mesh)
+            visualNode.interactable.onClick.subscribe(() => this.onNodeClicked.invoke(key))
+            visualNode.interactable.onHoverStart.subscribe(() => visualNode.label.textMesh?.scale.setScalar(1.2))
+            visualNode.interactable.onHoverEnd.subscribe(() => visualNode.label.textMesh?.scale.setScalar(1.0))
         })
     }
 
