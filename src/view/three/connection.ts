@@ -1,6 +1,5 @@
 import { THREE } from "../../deps";
 import type { IDisposable } from "./disposable";
-import { onRender } from "./renderer";
 
 export class Connection implements IDisposable {
     readonly parent: THREE.Object3D
@@ -12,7 +11,6 @@ export class Connection implements IDisposable {
     readonly material: THREE.Material
 
     private readonly curve: THREE.Curve<THREE.Vector3>
-    private readonly updateMethod: () => void
     private readonly startControlPoint = new THREE.Vector3()
     private readonly endControlPoint = new THREE.Vector3()
 
@@ -25,7 +23,7 @@ export class Connection implements IDisposable {
         return new THREE.TubeGeometry( this.curve, 20, 0.005, 4 )
     }
 
-    private update() {
+    step() {
         this.updateControlPoints()
 
         this.mesh.geometry.dispose()
@@ -51,14 +49,10 @@ export class Connection implements IDisposable {
         this.material = new THREE.MeshBasicMaterial({ color: '#ffffff' })
         this.mesh = new THREE.Mesh( this.getGeometry(), this.material )
 
-        this.updateMethod = () => this.update()
-
         parent.add(this.mesh)
-        onRender.subscribe(this.updateMethod)
     }
 
     dispose() {
-        onRender.unsubscribe(this.updateMethod)
         this.mesh.geometry.dispose()
         this.material.dispose()
         this.parent.remove(this.mesh)
