@@ -1,4 +1,3 @@
-import { Object3D, Vector3 } from "three";
 import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
@@ -9,17 +8,17 @@ import { VisualNode } from "./visual_node";
 
 export class VisualDirectory implements IDisposable {
     directoryNode: DirectoryNode
-    content: Object3D
-    parent: Object3D
+    content: THREE.Object3D
+    parent: THREE.Object3D
 
     connections: Record<string, Connection> = {}
     visualNodes: Record<string, VisualNode> = {}
     disposables: IDisposable[] = []
     onNodeClicked = new Invokable<[string]>()
 
-    constructor(directoryNode: DirectoryNode, parent: Object3D) {
+    constructor(directoryNode: DirectoryNode, parent: THREE.Object3D) {
         this.directoryNode = directoryNode
-        this.content = new Object3D()
+        this.content = new THREE.Object3D()
         this.parent = parent
         parent.add(this.content)
 
@@ -54,7 +53,7 @@ export class VisualDirectory implements IDisposable {
         })
     }
 
-    getWorldCenter(): Vector3 {
+    getWorldCenter(): THREE.Vector3 {
         const localPos = new THREE.Vector3(0, 1, 0)
         const worldPos = this.content.localToWorld(localPos)
         return worldPos

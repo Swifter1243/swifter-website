@@ -1,4 +1,3 @@
-import { Object3D } from "three";
 import type { IDisposable } from "./disposable";
 import { Interactable } from "./interactable";
 import { THREE } from "../../deps";
@@ -8,16 +7,16 @@ import { alignLocalUp } from "../../utilities/three";
 const textOffset = new THREE.Vector3(0, 0.1, 0)
 
 export class VisualNode implements IDisposable {
-    parent: Object3D
-    content: Object3D
+    parent: THREE.Object3D
+    content: THREE.Object3D
     interactable: Interactable
     label: Label
 
     position: THREE.Vector3
 
-    constructor(key: string, parent: Object3D, position: THREE.Vector3, normal: THREE.Vector3) {
+    constructor(key: string, parent: THREE.Object3D, position: THREE.Vector3, normal: THREE.Vector3) {
         this.parent = parent
-        this.content = new Object3D()
+        this.content = new THREE.Object3D()
         this.parent.add(this.content)
 
         this.position = position

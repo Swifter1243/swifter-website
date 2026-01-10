@@ -1,4 +1,4 @@
-import type { Object3D } from "three"
+import type { THREE } from "../../deps"
 import { DirectoryNode } from "../../model/directory_node"
 import type { Navigation } from "../../navigation/navigation"
 import { setPivotPos } from "./camera"
@@ -42,7 +42,7 @@ export class DirectoryView {
     }
 
     onAscent(newNode: DirectoryNode, key: string) {
-        let newParent: Object3D = scene
+        let newParent: THREE.Object3D = scene
         const currentDir = this.getCurrent()
 
         if (currentDir) {

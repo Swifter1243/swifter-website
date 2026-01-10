@@ -1,4 +1,3 @@
-import { Mesh, Object3D } from "three";
 import { camera, font } from "./main";
 import { TextGeometry, THREE } from "../../deps";
 import { onRender } from "./renderer";
@@ -7,15 +6,15 @@ import type { IDisposable } from "./disposable";
 const textMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' })
 
 export class Label implements IDisposable {
-    content: Object3D
-    textMesh?: Mesh
+    content: THREE.Object3D
+    textMesh?: THREE.Mesh
     textGeometry?: TextGeometry
-    readonly parent: Object3D
+    readonly parent: THREE.Object3D
 
-    constructor(parent: Object3D, text: string) {
+    constructor(parent: THREE.Object3D, text: string) {
         this.parent = parent
 
-        this.content = new Object3D()
+        this.content = new THREE.Object3D()
         parent.add(this.content)
 
         font.then(f => {

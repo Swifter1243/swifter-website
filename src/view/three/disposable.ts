@@ -1,7 +1,7 @@
-import type { Object3D } from "three";
+import type { THREE } from "../../deps"
 
 export interface IDisposable {
-    parent: Object3D
+    parent: THREE.Object3D
 
     dispose(): void
 }

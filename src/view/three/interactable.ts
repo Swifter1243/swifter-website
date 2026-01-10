@@ -1,4 +1,3 @@
-import { Object3D } from "three";
 import { THREE } from "../../deps";
 import { Invokable } from "../../utilities/invokable";
 import { onRender } from "./renderer";
@@ -6,7 +5,7 @@ import { inputState, onClick, onHoverEnd } from "../input";
 import { camera } from "./main";
 import type { IDisposable } from "./disposable";
 
-const interactables = new Map<Object3D, Interactable>()
+const interactables = new Map<THREE.Object3D, Interactable>()
 let hoveredInteractable: Interactable | undefined = undefined
 
 const raycaster = new THREE.Raycaster()
