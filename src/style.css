@@ -7,3 +7,24 @@ body {
 	line-height: 24px;
 	overscroll-behavior: none;
 }
+
+#page {
+  position: fixed;
+  inset: 0;
+}
+
+#page-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: min(100%, 90vh);
+  margin: 0 auto;
+  transition: transform 0.5s ease; /* smooth animation */
+  transform: translateY(100px);
+}
+
+#page-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}

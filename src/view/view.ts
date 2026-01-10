@@ -1,18 +1,23 @@
 import { DirectoryNode } from "../model/directory_node"
-import { FileNode } from "../model/file_node"
+import { PageNode } from "../model/page_node"
 import type { INode } from "../model/node"
 import type { Navigation } from "../navigation/navigation"
 import { DirectoryView } from "./three/directory_view"
+import { PageView } from "./page_view"
+import { Vector3 } from "three"
+import { setPivotPos } from "./three/camera"
 
 export class View {
     navigation: Navigation
     directoryView: DirectoryView
+    pageView: PageView
     currentNode: INode
 
     constructor(navigation: Navigation) {
         this.navigation = navigation
         this.currentNode = this.navigation.grabCurrentNode()
         this.directoryView = new DirectoryView(navigation)
+        this.pageView = new PageView(navigation)
     }
 
     initialize() {
@@ -29,8 +34,15 @@ export class View {
         if (newNode instanceof DirectoryNode) {
             this.directoryView.onAscent(newNode, key)
         }
-        else if (newNode instanceof FileNode) {
-            // TODO: Display file
+        else if (newNode instanceof PageNode) {
+            const currentDirectoryView = this.directoryView.getCurrent()
+            if (currentDirectoryView) {
+                const nodeObject = currentDirectoryView.arrangedObjects[key]
+                const worldPos = currentDirectoryView.parent.localToWorld(nodeObject.position)
+                setPivotPos(worldPos.x, worldPos.y, worldPos.z)
+            }
+
+            this.pageView.openPage(newNode)
         }
     }
 
@@ -38,8 +50,14 @@ export class View {
         if (this.currentNode instanceof DirectoryNode) {
             this.directoryView.onDescent(this.currentNode)
         }
-        else if (this.currentNode instanceof FileNode) {
-            // TODO: Close file
+        else if (this.currentNode instanceof PageNode) {
+            const currentDirectoryView = this.directoryView.getCurrent()
+            if (currentDirectoryView) {
+                const worldPos = currentDirectoryView.getWorldCenter()
+                setPivotPos(worldPos.x, worldPos.y, worldPos.z)
+            }
+
+            this.pageView.closePage()
         }
 
         this.currentNode = this.navigation.grabCurrentNode()

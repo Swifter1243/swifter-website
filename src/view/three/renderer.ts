@@ -10,7 +10,7 @@ export function initRenderer() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setAnimationLoop(render);
 
-    document.body.appendChild(renderer.domElement);
+    document.getElementById('three')!.appendChild(renderer.domElement);
 
     const composer = new EffectComposer(renderer)
 

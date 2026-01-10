@@ -1,10 +1,11 @@
 import { DirectoryNode } from "./directory_node";
 import type { INode } from "./node";
+import { PageNode } from "./page_node";
 
 export function createRootNode(): INode {
     const rootNode = new DirectoryNode()
     rootNode.addNode('skills', skills())
-    rootNode.addNode('about me', new DirectoryNode())
+    rootNode.addNode('about me', new PageNode('<h1>yeah big fun</h1>'))
     rootNode.addNode('projects', new DirectoryNode())
 
     return rootNode
