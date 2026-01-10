@@ -35,6 +35,12 @@ export class DirectoryView {
             const worldCenter = current.getWorldCenter()
             setPivotPos(worldCenter.x, worldCenter.y, worldCenter.z)
         }
+
+        this.visualDirectories.forEach((visualDirectory, i) => {
+            const depth = this.visualDirectories.length - 1 - i
+            const breezeAmount = Math.exp(-depth * 1.5) * 0.1
+            visualDirectory.breezeAmount.set(breezeAmount)
+        })
     }
 
     getCurrent(): VisualDirectory | undefined {

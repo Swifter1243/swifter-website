@@ -1,7 +1,8 @@
 import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
-import { SmoothVec3 } from "../../utilities/smooth_value";
+import { randomRange } from "../../utilities/math";
+import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
 import { generateSunflowerArrangement } from "./arrangement";
 import { Connection } from "./connection";
 import type { IDisposable } from "./disposable";
@@ -23,6 +24,8 @@ export class VisualDirectory implements IDisposable {
     endNormals: Record<string, SmoothVec3> = {}
     breezeOffsets: Record<string, number> = {}
 
+    breezeAmount = new SmoothNumber(0.05, 2)
+
     stepFunction: (deltaTime: number) => void
 
     constructor(directoryNode: DirectoryNode, parent: THREE.Object3D) {
@@ -43,11 +46,14 @@ export class VisualDirectory implements IDisposable {
 
         const startPoint = new THREE.Vector3()
 
+        let nextBreezeOffset = 0
+
         objects.forEach((o, i) => {
             const entry = nodeEntries[i]
             const key = entry[0]
 
-            this.breezeOffsets[key] = Math.random()
+            this.breezeOffsets[key] = nextBreezeOffset
+            nextBreezeOffset += randomRange(0.3, 0.8)
 
             const endPoint = new THREE.Vector3()
             const endNormal = new SmoothVec3(0, 0, 0, 0.5)
@@ -71,6 +77,7 @@ export class VisualDirectory implements IDisposable {
 
     step(deltaTime: number): void {
         this.startNormal.step(deltaTime)
+        this.breezeAmount.step(deltaTime)
 
         time += deltaTime
 
@@ -86,9 +93,9 @@ export class VisualDirectory implements IDisposable {
             connection.endPoint.copy(visualNode.smoothedPosition.current)
 
             const t = time + this.breezeOffsets[key] * 3
-            const breezeAmount = 0.05
 
-            const newPosition = new THREE.Vector3(Math.sin(t), Math.cos(t * 0.283), Math.cos(t * 0.86)).multiplyScalar(breezeAmount)
+            const newPosition = new THREE.Vector3(Math.sin(t), Math.cos(t * 0.283), Math.cos(t * 0.86))
+            newPosition.multiplyScalar(this.breezeAmount.current)
             newPosition.add(visualNode.position)
 
             visualNode.smoothedPosition.copy(newPosition)
