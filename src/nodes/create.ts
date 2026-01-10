@@ -6,9 +6,9 @@ import aboutMeHTML from './pages/about_me.html?raw'
 
 export function createRootNode(): INode {
     const rootNode = new DirectoryNode()
-    rootNode.addNode('skills', skills())
-    rootNode.addNode('about me', new PageNode(aboutMeHTML))
-    rootNode.addNode('projects', new DirectoryNode())
+    rootNode.addNode('Skills', skills())
+    rootNode.addNode('About Me', new PageNode(aboutMeHTML))
+    rootNode.addNode('Projects', new DirectoryNode())
 
     return rootNode
 }
