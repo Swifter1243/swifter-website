@@ -11,6 +11,8 @@ body {
 #page {
   position: fixed;
   inset: 0;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.5s ease;
 }
 
 #page-panel {
@@ -20,7 +22,6 @@ body {
   width: min(100%, 90vh);
   margin: 0 auto;
   transition: transform 0.5s ease; /* smooth animation */
-  transform: translateY(100px);
 }
 
 #page-content {
