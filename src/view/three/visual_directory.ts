@@ -8,6 +8,8 @@ import type { IDisposable } from "./disposable";
 import { onRender } from "./renderer";
 import { VisualNode } from "./visual_node";
 
+let time = 0
+
 export class VisualDirectory implements IDisposable {
     directoryNode: DirectoryNode
     content: THREE.Object3D
@@ -19,6 +21,7 @@ export class VisualDirectory implements IDisposable {
     onNodeClicked = new Invokable<[string]>()
     startNormal = new SmoothVec3(0, 0.8, 0, 0.2)
     endNormals: Record<string, SmoothVec3> = {}
+    breezeOffsets: Record<string, number> = {}
 
     stepFunction: (deltaTime: number) => void
 
@@ -44,6 +47,8 @@ export class VisualDirectory implements IDisposable {
             const entry = nodeEntries[i]
             const key = entry[0]
 
+            this.breezeOffsets[key] = Math.random()
+
             const endPoint = new THREE.Vector3()
             const endNormal = new SmoothVec3(0, 0, 0, 0.5)
             endNormal.copyImmediate(new THREE.Vector3().addScaledVector(o.normal, -0.1))
@@ -67,6 +72,8 @@ export class VisualDirectory implements IDisposable {
     step(deltaTime: number): void {
         this.startNormal.step(deltaTime)
 
+        time += deltaTime
+
         Object.entries(this.visualNodes).forEach(entry => {
             const key = entry[0]
             const visualNode = entry[1]
@@ -77,6 +84,14 @@ export class VisualDirectory implements IDisposable {
             endNormal.step(deltaTime)
             connection.step()
             connection.endPoint.copy(visualNode.smoothedPosition.current)
+
+            const t = time + this.breezeOffsets[key] * 3
+            const breezeAmount = 0.05
+
+            const newPosition = new THREE.Vector3(Math.sin(t), Math.cos(t * 0.283), Math.cos(t * 0.86)).multiplyScalar(breezeAmount)
+            newPosition.add(visualNode.position)
+
+            visualNode.smoothedPosition.copy(newPosition)
         })
     }
 
