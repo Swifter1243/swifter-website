@@ -6,20 +6,24 @@ import { generateSunflowerArrangement, type ArrangedObject } from "./arrangement
 import { Connection } from "./connection";
 import { Interactable } from "./interactable";
 import { Label } from "./label";
-import { font, scene } from "./main";
+import { font } from "./main";
+import type { IDisposable } from "./disposable";
 
-export class VisualDirectory {
+export class VisualDirectory implements IDisposable {
     directoryNode: DirectoryNode
+    content: Object3D
     parent: Object3D
 
     connections: Record<string, Connection> = {}
+    disposables: IDisposable[] = []
     arrangedObjects: Record<string, ArrangedObject> = {} 
     onNodeClicked = new Invokable<[string]>()
 
-    constructor(directoryNode: DirectoryNode) {
+    constructor(directoryNode: DirectoryNode, parent: Object3D) {
         this.directoryNode = directoryNode
-        this.parent = new Object3D()
-        scene.add(this.parent)
+        this.content = new Object3D()
+        this.parent = parent
+        parent.add(this.content)
 
         this.generateObjects()
     }
@@ -42,19 +46,29 @@ export class VisualDirectory {
             const endPoint = o.position
             const endNormal = new THREE.Vector3().addScaledVector(o.normal, -0.5)
 
-            const connection = new Connection(scene, startPoint, startNormal, endPoint, endNormal)
+            const connection = new Connection(this.content, startPoint, startNormal, endPoint, endNormal)
             this.connections[key] = connection
-            this.parent.add(connection.mesh)
+            this.disposables.push(connection)
+            this.content.add(connection.mesh)
 
-            const label = new Label(scene, key)
-            label.parent.position.copy(endPoint).add(textOffset)
-            this.parent.add(label.parent)
+            const label = new Label(this.content, key)
+            label.content.position.copy(endPoint).add(textOffset)
+            this.disposables.push(label)
+            this.content.add(label.content)
 
-            const interactable = new Interactable(0.1)
+            const interactable = new Interactable(0.1, this.content)
             interactable.onClick.subscribe(() => this.onNodeClicked.invoke(key))
             interactable.mesh.position.copy(endPoint)
-            scene.add(interactable.mesh) // TODO: Interactables shouldn't be visible >:(
-            this.parent.add(interactable.mesh)
+            this.disposables.push(interactable)
+            this.content.add(interactable.mesh)
         })
+    }
+
+    dispose() {
+        this.disposables.forEach(disposable => {
+            disposable.dispose()
+        }) 
+
+        this.parent.remove(this.content)
     }
 }

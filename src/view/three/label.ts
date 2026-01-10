@@ -1,30 +1,35 @@
-import { Mesh, Object3D, type Scene } from "three";
+import { Mesh, Object3D } from "three";
 import { camera, font } from "./main";
 import { TextGeometry, THREE } from "../../deps";
 import { onRender } from "./renderer";
+import type { IDisposable } from "./disposable";
 
 const textMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' })
 
-export class Label {
-    parent: Object3D
+export class Label implements IDisposable {
+    content: Object3D
     textMesh?: Mesh
+    textGeometry?: TextGeometry
+    readonly parent: Object3D
 
-    constructor(scene: Scene, text: string) {
-        this.parent = new Object3D()
-        scene.add(this.parent)
+    constructor(parent: Object3D, text: string) {
+        this.parent = parent
+
+        this.content = new Object3D()
+        parent.add(this.content)
 
         font.then(f => {
-            const textGeometry = new TextGeometry(text, {
+            this.textGeometry = new TextGeometry(text, {
                 font: f,
                 size: 0.08,
                 depth: 0.01,
             })
-            textGeometry.computeBoundingBox()
-            textGeometry.center()
-            this.textMesh = new THREE.Mesh(textGeometry, textMaterial)
+            this.textGeometry.computeBoundingBox()
+            this.textGeometry.center()
+            this.textMesh = new THREE.Mesh(this.textGeometry, textMaterial)
 
-            scene.add(this.textMesh)
-            this.parent.add(this.textMesh)
+            parent.add(this.textMesh)
+            this.content.add(this.textMesh)
         })
 
         onRender.subscribe(() => this.update())
@@ -36,5 +41,15 @@ export class Label {
             camera.getWorldPosition(target)
             this.textMesh.lookAt(target)
         }
+    }
+
+    dispose() {
+        if (this.textMesh)
+            this.content.remove(this.textMesh)
+
+        if (this.textGeometry)
+            this.textGeometry.dispose()
+
+        this.parent.remove(this.content)
     }
 }

@@ -4,26 +4,32 @@ import { Invokable } from "../../utilities/invokable";
 import { onRender } from "./renderer";
 import { inputState, onClick, onHoverEnd } from "../input";
 import { camera } from "./main";
+import type { IDisposable } from "./disposable";
 
 const interactables = new Map<Object3D, Interactable>()
 let hoveredInteractable: Interactable | undefined = undefined
 
 const raycaster = new THREE.Raycaster()
 
-export class Interactable {
+export class Interactable implements IDisposable {
     mesh: THREE.Mesh
+    parent: THREE.Object3D
     readonly onHoverStart = new Invokable()
     readonly onHoverEnd = new Invokable()
     readonly onClick = new Invokable()
 
-    constructor(radius: number) {
+    constructor(radius: number, parent: THREE.Object3D) {
         const geometry = new THREE.BoxGeometry(radius, radius, radius)
         this.mesh = new THREE.Mesh(geometry, undefined)
         interactables.set(this.mesh, this)
+
+        this.parent = parent
+        this.parent.add(this.mesh)
     }
 
     dispose() {
         interactables.delete(this.mesh)
+        this.parent.remove(this.mesh)
     }
 }
 

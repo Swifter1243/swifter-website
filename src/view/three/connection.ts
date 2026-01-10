@@ -1,13 +1,15 @@
 import { THREE } from "../../deps";
+import type { IDisposable } from "./disposable";
 import { onRender } from "./renderer";
 
-export class Connection {
-    readonly scene: THREE.Scene
+export class Connection implements IDisposable {
+    readonly parent: THREE.Object3D
     readonly startPoint: THREE.Vector3
     readonly startNormal: THREE.Vector3
     readonly endPoint: THREE.Vector3
     readonly endNormal: THREE.Vector3
     readonly mesh: THREE.Mesh
+    readonly material: THREE.Material
 
     private readonly curve: THREE.Curve<THREE.Vector3>
     private readonly updateMethod: () => void
@@ -31,13 +33,13 @@ export class Connection {
     }
 
     constructor(
-        scene: THREE.Scene,
+        parent: THREE.Object3D,
         startPoint: THREE.Vector3,
         startNormal: THREE.Vector3,
         endPoint: THREE.Vector3, 
         endNormal: THREE.Vector3
     ) {
-        this.scene = scene
+        this.parent = parent
         this.startPoint = startPoint
         this.startNormal = startNormal
         this.endPoint = endPoint
@@ -46,17 +48,19 @@ export class Connection {
         this.updateControlPoints()
         this.curve = new THREE.CubicBezierCurve3(startPoint, this.startControlPoint, this.endControlPoint, endPoint)
 
-        const material = new THREE.MeshBasicMaterial({ color: '#ffffff' })
-        this.mesh = new THREE.Mesh( this.getGeometry(), material )
+        this.material = new THREE.MeshBasicMaterial({ color: '#ffffff' })
+        this.mesh = new THREE.Mesh( this.getGeometry(), this.material )
 
         this.updateMethod = () => this.update()
 
-        scene.add(this.mesh)
+        parent.add(this.mesh)
         onRender.subscribe(this.updateMethod)
     }
 
     dispose() {
         onRender.unsubscribe(this.updateMethod)
-        this.scene.remove(this.mesh)
+        this.mesh.geometry.dispose()
+        this.material.dispose()
+        this.parent.remove(this.mesh)
     }
 }

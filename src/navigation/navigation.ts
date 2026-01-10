@@ -4,7 +4,7 @@ import { Invokable } from "../utilities/invokable";
 
 export class Navigation {
     rootNode: INode
-    headerPath: string = './'
+    headerPath: string = '.'
 
     readonly onDescent = new Invokable()
     readonly onAscent = new Invokable<[string]>()
@@ -15,6 +15,17 @@ export class Navigation {
 
     initialize() {
         
+    }
+
+    private getKeySequence(path: string): string[] {
+        const entries = path.split('/')
+
+        if (entries.length == 0) {
+            return [path]
+        }
+        else {
+            return entries
+        }
     }
 
     grabCurrentNode(): INode {
@@ -34,9 +45,9 @@ export class Navigation {
     }
 
     descend(): boolean {
-        const nodes = this.headerPath.split('/')
+        const nodes = this.getKeySequence(this.headerPath)
 
-        if (nodes.length < 2)
+        if (nodes.length <= 1)
             return false
 
         const newNodes = nodes.splice(nodes.length - 2)
@@ -49,12 +60,12 @@ export class Navigation {
     fetchNode(path: string): INode {
         let lastNode = this.rootNode
 
-        for (const node of path.split('/')) {
-            if (node == '.')
+        for (const key of this.getKeySequence(path)) {
+            if (key == '.')
                 continue
 
-            if (lastNode instanceof DirectoryNode && lastNode.nodes[node] !== undefined) {
-                lastNode = lastNode.nodes[node]
+            if (lastNode instanceof DirectoryNode && lastNode.nodes[key] !== undefined) {
+                lastNode = lastNode.nodes[key]
             }
         }
 
@@ -65,13 +76,13 @@ export class Navigation {
         let lastNode = this.rootNode
         const result = ['.']
 
-        for (const node of path.split('/')) {
-            if (node == '.')
+        for (const key of this.getKeySequence(path)) {
+            if (key == '.')
                 continue
 
-            if (lastNode instanceof DirectoryNode && lastNode.nodes[node] !== undefined) {
-                result.push(node)
-                lastNode = lastNode.nodes[node]
+            if (lastNode instanceof DirectoryNode && lastNode.nodes[key] !== undefined) {
+                result.push(key)
+                lastNode = lastNode.nodes[key]
             }
         }
 
@@ -96,14 +107,14 @@ export class Navigation {
         }
 
         const pathDown = a.substring(commonLength)
-        pathDown.split('/').filter(x => x.length > 0).reverse().forEach(_ => {
-            this.headerPath = this.headerPath.substring(0, this.headerPath.lastIndexOf('/')) // TODO: Test
+        this.getKeySequence(pathDown).filter(x => x.length > 0).reverse().forEach(_ => {
+            this.headerPath = this.headerPath.substring(0, this.headerPath.lastIndexOf('/'))
             this.onDescent.invoke()
         })
 
         const pathUp = b.substring(commonLength)
-        pathUp.split('/').filter(x => x.length > 0).forEach(key => {
-            this.headerPath += `/${key}` // TODO: Test
+        this.getKeySequence(pathUp).filter(x => x.length > 0).forEach(key => {
+            this.headerPath += `/${key}`
             this.onAscent.invoke(key)
         })
     }
