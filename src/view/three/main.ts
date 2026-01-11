@@ -4,6 +4,7 @@ import { initRenderer } from "./renderer";
 import { initScene } from "./scene";
 import { initWindow } from "../window";
 import { initInteractables } from "./interactable";
+import { initLeafParticleSystem } from "./leaf_particle_system";
 
 export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera();
@@ -15,4 +16,5 @@ export function initThree() {
     initRenderer()
     initWindow()
     initInteractables()
+    initLeafParticleSystem()
 }

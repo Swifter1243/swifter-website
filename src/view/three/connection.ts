@@ -2,6 +2,7 @@ import { THREE } from "../../deps";
 import { randomRange } from "../../utilities/math";
 import { alignLocalUp } from "../../utilities/three";
 import type { IDisposable } from "./disposable";
+import { leafParticleSystem } from "./leaf_particle_system";
 
 type Leaf = {
     mesh: THREE.Mesh,
@@ -88,9 +89,13 @@ export class Connection implements IDisposable {
         this.material.dispose()
         this.parent.remove(this.mesh)
 
-        // TODO: Reparent leaves to a particle manager
         this.leaves.forEach(leaf => {
-            this.parent.remove(leaf.mesh)
+            leafParticleSystem.add({
+                time: 0,
+                lifetime: randomRange(0.5, 1),
+                mesh: leaf.mesh,
+                velocityY: randomRange(0, 0.2)
+            }, this.parent)
         })
     }
 }
