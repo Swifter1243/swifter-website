@@ -92,9 +92,10 @@ export class Connection implements IDisposable {
         this.leaves.forEach(leaf => {
             leafParticleSystem.add({
                 time: 0,
-                lifetime: randomRange(0.5, 1),
+                lifetime: randomRange(0.1, 1),
                 mesh: leaf.mesh,
-                velocityY: randomRange(0, 0.2)
+                velocityY: randomRange(0, 0.2),
+                velocityLocalZ: randomRange(0.3, 0.7),
             }, this.parent)
         })
     }

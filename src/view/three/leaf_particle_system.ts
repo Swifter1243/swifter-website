@@ -9,6 +9,7 @@ export type LeafParticle = {
     time: number,
     mesh: THREE.Mesh,
     velocityY: number
+    velocityLocalZ: number
 }
 
 export class LeafParticleSystem {
@@ -27,7 +28,9 @@ export class LeafParticleSystem {
         particle.time += deltaTime
         particle.mesh.scale.setScalar(1 - particle.time / particle.lifetime)
         particle.velocityY -= deltaTime * 2
+        particle.velocityLocalZ += deltaTime * 0.4
         particle.mesh.position.y += particle.velocityY * deltaTime
+        particle.mesh.translateZ(particle.velocityLocalZ * deltaTime)
 
         if (particle.time >= particle.lifetime) {
             this.parent.remove(particle.mesh)
