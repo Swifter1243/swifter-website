@@ -1,14 +1,12 @@
-import { camera, font } from "./main";
-import { TextGeometry, THREE } from "../../deps";
+import { camera } from "./main";
+import { THREE } from "../../deps";
 import { onRender } from "./renderer";
 import type { IDisposable } from "./disposable";
-
-const textMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' })
+import { Text } from "troika-three-text";
 
 export class Label implements IDisposable {
     content: THREE.Object3D
-    textMesh?: THREE.Mesh
-    textGeometry?: TextGeometry
+    textObject: Text
     readonly parent: THREE.Object3D
 
     constructor(parent: THREE.Object3D, text: string, size = 1) {
@@ -17,44 +15,33 @@ export class Label implements IDisposable {
         this.content = new THREE.Object3D()
         parent.add(this.content)
 
-        font.then(f => {
-            this.textGeometry = new TextGeometry(text, {
-                font: f,
-                size,
-                depth: size * 0.1,
-            })
-            this.textGeometry.computeBoundingBox()
-            this.textGeometry.center()
-            this.textMesh = new THREE.Mesh(this.textGeometry, textMaterial)
-
-            parent.add(this.textMesh)
-            this.content.add(this.textMesh)
-        })
+        this.textObject = new Text()
+        this.textObject.text = text
+        this.textObject.font = '/pala.ttf'
+        this.textObject.fontSize = size
+        this.textObject.anchorX = 'center';
+        this.textObject.anchorY = 'middle';
+        this.textObject.textAlign = 'center'
+        this.content.add(this.textObject)
 
         onRender.subscribe(() => this.update())
     }
 
     private update() {
-        if (this.textMesh) {
-            const camQ = new THREE.Quaternion()
-            const parentQ = new THREE.Quaternion()
+        const camQ = new THREE.Quaternion()
+        const parentQ = new THREE.Quaternion()
 
-            camera.getWorldQuaternion(camQ)
-            if (this.textMesh.parent) {
-                this.textMesh.parent!.getWorldQuaternion(parentQ).invert()
-                camQ.premultiply(parentQ)
-                this.textMesh.quaternion.copy(camQ)
-            }
+        camera.getWorldQuaternion(camQ)
+        if (this.textObject.parent) {
+            this.textObject.parent!.getWorldQuaternion(parentQ).invert()
+            camQ.premultiply(parentQ)
+            this.textObject.quaternion.copy(camQ)
         }
     }
 
     dispose() {
-        if (this.textMesh)
-            this.content.remove(this.textMesh)
-
-        if (this.textGeometry)
-            this.textGeometry.dispose()
-
+        this.textObject.dispose()
+        this.content.remove(this.textObject)
         this.parent.remove(this.content)
     }
 }

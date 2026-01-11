@@ -26,7 +26,7 @@ function projects(): INode {
     rootNode.addNode('exsii', new PageNode('Extra Sensory II', ''))
     rootNode.addNode('derelict', new PageNode('Derelict', ''))
     rootNode.addNode('synergy', new PageNode('SYNERGY', ''))
-    rootNode.addNode('aether', new PageNode('Aether', ''))
+    rootNode.addNode('aether', new PageNode('743⁺Aether*✧ . * ¹¹¹} ⁺ , .', ''))
     rootNode.addNode('grasping-at-straws', new PageNode('Grasping At Straws', ''))
     rootNode.addNode('zero', new PageNode('ZERO Inc.', ''))
     rootNode.addNode('bloon-man', new PageNode('BLOON MAN', ''))

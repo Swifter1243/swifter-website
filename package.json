@@ -13,6 +13,7 @@
     "@react-three/uikit": "^0.8.21",
     "@types/three": "^0.178.1",
     "three": "^0.178.0",
+    "troika-three-text": "^0.52.4",
     "typescript": "~5.8.3",
     "vite": "^7.0.4"
   }

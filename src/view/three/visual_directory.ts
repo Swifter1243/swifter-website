@@ -75,8 +75,8 @@ export class VisualDirectory implements IDisposable {
             this.disposables.push(visualNode)
 
             visualNode.interactable.onClick.subscribe(() => this.onNodeClicked.invoke(key))
-            visualNode.interactable.onHoverStart.subscribe(() => visualNode.label.textMesh?.scale.setScalar(1.2))
-            visualNode.interactable.onHoverEnd.subscribe(() => visualNode.label.textMesh?.scale.setScalar(1.0))
+            visualNode.interactable.onHoverStart.subscribe(() => visualNode.label.textObject?.scale.setScalar(1.2))
+            visualNode.interactable.onHoverEnd.subscribe(() => visualNode.label.textObject?.scale.setScalar(1.0))
         })
     }
 

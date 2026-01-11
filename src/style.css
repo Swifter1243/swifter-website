@@ -1,8 +1,13 @@
+@font-face {
+  font-family: 'Palatino Linotype';
+  src: URL('/pala.ttf') format('truetype');
+}
+
 body {
 	margin: 0;
 	background-color: #000;
 	color: #fff;
-	font-family: Monospace;
+	font-family: 'Palatino Linotype';
 	font-size: 24px;
 	overscroll-behavior: none;
 }
