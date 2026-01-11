@@ -36,7 +36,7 @@ export class DirectoryView {
         this.visualDirectories.forEach((visualDirectory, i) => {
             const depth = this.visualDirectories.length - 1 - i
             const nodeCount = Object.values(visualDirectory.directoryNode.nodes).length
-            const countBias = Math.exp(-nodeCount * 0.3)
+            const countBias = Math.exp(-nodeCount * 0.2)
             const depthBias = Math.exp(-depth)
             const breezeAmount = depthBias * countBias * 0.2
             visualDirectory.breezeAmount.set(breezeAmount)
