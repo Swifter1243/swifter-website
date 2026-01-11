@@ -1,5 +1,13 @@
 import { THREE } from "../../deps";
+import { randomRange } from "../../utilities/math";
+import { alignLocalUp } from "../../utilities/three";
 import type { IDisposable } from "./disposable";
+
+type Leaf = {
+    mesh: THREE.Mesh,
+    t: number,
+    rotation: THREE.Quaternion
+}
 
 export class Connection implements IDisposable {
     readonly parent: THREE.Object3D
@@ -13,6 +21,7 @@ export class Connection implements IDisposable {
     private readonly curve: THREE.Curve<THREE.Vector3>
     private readonly startControlPoint = new THREE.Vector3()
     private readonly endControlPoint = new THREE.Vector3()
+    private readonly leaves: Leaf[] = []
 
     private updateControlPoints() {
         this.startControlPoint.addVectors(this.startPoint, this.startNormal)
@@ -25,9 +34,18 @@ export class Connection implements IDisposable {
 
     step() {
         this.updateControlPoints()
+        this.updateGeometry()
+    }
 
+    private updateGeometry() {
         this.mesh.geometry.dispose()
         this.mesh.geometry = this.getGeometry()
+
+        this.leaves.forEach(leaf => {
+            alignLocalUp(leaf.mesh, this.curve.getTangent(leaf.t))
+            leaf.mesh.quaternion.multiply(leaf.rotation)
+            leaf.mesh.position.copy(this.curve.getPoint(leaf.t))
+        })
     }
 
     constructor(
@@ -50,11 +68,29 @@ export class Connection implements IDisposable {
         this.mesh = new THREE.Mesh( this.getGeometry(), this.material )
 
         parent.add(this.mesh)
+
+        for (let t = randomRange(0.2, 0.5); t < 1; t += randomRange(0.1, 0.5)) {
+            const geometry = new THREE.BoxGeometry(0.05, 0.01, 0.05)
+            geometry.translate(0, 0, 0.025)
+            const mesh = new THREE.Mesh(geometry, this.material)
+            this.parent.add(mesh)
+
+            alignLocalUp(mesh, this.curve.getTangent(t))
+            const rotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), randomRange(0, Math.PI * 2))
+            mesh.quaternion.multiply(rotation)
+            mesh.position.copy(this.curve.getPoint(t))
+            this.leaves.push({ mesh, t, rotation })
+        }
     }
 
     dispose() {
         this.mesh.geometry.dispose()
         this.material.dispose()
         this.parent.remove(this.mesh)
+
+        // TODO: Reparent leaves to a particle manager
+        this.leaves.forEach(leaf => {
+            this.parent.remove(leaf.mesh)
+        })
     }
 }
