@@ -4,7 +4,7 @@ import { Invokable } from "../../utilities/invokable";
 
 export const onRender = new Invokable<[number]>();
 
-export const unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.3, 0.5, 0.2)
+export const unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.2, 0.1, 0.2)
 
 export function initRenderer() {
     renderer.setPixelRatio( window.devicePixelRatio );

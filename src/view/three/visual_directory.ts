@@ -69,7 +69,7 @@ export class VisualDirectory implements IDisposable {
             this.connections[key] = connection
             this.disposables.push(connection)
 
-            const labelSize = Math.max(0.03, lerp(0.4, 0.01, Math.exp(-nodeEntries.length * 0.4)))
+            const labelSize = Math.max(0.05, lerp(0.4, 0.01, Math.exp(-nodeEntries.length * 0.4)))
             const visualNode = new VisualNode(entry[1].name, this.content, o.position, o.normal, labelSize)
             this.visualNodes[key] = visualNode
             this.disposables.push(visualNode)
