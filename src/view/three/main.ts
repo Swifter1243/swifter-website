@@ -1,5 +1,5 @@
 import { initCamera } from "../../view/three/camera";
-import { THREE } from "../../deps";
+import { EffectComposer, THREE } from "../../deps";
 import { initRenderer } from "./renderer";
 import { initScene } from "./scene";
 import { initWindow } from "../window";
@@ -9,6 +9,7 @@ import { initLeafParticleSystem } from "./leaf_particle_system";
 export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera();
 export const renderer = new THREE.WebGLRenderer();
+export const composer = new EffectComposer(renderer)
 
 export function initThree() {
     initScene()

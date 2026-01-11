@@ -1,7 +1,6 @@
 import { camera, scene } from "../three/main";
 import { onRender } from "./renderer";
 import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
-import { onResize } from "../window";
 import { inputState, onDragMove, onDragStart } from "../input";
 import { THREE } from "../../deps";
 import { clamp } from "../../utilities/math";
@@ -29,7 +28,6 @@ export function initCamera() {
 
     camera.fov = 40
     camera.far = 100
-    setCameraAspectFromWindow()
 
     const pivotWorldPos = new THREE.Vector3()
     onRender.subscribe(deltaTime => {
@@ -71,13 +69,4 @@ export function initCamera() {
         cameraRotX.target = clamp(downRotX + deltaUVY * -2, -Math.PI / 2, Math.PI / 2) // vertical
         cameraRotY.target = downRotY + deltaUVX * -2 * aspect // horizontal
     })
-
-    onResize.subscribe(() => {
-        setCameraAspectFromWindow()
-    })
-}
-
-function setCameraAspectFromWindow() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
 }
