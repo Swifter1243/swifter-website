@@ -22,6 +22,7 @@ export class Label implements IDisposable {
         this.textObject.anchorX = 'center';
         this.textObject.anchorY = 'middle';
         this.textObject.textAlign = 'center'
+        this.textObject.sync()
         this.content.add(this.textObject)
 
         onRender.subscribe(() => this.update())
