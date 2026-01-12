@@ -24,9 +24,10 @@ export class VisualDirectory implements IDisposable {
     startNormal = new SmoothVec3(0, 0.8, 0, 0.2)
     endNormals: Record<string, SmoothVec3> = {}
     breezeOffsets: Record<string, number> = {}
-
+    
     breezeAmount = new SmoothNumber(0.05, 2)
-
+    currentOpenKey?: string
+    
     stepFunction: (deltaTime: number) => void
 
     constructor(directoryNode: DirectoryNode, parent: THREE.Object3D) {
@@ -121,5 +122,18 @@ export class VisualDirectory implements IDisposable {
         this.content.remove(this.pivot)
         this.parent.remove(this.content)
         onRender.unsubscribe(this.stepFunction)
+    }
+
+    openNode(key: string) {
+        // TODO
+        this.currentOpenKey = key
+    }
+
+    closeNode() {
+        if (!this.currentOpenKey)
+            return
+
+        this.currentOpenKey = undefined
+        // TODO
     }
 }

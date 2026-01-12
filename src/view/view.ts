@@ -51,13 +51,18 @@ export class View {
         const newNode = this.navigation.grabCurrentNode()
         this.currentNode = newNode
 
+        const currentVisualDirectory = this.directoryView.getCurrent()
+        if (currentVisualDirectory) {
+            currentVisualDirectory.openNode(key)
+        }
+
         if (newNode instanceof DirectoryNode) {
             this.directoryView.onAscent(newNode, key)
         }
         else if (newNode instanceof PageNode) {
-            const currentDirectoryView = this.directoryView.getCurrent()
-            if (currentDirectoryView) {
-                const visualNode = currentDirectoryView.visualNodes[key]
+            const currentVisualDirectory = this.directoryView.getCurrent()
+            if (currentVisualDirectory) {
+                const visualNode = currentVisualDirectory.visualNodes[key]
                 setPivotObject(visualNode.content)
             }
 
@@ -70,12 +75,17 @@ export class View {
             this.directoryView.onDescent(this.currentNode)
         }
         else if (this.currentNode instanceof PageNode) {
-            const currentDirectoryView = this.directoryView.getCurrent()
-            if (currentDirectoryView) {
-                setPivotObject(currentDirectoryView.pivot)
+            const currentVisualDirectory = this.directoryView.getCurrent()
+            if (currentVisualDirectory) {
+                setPivotObject(currentVisualDirectory.pivot)
             }
 
             this.pageView.closePage()
+        }
+
+        const currentVisualDirectory = this.directoryView.getCurrent()
+        if (currentVisualDirectory) {
+            currentVisualDirectory.closeNode()
         }
 
         this.currentNode = this.navigation.grabCurrentNode()
