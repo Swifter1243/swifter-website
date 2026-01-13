@@ -9,7 +9,8 @@ export type LeafParticle = {
     time: number,
     mesh: THREE.Mesh,
     velocityY: number
-    velocityLocalZ: number
+    velocityLocalZ: number,
+    originalScale: THREE.Vector3
 }
 
 export class LeafParticleSystem {
@@ -26,7 +27,7 @@ export class LeafParticleSystem {
 
     private stepParticle(deltaTime: number, particle: LeafParticle): boolean {
         particle.time += deltaTime
-        particle.mesh.scale.setScalar(1 - particle.time / particle.lifetime)
+        particle.mesh.scale.copy(particle.originalScale).multiplyScalar(1 - particle.time / particle.lifetime)
         particle.velocityY -= deltaTime * 2
         particle.velocityLocalZ += deltaTime * 0.4
         particle.mesh.position.y += particle.velocityY * deltaTime

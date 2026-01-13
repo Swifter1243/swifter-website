@@ -3,6 +3,7 @@ import { randomRange } from "../../utilities/math";
 import { alignLocalUp } from "../../utilities/three";
 import type { IDisposable } from "./disposable";
 import { leafParticleSystem } from "./leaf_particle_system";
+import { leafGeometry } from "./resources";
 
 type Leaf = {
     mesh: THREE.Mesh,
@@ -17,7 +18,8 @@ export class Connection implements IDisposable {
     readonly endPoint: THREE.Vector3
     readonly endNormal: THREE.Vector3
     readonly mesh: THREE.Mesh
-    readonly material: THREE.Material
+    readonly branchMaterial: THREE.Material
+    readonly leafMaterial: THREE.Material
 
     private readonly curve: THREE.Curve<THREE.Vector3>
     private readonly startControlPoint = new THREE.Vector3()
@@ -65,28 +67,28 @@ export class Connection implements IDisposable {
         this.updateControlPoints()
         this.curve = new THREE.CubicBezierCurve3(startPoint, this.startControlPoint, this.endControlPoint, endPoint)
 
-        this.material = new THREE.MeshBasicMaterial({ color: '#ffffff' })
-        this.mesh = new THREE.Mesh( this.getGeometry(), this.material )
+        this.branchMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' })
+        this.mesh = new THREE.Mesh( this.getGeometry(), this.branchMaterial )
 
         parent.add(this.mesh)
 
+        this.leafMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', side: THREE.DoubleSide })
         for (let t = randomRange(0.2, 0.5); t < 1; t += randomRange(0.1, 0.5)) {
-            const geometry = new THREE.BoxGeometry(0.05, 0.01, 0.05)
-            geometry.translate(0, 0, 0.025)
-            const mesh = new THREE.Mesh(geometry, this.material)
+            const mesh = new THREE.Mesh(leafGeometry, this.leafMaterial)
             this.parent.add(mesh)
 
             alignLocalUp(mesh, this.curve.getTangent(t))
             const rotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), randomRange(0, Math.PI * 2))
             mesh.quaternion.multiply(rotation)
             mesh.position.copy(this.curve.getPoint(t))
+            mesh.scale.setScalar(randomRange(0.09, 0.15))
             this.leaves.push({ mesh, t, rotation })
         }
     }
 
     dispose() {
         this.mesh.geometry.dispose()
-        this.material.dispose()
+        this.branchMaterial.dispose()
         this.parent.remove(this.mesh)
 
         this.leaves.forEach(leaf => {
@@ -96,6 +98,7 @@ export class Connection implements IDisposable {
                 mesh: leaf.mesh,
                 velocityY: randomRange(0, 0.2),
                 velocityLocalZ: randomRange(0.3, 0.7),
+                originalScale: new THREE.Vector3().copy(leaf.mesh.scale)
             }, this.parent)
         })
     }

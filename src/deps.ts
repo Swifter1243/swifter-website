@@ -8,3 +8,4 @@ export { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 export { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 export { FXAAPass } from 'three/addons/postprocessing/FXAAPass.js';
 export { Text, preloadFont } from 'troika-three-text';
+export { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
