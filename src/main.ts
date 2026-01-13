@@ -3,5 +3,5 @@ import { initInput } from "./view/input";
 import { initThree } from './view/three/main'
 
 initInput()
-initThree()
+await initThree()
 initMVC()

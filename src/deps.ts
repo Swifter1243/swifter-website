@@ -7,4 +7,4 @@ export { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 export { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 export { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 export { FXAAPass } from 'three/addons/postprocessing/FXAAPass.js';
-export { Text } from 'troika-three-text';
+export { Text, preloadFont } from 'troika-three-text';

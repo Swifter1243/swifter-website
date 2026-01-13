@@ -5,17 +5,20 @@ import { initScene } from "./scene";
 import { initWindow } from "../window";
 import { initInteractables } from "./interactable";
 import { initLeafParticleSystem } from "./leaf_particle_system";
+import { initResources } from "./resources";
 
 export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera();
 export const renderer = new THREE.WebGLRenderer();
 export const composer = new EffectComposer(renderer)
 
-export function initThree() {
+export async function initThree() {
+    const resourcesPromise = initResources()
     initScene()
     initCamera()
     initRenderer()
     initWindow()
     initInteractables()
     initLeafParticleSystem()
+    await resourcesPromise
 }
