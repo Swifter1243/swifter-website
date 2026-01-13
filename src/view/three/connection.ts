@@ -73,15 +73,15 @@ export class Connection implements IDisposable {
         parent.add(this.mesh)
 
         this.leafMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', side: THREE.DoubleSide })
-        for (let t = randomRange(0.2, 0.5); t < 1; t += randomRange(0.1, 0.5)) {
+        for (let t = randomRange(0.2, 0.5); t < 1; t += randomRange(0.1, 0.3)) {
             const mesh = new THREE.Mesh(leafGeometry, this.leafMaterial)
             this.parent.add(mesh)
 
             alignLocalUp(mesh, this.curve.getTangent(t))
-            const rotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), randomRange(0, Math.PI * 2))
+            const rotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.5, randomRange(0, Math.PI * 2), 0, 'YXZ'))
             mesh.quaternion.multiply(rotation)
             mesh.position.copy(this.curve.getPoint(t))
-            mesh.scale.setScalar(randomRange(0.09, 0.15))
+            mesh.scale.setScalar(randomRange(0.08, 0.12))
             this.leaves.push({ mesh, t, rotation })
         }
     }
