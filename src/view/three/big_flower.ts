@@ -13,7 +13,7 @@ export class BigFlower implements IDisposable {
 
     constructor(parent: THREE.Object3D) {
         this.parent = parent
-        this.interactable = new Interactable(0.5, parent)
+        this.interactable = new Interactable(1, parent)
         
         this.outerFlower = new Flower(this.parent, 5, 0.7)
         this.outerFlower.content.scale.setScalar(0.4)
