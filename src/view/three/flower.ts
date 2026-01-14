@@ -1,13 +1,14 @@
 import { THREE } from "../../deps";
-import { cloneFbx } from "../../utilities/three";
+import { randomRange } from "../../utilities/math";
+import { cloneGltf } from "../../utilities/three";
 import type { IDisposable } from "./disposable";
 import { onRender } from "./renderer";
-import { petalAnimations, petalFbx, type PetalAnimationNames } from "./resources";
+import { petalAnimations, petalModel, type PetalAnimationNames } from "./resources";
 
 type Petal = {
     mixer: THREE.AnimationMixer,
-    fbx: THREE.Object3D,
-    actions: Record<string, THREE.AnimationAction>
+    model: THREE.Object3D,
+    actions: Record<PetalAnimationNames, THREE.AnimationAction>
 }
 
 export class Flower implements IDisposable {
@@ -23,17 +24,17 @@ export class Flower implements IDisposable {
         this.stepFunction = (deltaTime) => this.step(deltaTime)
         onRender.subscribe(this.stepFunction)
 
-        console.log(petalFbx.animations.map(a => ({
-            name: a.name,
-            duration: a.duration,
-            tracks: a.tracks.map(t => ({ name: t.name, times: t.times.length }))
-        })));
-
+        const yRot = (Math.PI * 2) / count
         for (let i = 0; i < count; i++) {
-            const fbx = cloneFbx(petalFbx)
-            this.content.add(fbx)
+            const model = cloneGltf(petalModel)
+            this.content.add(model)
+            model.rotateY(yRot * i)
+            model.rotateX(randomRange(-1, 1) * 0.01)
+            model.translateX(0.05)
+            model.translateY(randomRange(-1, 1) * 0.01)
+            model.scale.setScalar(0.4)
 
-            const mixer = new THREE.AnimationMixer(fbx)
+            const mixer = new THREE.AnimationMixer(model)
             const actions: Record<PetalAnimationNames, THREE.AnimationAction> = {} as Record<PetalAnimationNames, THREE.AnimationAction>
 
             for (const name in petalAnimations) {
@@ -41,14 +42,25 @@ export class Flower implements IDisposable {
                 actions[safeName] = mixer.clipAction(petalAnimations[safeName])
             }
 
-            const closeAction = actions['Petal|Idle']
-            closeAction.reset()
-            closeAction.setEffectiveWeight(1);
-            closeAction.timeScale = 30
+            const idleAction = actions.Idle
+            idleAction.setEffectiveTimeScale(0.3)
+            idleAction.time = petalAnimations.Idle.duration * randomRange(0, 0.2)
+            idleAction.setEffectiveWeight(0)
+            idleAction.play()
+
+            const closeAction = actions.Close
+            closeAction.time = petalAnimations.Close.duration
+            closeAction.setLoop(THREE.LoopOnce, 1)
+            closeAction.clampWhenFinished = true
             closeAction.play()
 
+            const openAction = actions.Open
+            openAction.setEffectiveTimeScale(0.5)
+            openAction.setLoop(THREE.LoopOnce, 1)
+            openAction.clampWhenFinished = true
+
             this.petals.push({
-                fbx,
+                model,
                 mixer,
                 actions
             })
@@ -62,7 +74,18 @@ export class Flower implements IDisposable {
     }
 
     open() {
-        // TODO
+        this.petals.forEach(p => {
+            const openAction = p.actions.Open
+            openAction.reset()
+            openAction.play()
+
+            const closeAction = p.actions.Close
+            closeAction.stop()
+
+            const idleAction = p.actions.Idle
+            idleAction.setEffectiveWeight(1)
+            idleAction.fadeIn(0.3)
+        })
     }
 
     close() {
@@ -71,7 +94,7 @@ export class Flower implements IDisposable {
 
     dispose(): void {
         this.petals.forEach(petal => {
-            this.content.remove(petal.fbx)
+            this.content.remove(petal.model)
         })
         onRender.unsubscribe(this.stepFunction)
         

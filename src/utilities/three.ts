@@ -28,7 +28,7 @@ export function reparentKeepWorldTransform(child: Object3D, newParent: Object3D)
     child.updateMatrixWorld(true)
 }
 
-export function cloneFbx(original: THREE.Group<THREE.Object3DEventMap>): Object3D {
+export function cloneGltf(original: THREE.Group<THREE.Object3DEventMap>): Object3D {
     const clone = SkeletonUtils.clone(original);
 
     // Share geometry and materials (important for performance)

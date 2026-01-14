@@ -1,22 +1,22 @@
-import { FBXLoader, OBJLoader, preloadFont, THREE } from "../../deps";
+import { GLTFLoader, OBJLoader, preloadFont, THREE } from "../../deps";
 
 export let leafGeometry: THREE.BufferGeometry
 
 export type PetalAnimationNames = 
-    'Petal|Close' |
-    'Petal|Open' |
-    'Petal|Idle'
+    'Close' |
+    'Open' |
+    'Idle'
 export let petalAnimations: Record<PetalAnimationNames, THREE.AnimationClip> = {} as Record<PetalAnimationNames, THREE.AnimationClip>
-export let petalFbx: THREE.Group<THREE.Object3DEventMap>
+export let petalModel: THREE.Group<THREE.Object3DEventMap>
 
 export async function initResources() {
     const objLoader = new OBJLoader()
-    const fbxLoader = new FBXLoader()
+    const gltfLoader = new GLTFLoader()
 
     await Promise.all([
         loadFont(),
         loadLeafModel(objLoader),
-        loadPetalModel(fbxLoader)
+        loadPetalModel(gltfLoader)
     ])
 }
 
@@ -39,12 +39,12 @@ async function loadLeafModel(objLoader: OBJLoader) {
     })
 }
 
-async function loadPetalModel(fbxLoader: FBXLoader) {
-    const model = await fbxLoader.loadAsync('/petal.fbx')
+async function loadPetalModel(gltfLoader: GLTFLoader) {
+    const model = await gltfLoader.loadAsync('/petal.glb')
 
     model.animations.forEach(clip => {
         petalAnimations[clip.name as PetalAnimationNames] = clip
     })
 
-    petalFbx = model
+    petalModel = model.scene
 }
