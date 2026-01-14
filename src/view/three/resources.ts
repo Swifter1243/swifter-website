@@ -45,6 +45,12 @@ async function loadLeafModel(objLoader: OBJLoader) {
 async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoader) {
     const model = await gltfLoader.loadAsync('/petal.glb')
     const texture = await textureLoader.loadAsync('/petal.png')
+    texture.wrapS = THREE.ClampToEdgeWrapping
+    texture.wrapT = THREE.ClampToEdgeWrapping
+
+    texture.generateMipmaps = false
+    texture.minFilter = THREE.LinearMipmapLinearFilter
+    texture.magFilter = THREE.LinearFilter
 
     model.animations.forEach(clip => {
         petalAnimations[clip.name as PetalAnimationNames] = clip
