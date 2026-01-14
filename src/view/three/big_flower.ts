@@ -29,7 +29,7 @@ export class BigFlower implements IDisposable {
         })
         this.innerFlower.content.rotateY((Math.PI * 2) / (this.innerFlower.petals.length * 2))
 
-        this.base = new THREE.Mesh(flowerBaseGeometry, new THREE.MeshBasicMaterial({ color: '#000000', side: THREE.DoubleSide }))
+        this.base = new THREE.Mesh(flowerBaseGeometry, new THREE.MeshPhongMaterial({ color: '#000000', side: THREE.DoubleSide }))
         this.base.translateY(-0.01)
         this.base.scale.setScalar(0.3)
         this.parent.add(this.base)
