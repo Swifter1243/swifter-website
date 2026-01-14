@@ -43,7 +43,6 @@ export class Flower implements IDisposable {
 
             const idleAction = actions.Idle
             idleAction.setEffectiveTimeScale(0.3)
-            idleAction.time = petalAnimations.Idle.duration * randomRange(0, 0.2)
             idleAction.setEffectiveWeight(0)
             idleAction.play()
 
@@ -82,8 +81,10 @@ export class Flower implements IDisposable {
             closeAction.stop()
 
             const idleAction = p.actions.Idle
+            idleAction.reset()
+            idleAction.time = petalAnimations.Idle.duration * randomRange(-0.1, 0.2)
             idleAction.setEffectiveWeight(6)
-            idleAction.fadeIn(0.8)
+            idleAction.fadeIn(1.5)
         })
     }
 
@@ -97,7 +98,7 @@ export class Flower implements IDisposable {
             closeAction.play()
 
             const idleAction = p.actions.Idle
-            idleAction.fadeOut(0.3)
+            idleAction.fadeOut(0.1)
         })
     }
 
