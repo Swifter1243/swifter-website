@@ -49,7 +49,7 @@ async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoad
     texture.wrapT = THREE.ClampToEdgeWrapping
 
     texture.generateMipmaps = false
-    texture.minFilter = THREE.LinearMipmapLinearFilter
+    texture.minFilter = THREE.LinearFilter
     texture.magFilter = THREE.LinearFilter
 
     model.animations.forEach(clip => {
