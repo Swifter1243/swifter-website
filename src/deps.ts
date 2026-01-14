@@ -9,3 +9,5 @@ export { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 export { FXAAPass } from 'three/addons/postprocessing/FXAAPass.js';
 export { Text, preloadFont } from 'troika-three-text';
 export { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
+export { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
+export * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'

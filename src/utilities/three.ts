@@ -1,5 +1,5 @@
 import type { Object3D, Vector3 } from "three";
-import { THREE } from "../deps";
+import { SkeletonUtils, THREE } from "../deps";
 
 export function alignLocalUp(object: Object3D, up: Vector3) {
     const unitUp = new THREE.Vector3(0, 1, 0)
@@ -26,4 +26,19 @@ export function reparentKeepWorldTransform(child: Object3D, newParent: Object3D)
     )
     
     child.updateMatrixWorld(true)
+}
+
+export function cloneFbx(original: THREE.Group<THREE.Object3DEventMap>): Object3D {
+    const clone = SkeletonUtils.clone(original);
+
+    // Share geometry and materials (important for performance)
+    original.traverse((src) => {
+        if (src instanceof THREE.Mesh && src.isMesh) {
+            const dest = clone.getObjectByName(src.name) as THREE.Mesh;
+            dest.geometry = src.geometry;
+            dest.material = src.material;
+        }
+    });
+
+    return clone;
 }

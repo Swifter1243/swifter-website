@@ -1,28 +1,25 @@
 import { THREE } from "../../deps";
 import type { IDisposable } from "./disposable";
+import { Flower } from "./flower";
 import { Interactable } from "./interactable";
 
 export class BigFlower implements IDisposable {
     interactable: Interactable
     parent: THREE.Object3D
-    mesh: THREE.Mesh
-    geometry: THREE.BufferGeometry
+    flower: Flower
 
     constructor(parent: THREE.Object3D) {
         this.parent = parent
         this.interactable = new Interactable(0.5, parent)
-        this.geometry = new THREE.CylinderGeometry(0.5, 0.1, 0.3)
-        this.mesh = new THREE.Mesh(this.geometry, undefined)
-        this.parent.add(this.mesh)
+        this.flower = new Flower(this.parent, 5)
     }
 
     bloom() {
-        // TODO
+        this.flower.open()
     }
 
     dispose() {
-        this.geometry.dispose()
         this.interactable.dispose()
-        this.parent.remove(this.mesh)
+        this.flower.dispose()
     }
 }
