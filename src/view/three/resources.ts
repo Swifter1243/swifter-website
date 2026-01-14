@@ -58,12 +58,67 @@ async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoad
     
     petalModel = model.scene
 
-    setMaterialRecursive(petalModel, new THREE.MeshPhongMaterial({
-        map: texture,
+    const material = new THREE.ShaderMaterial({
+        uniforms: {
+            uMap: { value: texture },
+            uAlphaCutoff: { value: 0.5 }
+        },
+        vertexShader: `
+            #define USE_SKINNING
+
+            #include <common>
+            #include <uv_pars_vertex>
+            #include <skinning_pars_vertex>
+            #include <normal_pars_vertex>
+
+            varying vec2 vUv;
+            varying vec3 vObjectPos;
+
+            void main() {
+                #include <begin_vertex>
+                vUv = uv;
+
+                #include <skinbase_vertex>
+                #include <skinning_vertex>
+
+                #include <beginnormal_vertex>
+                #include <skinnormal_vertex>
+                vNormal = objectNormal;
+
+                vObjectPos = transformed;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( transformed, 1.0 );
+            }
+        `,
+        fragmentShader: `
+            #include <common>
+            #include <uv_pars_fragment>
+
+            uniform sampler2D uMap;
+            uniform float uAlphaCutoff;
+
+            varying vec2 vUv;
+            varying vec3 vNormal;
+            varying vec3 vObjectPos;
+
+            void main() {
+                vec3 normal = vNormal;
+
+                if (!gl_FrontFacing) {
+                    normal = -normal;
+                }
+
+                vec3 toLight = vObjectPos - vec3(0, 0, 0);
+                float alignment = max(0.0, dot(normal, normalize(toLight)));
+                float falloff = exp(2.5 * -length(toLight));
+                float v = falloff * 8.0;
+
+                vec4 color = texture2D( uMap, vUv );
+                if ( color.a < uAlphaCutoff ) discard;
+                gl_FragColor = color * v;
+            }
+        `,
         transparent: false,
-        alphaTest: 0.5,
-        depthWrite: true,
-        depthTest: true,
         side: THREE.DoubleSide
-    }))
+    })
+    setMaterialRecursive(petalModel, material)
 }

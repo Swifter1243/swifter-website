@@ -3,12 +3,11 @@ import { Interactable } from "./interactable";
 import { THREE } from "../../deps";
 import { Label } from "./label";
 import { alignLocalUp } from "../../utilities/three";
-import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
+import { SmoothVec3 } from "../../utilities/smooth_value";
 import { randomRange } from "../../utilities/math";
 import { Flower } from "./flower";
 
 const textOffset = new THREE.Vector3(0, 0.2, 0)
-const lightIntensity = 0.03
 
 export class VisualNode implements IDisposable {
     parent: THREE.Object3D
@@ -16,10 +15,6 @@ export class VisualNode implements IDisposable {
     interactable: Interactable
     label: Label
     flower: Flower
-
-    backLight: THREE.PointLight
-    frontLight: THREE.PointLight
-    frontLightIntensity = new SmoothNumber(0)
 
     position: THREE.Vector3
     smoothedPosition: SmoothVec3
@@ -44,35 +39,19 @@ export class VisualNode implements IDisposable {
 
         this.flower = new Flower(this.content, 4, 1)
         this.flower.content.scale.setScalar(0.1)
-
-        this.backLight = new THREE.PointLight(0xffffff, lightIntensity, 0.2, 2)
-        this.content.add(this.backLight)
-        this.backLight.translateY(-0.05)
-
-        this.frontLight = new THREE.PointLight(0xffffff, lightIntensity, 0.2, 2)
-        this.content.add(this.frontLight)
-        this.frontLight.translateY(0.05)
-        this.content.remove(this.frontLight)
     }
 
     open() {
         this.flower.open()
-        this.content.add(this.frontLight)
-        this.frontLightIntensity.set(lightIntensity)
     }
 
     close() {
         this.flower.close()
-        this.content.remove(this.frontLight)
-        this.frontLightIntensity.set(0)
     }
 
     step(deltaTime: number): void {
         this.smoothedPosition.step(deltaTime)
         this.updatePositions()
-
-        this.frontLightIntensity.step(deltaTime)
-        this.frontLight.intensity = this.frontLightIntensity.current
     }
 
     updatePositions() {
@@ -84,8 +63,6 @@ export class VisualNode implements IDisposable {
         this.label.dispose()
         this.interactable.dispose()
         this.flower.dispose()
-        this.content.remove(this.backLight)
-        this.content.remove(this.frontLight)
         this.parent.remove(this.content)
     }
 }
