@@ -29,6 +29,26 @@ export class Navigation {
         }
     }
 
+    private getCommonPath(a: string, b: string): string {
+        const commonPath: string[] = []
+        const aSequence = this.getKeySequence(a)
+        const bSequence = this.getKeySequence(b)
+        const maxCommonLength = Math.min(aSequence.length, bSequence.length)
+
+        for (let i = 0; i < maxCommonLength; i++) {
+            const aKey = aSequence[i]
+            const bKey = bSequence[i]
+
+            if (aKey != bKey) {
+                break
+            } else {
+                commonPath.push(aKey)
+            }
+        }
+
+        return commonPath.join('/')
+    }
+
     grabCurrentNode(): INode {
         return this.fetchNode(this.headerPath)
     }
@@ -106,16 +126,7 @@ export class Navigation {
             return
         }
 
-        const maxCommonLength = Math.min(a.length, b.length)
-        let commonLength = 0
-
-        for (let i = 0; i < maxCommonLength; i++) {
-            if (a[i] != b[i]) {
-                break
-            }
-
-            commonLength++
-        }
+        const commonLength = this.getCommonPath(a, b).length
 
         const pathDown = a.substring(commonLength)
         this.getKeySequence(pathDown).filter(x => x.length > 0).reverse().forEach(_ => {
