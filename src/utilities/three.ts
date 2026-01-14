@@ -42,3 +42,11 @@ export function cloneGltf(original: THREE.Group<THREE.Object3DEventMap>): Object
 
     return clone;
 }
+
+export function setMaterialRecursive(object: THREE.Object3D, material: THREE.Material) {
+    object.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.isMesh) {
+            child.material = material
+        }
+    });
+}

@@ -1,4 +1,6 @@
+import type { TextureLoader } from "three";
 import { GLTFLoader, OBJLoader, preloadFont, THREE } from "../../deps";
+import { setMaterialRecursive } from "../../utilities/three";
 
 export let leafGeometry: THREE.BufferGeometry
 
@@ -12,11 +14,12 @@ export let petalModel: THREE.Group<THREE.Object3DEventMap>
 export async function initResources() {
     const objLoader = new OBJLoader()
     const gltfLoader = new GLTFLoader()
+    const textureLoader = new THREE.TextureLoader()
 
     await Promise.all([
         loadFont(),
         loadLeafModel(objLoader),
-        loadPetalModel(gltfLoader)
+        loadPetalModel(gltfLoader, textureLoader)
     ])
 }
 
@@ -39,12 +42,22 @@ async function loadLeafModel(objLoader: OBJLoader) {
     })
 }
 
-async function loadPetalModel(gltfLoader: GLTFLoader) {
+async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoader) {
     const model = await gltfLoader.loadAsync('/petal.glb')
+    const texture = await textureLoader.loadAsync('/petal.png')
 
     model.animations.forEach(clip => {
         petalAnimations[clip.name as PetalAnimationNames] = clip
     })
-
+    
     petalModel = model.scene
+
+    setMaterialRecursive(petalModel, new THREE.MeshPhongMaterial({
+        map: texture,
+        transparent: false,
+        alphaTest: 0.5,
+        depthWrite: true,
+        depthTest: true,
+        side: THREE.DoubleSide
+    }))
 }

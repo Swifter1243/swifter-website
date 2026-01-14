@@ -125,7 +125,7 @@ export class VisualDirectory implements IDisposable {
     }
 
     openNode(key: string) {
-        this.visualNodes[key].flower.open()
+        this.visualNodes[key].open()
         this.currentOpenKey = key
     }
 
@@ -133,7 +133,7 @@ export class VisualDirectory implements IDisposable {
         if (!this.currentOpenKey)
             return
 
-        this.visualNodes[this.currentOpenKey].flower.close()
+        this.visualNodes[this.currentOpenKey].close()
         this.currentOpenKey = undefined
     }
 }
