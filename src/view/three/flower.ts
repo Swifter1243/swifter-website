@@ -32,7 +32,6 @@ export class Flower implements IDisposable {
             model.rotateX(randomRange(-1, 1) * 0.01)
             model.translateX(0.05)
             model.translateY(randomRange(-1, 1) * 0.01)
-            model.scale.setScalar(0.4)
 
             const mixer = new THREE.AnimationMixer(model)
             const actions: Record<PetalAnimationNames, THREE.AnimationAction> = {} as Record<PetalAnimationNames, THREE.AnimationAction>
@@ -44,7 +43,7 @@ export class Flower implements IDisposable {
 
             const idleAction = actions.Idle
             idleAction.setEffectiveTimeScale(0.3)
-            idleAction.time = petalAnimations.Idle.duration * randomRange(0, 0.2)
+            idleAction.time = petalAnimations.Idle.duration * randomRange(0, 0.4)
             idleAction.setEffectiveWeight(0)
             idleAction.play()
 
