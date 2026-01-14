@@ -11,3 +11,4 @@ export { Text, preloadFont } from 'troika-three-text';
 export { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 export { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 export * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
+export * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';

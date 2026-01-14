@@ -1,5 +1,5 @@
 import type { Object3D, Vector3 } from "three";
-import { SkeletonUtils, THREE } from "../deps";
+import { BufferGeometryUtils, SkeletonUtils, THREE } from "../deps";
 
 export function alignLocalUp(object: Object3D, up: Vector3) {
     const unitUp = new THREE.Vector3(0, 1, 0)
@@ -49,4 +49,22 @@ export function setMaterialRecursive(object: THREE.Object3D, material: THREE.Mat
             child.material = material
         }
     });
+}
+
+
+export function mergeGroupGeometries(group: THREE.Group): THREE.BufferGeometry {
+    const geometries: THREE.BufferGeometry[] = [];
+
+    group.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+            const mesh = child as THREE.Mesh;
+            // Apply the mesh's world transform
+            const geom = mesh.geometry.clone();
+            geom.applyMatrix4(mesh.matrixWorld);
+            geometries.push(geom);
+        }
+    });
+
+    // Merge all geometries into one
+    return BufferGeometryUtils.mergeGeometries(geometries, true)!;
 }

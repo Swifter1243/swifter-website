@@ -2,12 +2,14 @@ import { THREE } from "../../deps";
 import type { IDisposable } from "./disposable";
 import { Flower } from "./flower";
 import { Interactable } from "./interactable";
+import { flowerBaseGeometry } from "./resources";
 
 export class BigFlower implements IDisposable {
     interactable: Interactable
     parent: THREE.Object3D
     outerFlower: Flower
     innerFlower: Flower
+    base: THREE.Mesh
 
     constructor(parent: THREE.Object3D) {
         this.parent = parent
@@ -26,6 +28,11 @@ export class BigFlower implements IDisposable {
             petal.model.rotateZ(-0.2)
         })
         this.innerFlower.content.rotateY((Math.PI * 2) / (this.innerFlower.petals.length * 2))
+
+        this.base = new THREE.Mesh(flowerBaseGeometry, new THREE.MeshBasicMaterial({ color: '#000000', side: THREE.DoubleSide }))
+        this.base.translateY(-0.01)
+        this.base.scale.setScalar(0.3)
+        this.parent.add(this.base)
     }
 
     bloom() {
@@ -36,6 +43,7 @@ export class BigFlower implements IDisposable {
     dispose() {
         this.interactable.dispose()
         this.outerFlower.dispose()
+        this.parent.remove(this.base)
         this.innerFlower.dispose
     }
 }

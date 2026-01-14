@@ -1,8 +1,9 @@
 import type { TextureLoader } from "three";
 import { GLTFLoader, OBJLoader, preloadFont, THREE } from "../../deps";
-import { setMaterialRecursive } from "../../utilities/three";
+import { mergeGroupGeometries, setMaterialRecursive } from "../../utilities/three";
 
 export let leafGeometry: THREE.BufferGeometry
+export let flowerBaseGeometry: THREE.BufferGeometry
 
 export type PetalAnimationNames = 
     'Close' |
@@ -19,6 +20,7 @@ export async function initResources() {
     await Promise.all([
         loadFont(),
         loadLeafModel(objLoader),
+        loadFlowerBaseModel(objLoader),
         loadPetalModel(gltfLoader, textureLoader)
     ])
 }
@@ -35,11 +37,15 @@ async function loadFont() {
 async function loadLeafModel(objLoader: OBJLoader) {
     const model = await objLoader.loadAsync('/leaf.obj')
     model.traverse(child => {
-        const mesh = child as THREE.Mesh
-        if (mesh.isMesh) {
-            leafGeometry = mesh.geometry 
+        if (child instanceof THREE.Mesh && child.isMesh) {
+            leafGeometry = child.geometry 
         }
     })
+}
+
+async function loadFlowerBaseModel(objLoader: OBJLoader) {
+    const model = await objLoader.loadAsync('/flower base.obj')
+    flowerBaseGeometry = mergeGroupGeometries(model)
 }
 
 async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoader) {
