@@ -12,14 +12,16 @@ export class BigFlower implements IDisposable {
     constructor(parent: THREE.Object3D) {
         this.parent = parent
         this.interactable = new Interactable(0.5, parent)
+        
         this.outerFlower = new Flower(this.parent, 5, 0.7)
         this.outerFlower.content.scale.setScalar(0.4)
+
         this.innerFlower = new Flower(this.parent, 5, 0.3)
         this.innerFlower.content.scale.setScalar(0.3)
         this.innerFlower.petals.forEach(petal => {
             petal.model.scale.set(1, 1, 0.7)
+            petal.model.rotateZ(-0.2)
         })
-        this.innerFlower.content.translateY(0.01)
         this.innerFlower.content.rotateY((Math.PI * 2) / (this.innerFlower.petals.length * 2))
     }
 

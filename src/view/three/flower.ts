@@ -30,7 +30,7 @@ export class Flower implements IDisposable {
             this.content.add(model)
             model.rotateY(yRot * i)
             model.rotateX(randomRange(-1, 1) * 0.01)
-            model.translateX(0.05)
+            model.translateX(0.1)
             model.translateY(randomRange(-1, 1) * 0.01)
 
             const mixer = new THREE.AnimationMixer(model)
