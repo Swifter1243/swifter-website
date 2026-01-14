@@ -15,6 +15,9 @@ export class BigFlower implements IDisposable {
         
         this.outerFlower = new Flower(this.parent, 5, 0.7)
         this.outerFlower.content.scale.setScalar(0.4)
+        this.outerFlower.petals.forEach(petal => {
+            petal.model.scale.set(1, 1, 0.8)
+        })
 
         this.innerFlower = new Flower(this.parent, 5, 0.3)
         this.innerFlower.content.scale.setScalar(0.3)

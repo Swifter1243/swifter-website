@@ -47,7 +47,8 @@ export class Flower implements IDisposable {
             idleAction.play()
 
             const closeAction = actions.Close
-            closeAction.time = petalAnimations.Close.duration
+            closeAction.time = petalAnimations.Close.duration * randomRange(0.3, 0.7)
+            closeAction.setEffectiveTimeScale(0)
             closeAction.setLoop(THREE.LoopOnce, 1)
             closeAction.clampWhenFinished = true
             closeAction.play()
@@ -94,6 +95,7 @@ export class Flower implements IDisposable {
             openAction.stop()
 
             const closeAction = p.actions.Close
+            closeAction.setEffectiveTimeScale(1)
             closeAction.reset()
             closeAction.play()
 
