@@ -5,14 +5,16 @@ import { Label } from "./label";
 import { alignLocalUp } from "../../utilities/three";
 import { SmoothVec3 } from "../../utilities/smooth_value";
 import { randomRange } from "../../utilities/math";
+import { Flower } from "./flower";
 
-const textOffset = new THREE.Vector3(0, 0.1, 0)
+const textOffset = new THREE.Vector3(0, 0.2, 0)
 
 export class VisualNode implements IDisposable {
     parent: THREE.Object3D
     content: THREE.Object3D
     interactable: Interactable
     label: Label
+    flower: Flower
 
     position: THREE.Vector3
     smoothedPosition: SmoothVec3
@@ -34,6 +36,9 @@ export class VisualNode implements IDisposable {
         this.smoothedPosition.copy(this.position)
 
         this.updatePositions()
+
+        this.flower = new Flower(this.content, 4, 1)
+        this.flower.content.scale.setScalar(0.1)
     }
 
     step(deltaTime: number): void {
@@ -49,6 +54,7 @@ export class VisualNode implements IDisposable {
     dispose(): void {
         this.label.dispose()
         this.interactable.dispose()
+        this.flower.dispose()
         this.parent.remove(this.content)
     }
 }

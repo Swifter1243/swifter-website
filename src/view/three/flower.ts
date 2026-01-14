@@ -17,7 +17,7 @@ export class Flower implements IDisposable {
     petals: Petal[] = []
     stepFunction: (deltaTime: number) => void
 
-    constructor(parent: THREE.Object3D, count = 5) {
+    constructor(parent: THREE.Object3D, count: number, openSpeed: number) {
         this.parent = parent
         this.content = new THREE.Object3D()
         this.parent.add(this.content)
@@ -43,7 +43,7 @@ export class Flower implements IDisposable {
 
             const idleAction = actions.Idle
             idleAction.setEffectiveTimeScale(0.3)
-            idleAction.time = petalAnimations.Idle.duration * randomRange(0, 0.4)
+            idleAction.time = petalAnimations.Idle.duration * randomRange(0, 0.2)
             idleAction.setEffectiveWeight(0)
             idleAction.play()
 
@@ -54,7 +54,7 @@ export class Flower implements IDisposable {
             closeAction.play()
 
             const openAction = actions.Open
-            openAction.setEffectiveTimeScale(0.5)
+            openAction.setEffectiveTimeScale(openSpeed)
             openAction.setLoop(THREE.LoopOnce, 1)
             openAction.clampWhenFinished = true
 
@@ -82,13 +82,23 @@ export class Flower implements IDisposable {
             closeAction.stop()
 
             const idleAction = p.actions.Idle
-            idleAction.setEffectiveWeight(1)
-            idleAction.fadeIn(0.3)
+            idleAction.setEffectiveWeight(6)
+            idleAction.fadeIn(0.8)
         })
     }
 
     close() {
-        // TODO
+        this.petals.forEach(p => {
+            const openAction = p.actions.Open
+            openAction.stop()
+
+            const closeAction = p.actions.Close
+            closeAction.reset()
+            closeAction.play()
+
+            const idleAction = p.actions.Idle
+            idleAction.fadeOut(0.3)
+        })
     }
 
     dispose(): void {
