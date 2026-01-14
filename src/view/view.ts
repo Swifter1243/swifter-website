@@ -7,6 +7,7 @@ import { PageView } from "./page_view"
 import { BigFlower } from "./three/big_flower"
 import { scene } from "./three/main"
 import { setPivotObject } from "./three/camera"
+import { soundState } from "./sound/main"
 
 export class View {
     navigation: Navigation
@@ -38,6 +39,7 @@ export class View {
             this.dontPushURLHistory = true
             this.spawnRoot()
             this.navigation.goToPath('.' + location.pathname)
+            soundState.queueChordChange = false
         }
 
         window.addEventListener('popstate', _ => {
@@ -50,6 +52,7 @@ export class View {
     private onAscent(key: string) {
         const newNode = this.navigation.grabCurrentNode()
         this.currentNode = newNode
+        soundState.queueChordChange = true
 
         const currentVisualDirectory = this.directoryView.getCurrent()
         if (currentVisualDirectory) {
@@ -71,6 +74,8 @@ export class View {
     }
 
     private onDescent() {
+        soundState.queueCrumple = true
+
         if (this.currentNode instanceof DirectoryNode) {
             this.directoryView.onDescent(this.currentNode)
         }
