@@ -22,7 +22,7 @@ export class Label implements IDisposable {
         this.textObject.anchorX = 'center';
         this.textObject.anchorY = 'middle';
         this.textObject.textAlign = 'center'
-        this.textObject.color = '#bcfff9'
+        this.textObject.color = '#9bfff7'
         this.textObject.sync()
         this.content.add(this.textObject)
 

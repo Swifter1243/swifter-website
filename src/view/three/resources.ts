@@ -53,6 +53,7 @@ async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoad
     const texture = await textureLoader.loadAsync('/petal.png')
     texture.wrapS = THREE.ClampToEdgeWrapping
     texture.wrapT = THREE.ClampToEdgeWrapping
+    texture.colorSpace = THREE.SRGBColorSpace
 
     texture.generateMipmaps = false
     texture.minFilter = THREE.LinearFilter
@@ -103,7 +104,7 @@ async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoad
             void main() {
                 vec3 toLight = vObjectPos - vec3(0, 0, 0);
                 float falloff = exp(2.5 * -length(toLight));
-                float v = falloff * 8.0;
+                float v = falloff * 10.0;
 
                 if (!gl_FrontFacing) {
                     v *= 0.1;
