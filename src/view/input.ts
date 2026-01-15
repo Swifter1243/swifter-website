@@ -10,6 +10,8 @@ export const onHoverEnd = new Invokable()
 export const onClick = new Invokable()
 
 export const inputState = {
+    enabled: true,
+
     currentX: 0,
     currentY: 0,
 
@@ -19,6 +21,17 @@ export const inputState = {
 
     isDragging: false,
     isHovering: false,
+}
+
+export function disableInput() {
+    inputState.enabled = false
+    inputState.isDragging = false
+    inputState.isHovering = false
+    inputState.isPointerDown = false
+}
+
+export function enableInput() {
+    inputState.enabled = true
 }
 
 const DRAG_DISTANCE_THRESHOLD = 10
@@ -31,6 +44,9 @@ export function initInput() {
 }
 
 function onPointerMove(e: PointerEvent) {
+    if (!inputState.enabled)
+        return
+
     inputState.currentX = e.clientX
     inputState.currentY = e.clientY
 
@@ -56,6 +72,9 @@ function onPointerMove(e: PointerEvent) {
 }
 
 function onPointerDown(e: PointerEvent) {
+    if (!inputState.enabled)
+        return
+
     inputState.isPointerDown = true
 
     inputState.downX = e.clientX
@@ -70,6 +89,9 @@ function onPointerDown(e: PointerEvent) {
 }
 
 function onPointerUp(e: PointerEvent) {
+    if (!inputState.enabled)
+        return
+
     if (e.pointerType !== 'mouse' && inputState.isHovering) {
         onHoverEnd.invoke()
         inputState.isHovering = false
@@ -83,10 +105,16 @@ function onPointerUp(e: PointerEvent) {
 }
 
 function onPointerCancel(_: PointerEvent) {
+    if (!inputState.enabled)
+        return
+
     endPointerDown()
 }
 
 function endPointerDown() {
+    if (!inputState.enabled)
+        return
+
     inputState.isPointerDown = false
     
     if (inputState.isDragging) {

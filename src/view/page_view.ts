@@ -1,5 +1,6 @@
 import type { PageNode } from "../model/page_node";
 import type { Navigation } from "../navigation/navigation";
+import { disableInput, enableInput } from "./input";
 
 const pageContent = document.getElementById('page-content')!
 const pagePanel = document.getElementById('page-panel')!
@@ -14,6 +15,7 @@ export class PageView {
     }
 
     openPage(node: PageNode): void {
+        disableInput()
         page.hidden = false
         page.appendChild(pagePanel)
         pagePanel.style.transform = "translateY(0px)";
@@ -25,6 +27,7 @@ export class PageView {
     closePage(): void {
         page.style.opacity = '0';
         pagePanel.style.transform = "translateY(50px)";
+        enableInput()
 
         setTimeout(() => {
             page.hidden = true
