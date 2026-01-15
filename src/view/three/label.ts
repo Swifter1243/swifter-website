@@ -1,16 +1,17 @@
 import { camera } from "./main";
 import { THREE } from "../../deps";
-import { onRender } from "./renderer";
 import type { IDisposable } from "./disposable";
 import { Text } from "troika-three-text";
+import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
-export class Label implements IDisposable {
+export class Label implements IDisposable, IUpdateable {
     content: THREE.Object3D
     textObject: Text
     readonly parent: THREE.Object3D
 
     constructor(parent: THREE.Object3D, text: string, size = 1) {
         this.parent = parent
+        addUpdateable(this)
 
         this.content = new THREE.Object3D()
         parent.add(this.content)
@@ -25,11 +26,10 @@ export class Label implements IDisposable {
         this.textObject.color = '#9bfff7'
         this.textObject.sync()
         this.content.add(this.textObject)
-
-        onRender.subscribe(() => this.update())
+        this.update(0)
     }
 
-    private update() {
+    update(_: number) {
         const camQ = new THREE.Quaternion()
         const parentQ = new THREE.Quaternion()
 
@@ -43,6 +43,7 @@ export class Label implements IDisposable {
 
     dispose() {
         this.textObject.dispose()
+        removeUpdateable(this)
         this.content.remove(this.textObject)
         this.parent.remove(this.content)
     }
