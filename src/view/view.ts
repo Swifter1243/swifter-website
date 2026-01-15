@@ -118,8 +118,8 @@ export class View {
 
         playOneShot(sounds.get('/intro.wav')!)
         playOneShot(sounds.get('/leaf move.wav')!, {
-            pitchMin: 1.5,
-            pitchMax: 1.5,
+            pitchMin: 1.3,
+            pitchMax: 1.3,
             volume: 0.1
         })
         fadeFirstChordIn()
