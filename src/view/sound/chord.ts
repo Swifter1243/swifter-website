@@ -89,6 +89,18 @@ export function changeChord() {
     }
 }
 
+export function changeChordPad() {
+    currentChord.fadePadOut()
+
+    let newChord: Chord | undefined = undefined
+    while (!newChord || newChord == currentChord) {
+        newChord = chords[Math.floor(Math.random() * chords.length)]
+    }
+    newChord.fadePadIn()
+
+    currentChord = newChord!
+}
+
 export function fadeFirstChordIn() {
     if (audioContextStarted) {
         currentChord.fadePadIn()

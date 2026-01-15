@@ -1,4 +1,4 @@
-import { changeChord } from "./chord"
+import { changeChord, changeChordPad } from "./chord"
 import { onRender } from "../three/renderer"
 import { initResources, SOUNDS, sounds } from "./resources"
 import { playOneShot } from "./context"
@@ -17,6 +17,14 @@ export async function initSound() {
 function playQueuedSounds() {
     let moveQueued = false
 
+    if (soundState.queueClose) {
+        if (!soundState.queueOpen)
+            changeChordPad()
+        
+        moveQueued = true
+        soundState.queueClose = false
+    }
+
     if (soundState.queueOpen) {
         changeChord()
         moveQueued = true
@@ -26,11 +34,6 @@ function playQueuedSounds() {
     if (soundState.queueBreak) {
         playLeafBreak()
         soundState.queueBreak = false
-    }
-
-    if (soundState.queueClose) {
-        moveQueued = true
-        soundState.queueClose = false
     }
 
     if (moveQueued) {
