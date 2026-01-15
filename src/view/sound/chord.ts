@@ -58,7 +58,6 @@ class Chord {
 
         const now = audioCtx.currentTime
         this.padGain.gain.cancelScheduledValues(now)
-        this.padGain.gain.setValueAtTime(this.padGain.gain.value, now)
         this.padGain.gain.linearRampToValueAtTime(0, now + fadeTime)
     }
 }
