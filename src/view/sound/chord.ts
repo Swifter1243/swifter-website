@@ -1,7 +1,7 @@
 import { audioContextStarted, audioCtx, masterGain, playOneShot } from "./context";
 import { SOUNDS, sounds } from "./resources";
 
-const PAD_GAIN = 0.5
+const PAD_GAIN = 0.8
 
 class Chord {
     oneShotName: string
@@ -49,17 +49,17 @@ class Chord {
         const now = audioCtx.currentTime
         if (cancelPrevious)
             this.padGain.gain.cancelScheduledValues(now)
-        this.padGain.gain.setValueAtTime(this.padGain.gain.value, now)
+        this.padGain.gain.setValueAtTime(0, now)
         this.padGain.gain.linearRampToValueAtTime(PAD_GAIN, now + fadeTime)
     }
 
-    fadePadOut(fadeTime = 0.5) {
+    fadePadOut(fadeTime = 1) {
         if (!audioCtx || !this.padGain)
             return
 
         const now = audioCtx.currentTime
         this.padGain.gain.cancelScheduledValues(now)
-        this.padGain.gain.setValueAtTime(this.padGain.gain.value, now)
+        this.padGain.gain.setValueAtTime(PAD_GAIN, now)
         this.padGain.gain.linearRampToValueAtTime(0, now + fadeTime)
     }
 }

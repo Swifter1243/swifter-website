@@ -44,7 +44,7 @@ function playQueuedSounds() {
 
 function playLeafBreak() {
     playOneShot(sounds.get(SOUNDS.LEAF_BREAK)!, {
-        volume: 0.4,
+        volume: 0.9,
         pitchMax: 0.9,
         pitchMin: 1.1
     })
@@ -52,7 +52,7 @@ function playLeafBreak() {
 
 function playLeafMove() {
     playOneShot(sounds.get(SOUNDS.LEAF_MOVE)!, {
-        volume: 0.1,
+        volume: 0.4,
         pitchMax: 1.5,
         pitchMin: 2.1
     })

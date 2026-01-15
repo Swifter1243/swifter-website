@@ -12,7 +12,7 @@ async function startContext() {
     
     audioCtx = new AudioContext()
     masterGain = audioCtx.createGain()
-    masterGain.gain.value = 1
+    masterGain.gain.setValueAtTime(0.3, audioCtx.currentTime)
     masterGain.connect(audioCtx.destination)
     
     await decodeAllPreloadedSounds()

@@ -120,7 +120,7 @@ export class View {
         playOneShot(sounds.get(SOUNDS.LEAF_MOVE)!, {
             pitchMin: 1.3,
             pitchMax: 1.3,
-            volume: 0.1
+            volume: 0.4
         })
         fadeFirstChordIn()
         this.rootSpawned = true
