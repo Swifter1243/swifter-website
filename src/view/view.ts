@@ -74,10 +74,9 @@ export class View {
     }
 
     private onDescent() {
-        soundState.queueCrumple = true
-
         if (this.currentNode instanceof DirectoryNode) {
             this.directoryView.onDescent(this.currentNode)
+            soundState.queueLeafBreak = true
         }
         else if (this.currentNode instanceof PageNode) {
             const currentVisualDirectory = this.directoryView.getCurrent()

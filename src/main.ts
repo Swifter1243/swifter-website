@@ -5,7 +5,7 @@ import { initSound } from "./view/sound/main";
 import { initThree } from './view/three/main'
 
 initInput()
-initSound()
+await initSound()
 await initThree()
 initMVC()
 fadeIn()
