@@ -19,6 +19,7 @@ export async function decodeAllPreloadedSounds() {
 
 export async function initResources() {
     await Promise.all([
-        await preload('/leaf break.wav')
+        await preload('/leaf break.wav'),
+        await preload('/intro.wav')
     ])
 }

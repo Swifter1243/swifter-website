@@ -8,6 +8,8 @@ import { BigFlower } from "./three/big_flower"
 import { scene } from "./three/main"
 import { setPivotObject } from "./three/camera"
 import { soundState } from "./sound/main"
+import { playOneShot } from "./sound/context"
+import { sounds } from "./sound/resources"
 
 export class View {
     navigation: Navigation
@@ -25,7 +27,9 @@ export class View {
         this.directoryView = new DirectoryView(navigation)
         this.pageView = new PageView(navigation)
         this.bigFlower = new BigFlower(scene)
-        this.bigFlower.interactable.onClick.subscribe(() => this.spawnRoot())
+        this.bigFlower.interactable.onClick.subscribe(() => {
+            this.spawnRoot()
+        })
     }
 
     initialize() {
@@ -109,6 +113,7 @@ export class View {
         if (this.rootSpawned)
             return
 
+        playOneShot(sounds.get('/intro.wav')!, { pitchMin: 1, pitchMax: 1 })
         this.rootSpawned = true
         this.bigFlower.bloom()
         this.directoryView.spawnRoot()
