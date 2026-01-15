@@ -8,7 +8,7 @@ export function initWindow() {
 }
 
 const SAFE_ASPECT = 1; // 1:1 safe zone
-const BASE_FOV = 40;
+const BASE_FOV = 37;
 
 function onResize() {
     const w = window.innerWidth;
