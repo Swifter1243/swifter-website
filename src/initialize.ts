@@ -6,7 +6,7 @@ import { View } from "./view/view"
 export function initMVC() {
     const rootNode = createRootNode()
     const navigation = createNavigation(rootNode)
-    const view = createView(navigation)
+    createView(navigation)
     navigation.initialize()
 }
 
