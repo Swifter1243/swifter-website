@@ -1,20 +1,23 @@
 import { randomRange } from "../../utilities/math"
+import { setupChords } from "./chord"
 import { decodeAllPreloadedSounds } from "./resources"
 
 export let audioCtx: AudioContext | undefined = undefined
 export let masterGain: GainNode | undefined = undefined
-let contextStarted = false
+export let audioContextStarted = false
 
 async function startContext() {
-    if (contextStarted)
+    if (audioContextStarted)
         return
     
-    contextStarted = true
+    audioContextStarted = true
     audioCtx = new AudioContext()
     masterGain = audioCtx.createGain()
     masterGain.gain.value = 1
     masterGain.connect(audioCtx.destination)
-    decodeAllPreloadedSounds()
+
+    await decodeAllPreloadedSounds()
+    setupChords()
 }
 
 window.addEventListener('pointerdown', startContext, { once: true })
@@ -23,8 +26,8 @@ export function playOneShot(
     buffer: AudioBuffer,
     {
         volume = 1,
-        pitchMin = 0.95,
-        pitchMax = 1.05
+        pitchMin = 1,
+        pitchMax = 1
     } = {}
 ) {
     if (!audioCtx || !masterGain)

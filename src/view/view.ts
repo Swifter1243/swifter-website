@@ -10,6 +10,7 @@ import { setPivotObject } from "./three/camera"
 import { soundState } from "./sound/main"
 import { playOneShot } from "./sound/context"
 import { sounds } from "./sound/resources"
+import { fadeFirstChordIn } from "./sound/chord"
 
 export class View {
     navigation: Navigation
@@ -113,7 +114,8 @@ export class View {
         if (this.rootSpawned)
             return
 
-        playOneShot(sounds.get('/intro.wav')!, { pitchMin: 1, pitchMax: 1 })
+        playOneShot(sounds.get('/intro.wav')!)
+        fadeFirstChordIn()
         this.rootSpawned = true
         this.bigFlower.bloom()
         this.directoryView.spawnRoot()
