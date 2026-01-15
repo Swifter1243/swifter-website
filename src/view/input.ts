@@ -31,13 +31,13 @@ export function initInput() {
 }
 
 function onPointerMove(e: PointerEvent) {
+    inputState.currentX = e.clientX
+    inputState.currentY = e.clientY
+
     if (e.pointerType === 'mouse' && !inputState.isHovering) {
         onHoverStart.invoke()
         inputState.isHovering = true
     }
-
-    inputState.currentX = e.clientX
-    inputState.currentY = e.clientY
 
     if (inputState.isPointerDown && !inputState.isDragging) {
         const deltaX = inputState.downX - inputState.currentX
@@ -58,13 +58,15 @@ function onPointerMove(e: PointerEvent) {
 function onPointerDown(e: PointerEvent) {
     inputState.isPointerDown = true
 
+    inputState.downX = e.clientX
+    inputState.downY = e.clientY
+    inputState.currentX = e.clientX
+    inputState.currentY = e.clientY
+
     if (e.pointerType !== 'mouse' && !inputState.isHovering) {
         inputState.isHovering = true
         onHoverStart.invoke()
     }
-
-    inputState.downX = e.clientX
-    inputState.downY = e.clientY
 }
 
 function onPointerUp(e: PointerEvent) {
