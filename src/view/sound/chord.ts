@@ -1,5 +1,5 @@
 import { audioContextStarted, audioCtx, masterGain, playOneShot } from "./context";
-import { sounds } from "./resources";
+import { SOUNDS, sounds } from "./resources";
 
 const PAD_GAIN = 0.5
 
@@ -23,7 +23,6 @@ class Chord {
 
         this.padSound = sounds.get(this.padName)
         this.oneShotSound = sounds.get(this.oneShotName)
-        console.log(sounds.get(this.oneShotName))
 
         this.padGain = audioCtx.createGain()
         this.padGain.gain.value = 0
@@ -65,10 +64,10 @@ class Chord {
 }
 
 const chords = [
-    new Chord('/chord A.wav', '/chord A reverb.wav'),
-    new Chord('/chord B.wav', '/chord B reverb.wav'),
-    new Chord('/chord C.wav', '/chord C reverb.wav'),
-    new Chord('/chord D.wav', '/chord D reverb.wav')
+    new Chord(SOUNDS.CHORD_A, SOUNDS.CHORD_A_REVERB),
+    new Chord(SOUNDS.CHORD_B, SOUNDS.CHORD_B_REVERB),
+    new Chord(SOUNDS.CHORD_C, SOUNDS.CHORD_C_REVERB),
+    new Chord(SOUNDS.CHORD_D, SOUNDS.CHORD_D_REVERB),
 ]
 let currentChord = chords[0]
 let firstChordQueued = false

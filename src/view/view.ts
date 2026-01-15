@@ -9,7 +9,7 @@ import { scene } from "./three/main"
 import { setPivotObject } from "./three/camera"
 import { soundState } from "./sound/main"
 import { playOneShot } from "./sound/context"
-import { sounds } from "./sound/resources"
+import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
 
 export class View {
@@ -116,8 +116,8 @@ export class View {
         if (this.rootSpawned)
             return
 
-        playOneShot(sounds.get('/intro.wav')!)
-        playOneShot(sounds.get('/leaf move.wav')!, {
+        playOneShot(sounds.get(SOUNDS.INTRO)!)
+        playOneShot(sounds.get(SOUNDS.LEAF_MOVE)!, {
             pitchMin: 1.3,
             pitchMax: 1.3,
             volume: 0.1

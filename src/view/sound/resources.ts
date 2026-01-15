@@ -1,5 +1,19 @@
 import { audioCtx } from "./context";
 
+export const SOUNDS = {
+    LEAF_BREAK: '/leaf break.wav',
+    LEAF_MOVE: '/leaf move.wav',
+    INTRO: '/intro.wav',
+    CHORD_A: '/chord A.wav',
+    CHORD_A_REVERB: '/chord A reverb.wav',
+    CHORD_B: '/chord B.wav',
+    CHORD_B_REVERB: '/chord B reverb.wav',
+    CHORD_C: '/chord C.wav',
+    CHORD_C_REVERB: '/chord C reverb.wav',
+    CHORD_D: '/chord D.wav',
+    CHORD_D_REVERB: '/chord D reverb.wav',
+} as const
+
 const rawAudioData = new Map<string, ArrayBuffer>()
 export const sounds = new Map<string, AudioBuffer>()
 
@@ -18,17 +32,5 @@ export async function decodeAllPreloadedSounds() {
 }
 
 export async function initResources() {
-    await Promise.all([
-        await preload('/leaf break.wav'),
-        await preload('/leaf move.wav'),
-        await preload('/intro.wav'),
-        await preload('/chord A.wav'),
-        await preload('/chord A reverb.wav'),
-        await preload('/chord B.wav'),
-        await preload('/chord B reverb.wav'),
-        await preload('/chord C.wav'),
-        await preload('/chord C reverb.wav'),
-        await preload('/chord D.wav'),
-        await preload('/chord D reverb.wav'),
-    ])
+    await Promise.all(Object.values(SOUNDS).map(preload))
 }

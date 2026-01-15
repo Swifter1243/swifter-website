@@ -1,6 +1,6 @@
 import { changeChord } from "./chord"
 import { onRender } from "../three/renderer"
-import { initResources, sounds } from "./resources"
+import { initResources, SOUNDS, sounds } from "./resources"
 import { playOneShot } from "./context"
 
 export const soundState = {
@@ -40,7 +40,7 @@ function playQueuedSounds() {
 }
 
 function playLeafBreak() {
-    playOneShot(sounds.get('/leaf break.wav')!, {
+    playOneShot(sounds.get(SOUNDS.LEAF_BREAK)!, {
         volume: 0.4,
         pitchMax: 0.9,
         pitchMin: 1.1
@@ -48,7 +48,7 @@ function playLeafBreak() {
 }
 
 function playLeafMove() {
-    playOneShot(sounds.get('/leaf move.wav')!, {
+    playOneShot(sounds.get(SOUNDS.LEAF_MOVE)!, {
         volume: 0.1,
         pitchMax: 1.5,
         pitchMin: 2.1
