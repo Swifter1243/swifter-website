@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && shx cp dist/index.html dist/404.html",
     "preview": "vite preview"
   },
   "devDependencies": {
     "@react-three/fiber": "^9.2.0",
     "@react-three/uikit": "^0.8.21",
     "@types/three": "^0.178.1",
+    "shx": "^0.4.0",
     "three": "^0.178.0",
     "troika-three-text": "^0.52.4",
     "typescript": "~5.8.3",
