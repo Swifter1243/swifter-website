@@ -4,8 +4,9 @@ import { initResources, sounds } from "./resources"
 import { playOneShot } from "./context"
 
 export const soundState = {
-    queueChordChange: false,
-    queueLeafBreak: false
+    queueOpen: false,
+    queueBreak: false,
+    queueClose: false
 }
 
 export async function initSound() {
@@ -14,20 +15,42 @@ export async function initSound() {
 }
 
 function playQueuedSounds() {
-    if (soundState.queueChordChange) {
+    let moveQueued = false
+
+    if (soundState.queueOpen) {
         changeChord()
-        soundState.queueChordChange = false
+        moveQueued = true
+        soundState.queueOpen = false
     }
 
-    if (soundState.queueLeafBreak) {
+    if (soundState.queueBreak) {
         playLeafBreak()
-        soundState.queueLeafBreak = false
+        soundState.queueBreak = false
+    }
+
+    if (soundState.queueClose) {
+        moveQueued = true
+        soundState.queueClose = false
+    }
+
+    if (moveQueued) {
+        moveQueued = false
+        playLeafMove()
     }
 }
 
 function playLeafBreak() {
     playOneShot(sounds.get('/leaf break.wav')!, {
+        volume: 0.4,
         pitchMax: 0.9,
         pitchMin: 1.1
+    })
+}
+
+function playLeafMove() {
+    playOneShot(sounds.get('/leaf move.wav')!, {
+        volume: 0.1,
+        pitchMax: 1.5,
+        pitchMin: 2.1
     })
 }

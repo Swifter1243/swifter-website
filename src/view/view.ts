@@ -44,7 +44,7 @@ export class View {
             this.dontPushURLHistory = true
             this.spawnRoot()
             this.navigation.goToPath('.' + location.pathname)
-            soundState.queueChordChange = false
+            soundState.queueOpen = false
         }
 
         window.addEventListener('popstate', _ => {
@@ -57,7 +57,7 @@ export class View {
     private onAscent(key: string) {
         const newNode = this.navigation.grabCurrentNode()
         this.currentNode = newNode
-        soundState.queueChordChange = true
+        soundState.queueOpen = true
 
         const currentVisualDirectory = this.directoryView.getCurrent()
         if (currentVisualDirectory) {
@@ -79,9 +79,11 @@ export class View {
     }
 
     private onDescent() {
+        soundState.queueClose = true
+
         if (this.currentNode instanceof DirectoryNode) {
             this.directoryView.onDescent(this.currentNode)
-            soundState.queueLeafBreak = true
+            soundState.queueBreak = true
         }
         else if (this.currentNode instanceof PageNode) {
             const currentVisualDirectory = this.directoryView.getCurrent()
@@ -115,6 +117,11 @@ export class View {
             return
 
         playOneShot(sounds.get('/intro.wav')!)
+        playOneShot(sounds.get('/leaf move.wav')!, {
+            pitchMin: 1.5,
+            pitchMax: 1.5,
+            volume: 0.1
+        })
         fadeFirstChordIn()
         this.rootSpawned = true
         this.bigFlower.bloom()
