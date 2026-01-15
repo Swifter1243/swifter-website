@@ -67,6 +67,9 @@ html, body {
     justify-content: center;
 	position: fixed;
 	flex-shrink: 0;
+	aspect-ratio: 1;
+	left: 100%;
+	transform: translate(-100%);
 }
 
 #page-content {
