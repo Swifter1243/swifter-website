@@ -7,12 +7,17 @@ import { clamp } from "../../utilities/math";
 
 const cameraRotX = new SmoothNumber(0, 7)
 const cameraRotY = new SmoothNumber(0, 7)
+const cameraDistance = new SmoothNumber(3)
 
 const pivotPos = new SmoothVec3(0, 0, 0, 5)
 export let pivotObject: THREE.Object3D | undefined = undefined
 
 export function setPivotObject(object?: THREE.Object3D) {
     pivotObject = object
+}
+
+export function setCameraDistance(distance: number) {
+    cameraDistance.set(distance)
 }
 
 let downRotX = 0
@@ -24,8 +29,7 @@ export function initCamera() {
     scene.add(pivot)
 
     pivot.add(camera)
-    camera.position.set(0, 0, 5)
-
+    camera.position.set(0, 0, cameraDistance.current)
     camera.fov = 40
     camera.far = 100
 
@@ -35,6 +39,7 @@ export function initCamera() {
 
         cameraRotX.update(deltaTime)
         cameraRotY.update(deltaTime)
+        cameraDistance.update(deltaTime)
         pivotPos.update(deltaTime)
 
         if (pivotObject) {
@@ -47,6 +52,7 @@ export function initCamera() {
         pivot.position.copy(pivotPos.current)
         pivot.rotation.x = cameraRotX.current
         pivot.rotation.y = cameraRotY.current
+        camera.position.set(0, 0, cameraDistance.current)
     })
 
     onDragStart.subscribe(() => {

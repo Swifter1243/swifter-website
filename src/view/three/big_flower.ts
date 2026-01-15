@@ -1,4 +1,5 @@
 import { THREE } from "../../deps";
+import { setCameraDistance } from "./camera";
 import type { IDisposable } from "./disposable";
 import { Flower } from "./flower";
 import { Interactable } from "./interactable";
@@ -38,6 +39,7 @@ export class BigFlower implements IDisposable {
     bloom() {
         this.outerFlower.open()
         this.innerFlower.open()
+        setCameraDistance(5)
     }
 
     dispose() {
