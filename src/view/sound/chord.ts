@@ -25,7 +25,7 @@ class Chord {
         this.oneShotSound = sounds.get(this.oneShotName)
 
         this.padGain = audioCtx.createGain()
-        this.padGain.gain.value = 0
+        this.padGain.gain.setValueAtTime(0, audioCtx.currentTime)
         this.padGain.connect(masterGain)
 
         const padSource = audioCtx.createBufferSource()
@@ -42,13 +42,14 @@ class Chord {
         playOneShot(this.oneShotSound)
     }
 
-    fadePadIn(fadeTime = 3) {
+    fadePadIn(fadeTime = 3, cancelPrevious = true) {
         if (!audioCtx || !this.padGain)
             return
 
         const now = audioCtx.currentTime
-        this.padGain.gain.cancelScheduledValues(now)
-        this.padGain.gain.setValueAtTime(0, now)
+        if (cancelPrevious)
+            this.padGain.gain.cancelScheduledValues(now)
+        this.padGain.gain.setValueAtTime(this.padGain.gain.value, now)
         this.padGain.gain.linearRampToValueAtTime(PAD_GAIN, now + fadeTime)
     }
 
@@ -58,6 +59,7 @@ class Chord {
 
         const now = audioCtx.currentTime
         this.padGain.gain.cancelScheduledValues(now)
+        this.padGain.gain.setValueAtTime(this.padGain.gain.value, now)
         this.padGain.gain.linearRampToValueAtTime(0, now + fadeTime)
     }
 }
@@ -114,6 +116,6 @@ export function setupChords() {
     })
 
     if (firstChordQueued) {
-        currentChord.fadePadIn()
+        currentChord.fadePadIn(3, false)
     }
 }
