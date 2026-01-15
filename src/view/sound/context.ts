@@ -10,14 +10,14 @@ async function startContext() {
     if (audioContextStarted)
         return
     
-    audioContextStarted = true
     audioCtx = new AudioContext()
     masterGain = audioCtx.createGain()
     masterGain.gain.value = 1
     masterGain.connect(audioCtx.destination)
-
+    
     await decodeAllPreloadedSounds()
     setupChords()
+    audioContextStarted = true
 }
 
 window.addEventListener('pointerdown', startContext, { once: true })
