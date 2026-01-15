@@ -6,12 +6,12 @@ import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
 import { generateSunflowerArrangement } from "../../utilities/arrangement";
 import { Connection } from "./connection";
 import type { IDisposable } from "./disposable";
-import { onRender } from "./renderer";
 import { VisualNode } from "./visual_node";
+import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
 let time = 0
 
-export class VisualDirectory implements IDisposable {
+export class VisualDirectory implements IDisposable, IUpdateable {
     directoryNode: DirectoryNode
     content: THREE.Object3D
     parent: THREE.Object3D
@@ -27,8 +27,6 @@ export class VisualDirectory implements IDisposable {
     
     breezeAmount = new SmoothNumber(0.05, 2)
     currentOpenKey?: string
-    
-    stepFunction: (deltaTime: number) => void
 
     constructor(directoryNode: DirectoryNode, parent: THREE.Object3D) {
         this.directoryNode = directoryNode
@@ -40,9 +38,7 @@ export class VisualDirectory implements IDisposable {
         this.content.add(this.pivot)
 
         this.generateObjects()
-
-        this.stepFunction = (deltaTime) => this.step(deltaTime)
-        onRender.subscribe(this.stepFunction)
+        addUpdateable(this)
     }
 
     private generateObjects() {
@@ -81,9 +77,9 @@ export class VisualDirectory implements IDisposable {
         })
     }
 
-    step(deltaTime: number): void {
-        this.startNormal.step(deltaTime)
-        this.breezeAmount.step(deltaTime)
+    update(deltaTime: number): void {
+        this.startNormal.update(deltaTime)
+        this.breezeAmount.update(deltaTime)
 
         time += deltaTime
 
@@ -93,9 +89,7 @@ export class VisualDirectory implements IDisposable {
             const connection = this.connections[key]
             const endNormal = this.endNormals[key]
 
-            visualNode.step(deltaTime)
-            endNormal.step(deltaTime)
-            connection.step()
+            endNormal.update(deltaTime)
             connection.endPoint.copy(visualNode.smoothedPosition.current)
 
             const t = time + this.breezeOffsets[key] * 3
@@ -121,7 +115,7 @@ export class VisualDirectory implements IDisposable {
 
         this.content.remove(this.pivot)
         this.parent.remove(this.content)
-        onRender.unsubscribe(this.stepFunction)
+        removeUpdateable(this)
     }
 
     openNode(key: string) {

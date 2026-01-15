@@ -2,8 +2,8 @@ import { THREE } from "../../deps";
 import { randomRange } from "../../utilities/math";
 import { cloneGltf } from "../../utilities/three";
 import type { IDisposable } from "./disposable";
-import { onRender } from "./renderer";
 import { petalAnimations, petalModel, type PetalAnimationNames } from "./resources";
+import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
 type Petal = {
     mixer: THREE.AnimationMixer,
@@ -11,18 +11,16 @@ type Petal = {
     actions: Record<PetalAnimationNames, THREE.AnimationAction>
 }
 
-export class Flower implements IDisposable {
+export class Flower implements IDisposable, IUpdateable {
     parent: THREE.Object3D
     content: THREE.Object3D
     petals: Petal[] = []
-    stepFunction: (deltaTime: number) => void
 
     constructor(parent: THREE.Object3D, count: number, openSpeed: number) {
         this.parent = parent
         this.content = new THREE.Object3D()
         this.parent.add(this.content)
-        this.stepFunction = (deltaTime) => this.step(deltaTime)
-        onRender.subscribe(this.stepFunction)
+        addUpdateable(this)
 
         const yRot = (Math.PI * 2) / count
         for (let i = 0; i < count; i++) {
@@ -66,7 +64,7 @@ export class Flower implements IDisposable {
         }
     }
 
-    private step(deltaTime: number) {
+    update(deltaTime: number) {
         this.petals.forEach(petal => {
             petal.mixer.update(deltaTime)
         })
@@ -108,7 +106,7 @@ export class Flower implements IDisposable {
         this.petals.forEach(petal => {
             this.content.remove(petal.model)
         })
-        onRender.unsubscribe(this.stepFunction)
+        removeUpdateable(this)
         
         this.parent.remove(this.content)
     }

@@ -21,7 +21,7 @@ export class LeafParticleSystem {
         this.parent = parent
     }
 
-    step(deltaTime: number): void {
+    update(deltaTime: number): void {
         this.particles = this.particles.filter(particle => this.stepParticle(deltaTime, particle))
     }
 
@@ -49,7 +49,7 @@ export class LeafParticleSystem {
 
 export function initLeafParticleSystem() {
     leafParticleSystem = new LeafParticleSystem(scene)
-    onRender.subscribe((deltaTime) => leafParticleSystem.step(deltaTime))
+    onRender.subscribe((deltaTime) => leafParticleSystem.update(deltaTime))
 }
 
 export let leafParticleSystem: LeafParticleSystem

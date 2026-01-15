@@ -35,7 +35,7 @@ export class SmoothNumber {
         return this
     }
 
-    step(deltaTime: number) {
+    update(deltaTime: number) {
         const t = Math.exp(-this.rate * deltaTime)
         this.currentVal = lerp(this.targetVal, this.currentVal, t)
     }
@@ -54,10 +54,10 @@ export class SmoothVec3 {
         this.updateCurrent()
     }
 
-    step(deltaTime: number) {
-        this.x.step(deltaTime)
-        this.y.step(deltaTime)
-        this.z.step(deltaTime)
+    update(deltaTime: number) {
+        this.x.update(deltaTime)
+        this.y.update(deltaTime)
+        this.z.update(deltaTime)
         this.updateCurrent()
     }
 

@@ -4,6 +4,7 @@ import { alignLocalUp } from "../../utilities/three";
 import type { IDisposable } from "./disposable";
 import { leafParticleSystem } from "./leaf_particle_system";
 import { leafGeometry } from "./resources";
+import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
 type Leaf = {
     mesh: THREE.Mesh,
@@ -11,7 +12,7 @@ type Leaf = {
     rotation: THREE.Quaternion
 }
 
-export class Connection implements IDisposable {
+export class Connection implements IDisposable, IUpdateable {
     readonly parent: THREE.Object3D
     readonly startPoint: THREE.Vector3
     readonly startNormal: THREE.Vector3
@@ -35,7 +36,7 @@ export class Connection implements IDisposable {
         return new THREE.TubeGeometry( this.curve, 20, 0.005, 4 )
     }
 
-    step() {
+    update(_: number) {
         this.updateControlPoints()
         this.updateGeometry()
     }
@@ -63,6 +64,8 @@ export class Connection implements IDisposable {
         this.startNormal = startNormal
         this.endPoint = endPoint
         this.endNormal = endNormal
+
+        addUpdateable(this)
         
         this.updateControlPoints()
         this.curve = new THREE.CubicBezierCurve3(startPoint, this.startControlPoint, this.endControlPoint, endPoint)
@@ -90,6 +93,7 @@ export class Connection implements IDisposable {
         this.mesh.geometry.dispose()
         this.branchMaterial.dispose()
         this.parent.remove(this.mesh)
+        removeUpdateable(this)
 
         this.leaves.forEach(leaf => {
             leafParticleSystem.add({

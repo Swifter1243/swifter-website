@@ -6,10 +6,11 @@ import { alignLocalUp } from "../../utilities/three";
 import { SmoothVec3 } from "../../utilities/smooth_value";
 import { randomRange } from "../../utilities/math";
 import { Flower } from "./flower";
+import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
 const textOffset = new THREE.Vector3(0, 0.2, 0)
 
-export class VisualNode implements IDisposable {
+export class VisualNode implements IDisposable, IUpdateable {
     parent: THREE.Object3D
     content: THREE.Object3D
     interactable: Interactable
@@ -23,6 +24,7 @@ export class VisualNode implements IDisposable {
         this.parent = parent
         this.content = new THREE.Object3D()
         this.parent.add(this.content)
+        addUpdateable(this)
 
         this.position = position
         alignLocalUp(this.content, normal)
@@ -49,8 +51,8 @@ export class VisualNode implements IDisposable {
         this.flower.close()
     }
 
-    step(deltaTime: number): void {
-        this.smoothedPosition.step(deltaTime)
+    update(deltaTime: number): void {
+        this.smoothedPosition.update(deltaTime)
         this.updatePositions()
     }
 
@@ -63,6 +65,7 @@ export class VisualNode implements IDisposable {
         this.label.dispose()
         this.interactable.dispose()
         this.flower.dispose()
+        removeUpdateable(this)
         this.parent.remove(this.content)
     }
 }

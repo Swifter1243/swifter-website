@@ -33,9 +33,9 @@ export function initCamera() {
     onRender.subscribe(deltaTime => {
         cameraRotY.target += deltaTime * 0.05
 
-        cameraRotX.step(deltaTime)
-        cameraRotY.step(deltaTime)
-        pivotPos.step(deltaTime)
+        cameraRotX.update(deltaTime)
+        cameraRotY.update(deltaTime)
+        pivotPos.update(deltaTime)
 
         if (pivotObject) {
             pivotObject?.getWorldPosition(pivotWorldPos)
