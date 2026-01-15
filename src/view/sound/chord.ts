@@ -48,7 +48,7 @@ class Chord {
 
         const now = audioCtx.currentTime
         this.padGain.gain.cancelScheduledValues(now)
-        this.padGain.gain.setValueAtTime(this.padGain.gain.value, now)
+        this.padGain.gain.setValueAtTime(0, now)
         this.padGain.gain.linearRampToValueAtTime(PAD_GAIN, now + fadeTime)
     }
 
@@ -58,7 +58,7 @@ class Chord {
 
         const now = audioCtx.currentTime
         this.padGain.gain.cancelScheduledValues(now)
-        this.padGain.gain.setValueAtTime(this.padGain.gain.value, now)
+        this.padGain.gain.setValueAtTime(PAD_GAIN, now)
         this.padGain.gain.linearRampToValueAtTime(0, now + fadeTime)
     }
 }
@@ -90,7 +90,7 @@ export function changeChord() {
 }
 
 export function changeChordPad() {
-    currentChord.fadePadOut()
+    currentChord.fadePadOut(1)
 
     let newChord: Chord | undefined = undefined
     while (!newChord || newChord == currentChord) {
