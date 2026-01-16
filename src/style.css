@@ -16,6 +16,12 @@ html, body {
 	touch-action: none;
 }
 
+#three {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
 #page {
 	position: fixed;
 	inset: 0;
