@@ -1,14 +1,14 @@
 @font-face {
-  font-family: 'Palatino Linotype';
-  src: URL('/pala.ttf') format('truetype');
+	font-family: "Palatino Linotype";
+	src: url("/pala.ttf") format("truetype");
 }
 
 body {
 	margin: 0;
 	background-color: #000;
 	color: #fff;
-	font-family: 'Palatino Linotype';
-	font-size: 24px;
+	font-family: "Palatino Linotype";
+	font-size: 20px;
 }
 
 html, body {
@@ -69,8 +69,8 @@ html, body {
 #page-close {
 	height: inherit;
 	display: flex;
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
 	position: fixed;
 	flex-shrink: 0;
 	aspect-ratio: 1;
@@ -79,15 +79,39 @@ html, body {
 }
 
 #page-content {
-    display: flex; 
-    flex-direction: column;
-    align-items: center;   
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 #fade {
 	background-color: rgb(0, 0, 0);
 	transition: opacity 1s ease;
 	position: absolute;
-  	inset: 0;
+	inset: 0;
 	pointer-events: none;
+}
+
+.image-pair-left, .image-pair-right {
+	display: flex;
+	align-items: flex-start;
+	gap: 30px;
+	width: 100%;
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+.image-pair-left img, .image-pair-right img {
+	width: 50%;
+	flex-shrink: 0;
+	display: block;
+}
+
+.image-pair-left div, .image-pair-right div {
+	min-width: 0;
+	word-wrap: break-word;
+}
+
+.image-pair-right div {
+	text-align: end;
 }
