@@ -1,6 +1,7 @@
 import { DirectoryNode } from "../model/directory_node";
 import type { INode } from "../model/node";
 import { Invokable } from "../utilities/invokable";
+import { getCommonPath, getPathKeySequence } from "./utility";
 
 export class Navigation {
     rootNode: INode
@@ -16,37 +17,6 @@ export class Navigation {
 
     initialize() {
         
-    }
-
-    private getKeySequence(path: string): string[] {
-        const entries = path.split('/')
-
-        if (entries.length == 0) {
-            return [path]
-        }
-        else {
-            return entries
-        }
-    }
-
-    private getCommonPath(a: string, b: string): string {
-        const commonPath: string[] = []
-        const aSequence = this.getKeySequence(a)
-        const bSequence = this.getKeySequence(b)
-        const maxCommonLength = Math.min(aSequence.length, bSequence.length)
-
-        for (let i = 0; i < maxCommonLength; i++) {
-            const aKey = aSequence[i]
-            const bKey = bSequence[i]
-
-            if (aKey != bKey) {
-                break
-            } else {
-                commonPath.push(aKey)
-            }
-        }
-
-        return commonPath.join('/')
     }
 
     grabCurrentNode(): INode {
@@ -67,7 +37,7 @@ export class Navigation {
     }
 
     descend(): boolean {
-        const nodes = this.getKeySequence(this.headerPath)
+        const nodes = getPathKeySequence(this.headerPath)
 
         if (nodes.length <= 1)
             return false
@@ -82,7 +52,7 @@ export class Navigation {
     fetchNode(path: string): INode {
         let lastNode = this.rootNode
 
-        for (const key of this.getKeySequence(path)) {
+        for (const key of getPathKeySequence(path)) {
             if (key == '.')
                 continue
 
@@ -98,7 +68,7 @@ export class Navigation {
         let lastNode = this.rootNode
         const result = ['.']
 
-        for (const key of this.getKeySequence(path)) {
+        for (const key of getPathKeySequence(path)) {
             if (key == '.')
                 continue
 
@@ -126,16 +96,16 @@ export class Navigation {
             return
         }
 
-        const commonLength = this.getCommonPath(a, b).length
+        const commonLength = getCommonPath(a, b).length
 
         const pathDown = a.substring(commonLength)
-        this.getKeySequence(pathDown).filter(x => x.length > 0).reverse().forEach(_ => {
+        getPathKeySequence(pathDown).filter(x => x.length > 0).reverse().forEach(_ => {
             this.headerPath = this.headerPath.substring(0, this.headerPath.lastIndexOf('/'))
             this.onDescent.invoke()
         })
 
         const pathUp = b.substring(commonLength)
-        this.getKeySequence(pathUp).filter(x => x.length > 0).forEach(key => {
+        getPathKeySequence(pathUp).filter(x => x.length > 0).forEach(key => {
             this.headerPath += `/${key}`
             this.onAscent.invoke(key)
         })
