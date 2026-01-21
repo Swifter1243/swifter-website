@@ -8,7 +8,7 @@ import { BigFlower } from "./three/big_flower"
 import { scene } from "./three/main"
 import { setPivotObject } from "./three/camera"
 import { soundState } from "./sound/main"
-import { playOneShot } from "./sound/context"
+import { playOneShot, startAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
 
@@ -28,7 +28,8 @@ export class View {
         this.directoryView = new DirectoryView(navigation)
         this.pageView = new PageView(navigation)
         this.bigFlower = new BigFlower(scene)
-        this.bigFlower.interactable.onClick.subscribe(() => {
+        this.bigFlower.interactable.onClick.subscribe(async () => {
+            await startAudioContext()
             this.spawnRoot()
         })
     }

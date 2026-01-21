@@ -1,4 +1,4 @@
-import { audioContextStarted, audioCtx, masterGain, playOneShot } from "./context";
+import { audioContextReady, audioCtx, masterGain, playOneShot } from "./context";
 import { SOUNDS, sounds } from "./resources";
 
 const PAD_GAIN = 0.8
@@ -74,7 +74,7 @@ let currentChord = chords[0]
 let firstChordQueued = false
 
 export function changeChord() {
-    if (audioContextStarted) {
+    if (audioContextReady) {
         currentChord.fadePadOut()
 
         let newChord: Chord | undefined = undefined
@@ -103,7 +103,7 @@ export function changeChordPad() {
 }
 
 export function fadeFirstChordIn() {
-    if (audioContextStarted) {
+    if (audioContextReady) {
         currentChord.fadePadIn()
     } else {
         firstChordQueued = true

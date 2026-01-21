@@ -4,10 +4,10 @@ import { decodeAllPreloadedSounds } from "./resources"
 
 export let audioCtx: AudioContext | undefined = undefined
 export let masterGain: GainNode | undefined = undefined
-export let audioContextStarted = false
+export let audioContextReady = false
 
-async function startContext() {
-    if (audioContextStarted)
+export async function startAudioContext() {
+    if (audioCtx)
         return
     
     audioCtx = new AudioContext()
@@ -17,10 +17,10 @@ async function startContext() {
     
     await decodeAllPreloadedSounds()
     setupChords()
-    audioContextStarted = true
+    audioContextReady = true
 }
 
-window.addEventListener('pointerdown', startContext, { once: true })
+window.addEventListener('pointerdown', startAudioContext, { once: true })
 
 export function playOneShot(
     buffer: AudioBuffer,
