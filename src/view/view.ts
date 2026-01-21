@@ -11,6 +11,7 @@ import { soundState } from "./sound/main"
 import { playOneShot, startAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
+import { getPathKeySequence } from "../navigation/utility"
 
 export class View {
     navigation: Navigation
@@ -50,8 +51,12 @@ export class View {
 
         window.addEventListener('popstate', _ => {
             this.dontPushURLHistory = true
-            const url = '.' + location.pathname
-            this.navigation.goToPath(url)
+            const path = '.' + location.pathname
+            const keys = getPathKeySequence(path)
+            if (keys.length > 1) {
+                this.spawnRoot()
+            }
+            this.navigation.goToPath(path)
         })
     }
 
@@ -117,7 +122,6 @@ export class View {
         if (this.rootSpawned)
             return
 
-        playOneShot(sounds.get(SOUNDS.INTRO)!)
         playOneShot(sounds.get(SOUNDS.LEAF_MOVE)!, {
             pitchMin: 1.3,
             pitchMax: 1.3,
