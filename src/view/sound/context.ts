@@ -6,10 +6,16 @@ export let audioCtx: AudioContext | undefined = undefined
 export let masterGain: GainNode | undefined = undefined
 export let audioContextReady = false
 
+let audioContextPromise: Promise<void> | undefined = undefined
+
 export async function startAudioContext() {
-    if (audioCtx)
-        return
-    
+    if (!audioContextPromise)
+        audioContextPromise = initialize()
+
+    return audioContextPromise
+}
+
+async function initialize() {
     audioCtx = new AudioContext()
     masterGain = audioCtx.createGain()
     masterGain.gain.setValueAtTime(0.3, audioCtx.currentTime)
