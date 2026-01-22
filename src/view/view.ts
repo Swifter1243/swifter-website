@@ -122,6 +122,7 @@ export class View {
         if (this.rootSpawned)
             return
 
+        playOneShot(sounds.get(SOUNDS.INTRO)!)
         playOneShot(sounds.get(SOUNDS.LEAF_MOVE)!, {
             pitchMin: 1.3,
             pitchMax: 1.3,
