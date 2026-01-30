@@ -14,12 +14,15 @@ body {
 html, body {
 	overscroll-behavior: none;
 	touch-action: none;
+	overflow: hidden;
 }
 
 #three {
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
+	overscroll-behavior: none;
+	touch-action: none;
 }
 
 #page {
