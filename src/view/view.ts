@@ -79,7 +79,7 @@ export class View {
                 const visualNode = currentVisualDirectory.visualNodes[key]
                 setCameraPivot({
                     object: visualNode.content,
-                    distance: 4
+                    distance: currentVisualDirectory.scalar * 4
                 })
             }
 

@@ -16,7 +16,8 @@ export class VisualDirectory implements IDisposable, IUpdateable {
     directoryNode: DirectoryNode
     content: THREE.Object3D
     parent: THREE.Object3D
-    scale: number
+    contentSize: number
+    scalar: number
     pivotObject: THREE.Object3D
     cameraPivot: CameraPivot
 
@@ -31,19 +32,22 @@ export class VisualDirectory implements IDisposable, IUpdateable {
     breezeAmount = new SmoothNumber(0.05, 2)
     currentOpenKey?: string
 
-    constructor(directoryNode: DirectoryNode, parent: THREE.Object3D) {
+    constructor(directoryNode: DirectoryNode, parent: THREE.Object3D, scale: number, deltaScale: number) {
         this.directoryNode = directoryNode
         this.content = new THREE.Object3D()
 
-        this.scale = Math.max(1, 1 + (Object.keys(this.directoryNode.nodes).length - 3) * 0.1)
-        this.pivotObject = new THREE.Object3D()
-        this.pivotObject.position.set(0, this.scale, 0)
+        this.contentSize = Math.max(1, 1 + (Object.keys(this.directoryNode.nodes).length - 3) * 0.1)
+        this.content.scale.setScalar(deltaScale / this.contentSize)
+        this.scalar = scale / this.contentSize
 
-        this.startNormal.copyImmediate(new THREE.Vector3(0, 0.8 * this.scale, 0))
+        this.pivotObject = new THREE.Object3D()
+        this.pivotObject.position.set(0, this.contentSize, 0)
+
+        this.startNormal.copyImmediate(new THREE.Vector3(0, 0.8 * this.contentSize, 0))
 
         this.cameraPivot = {
             object: this.pivotObject,
-            distance: this.scale * 5
+            distance: this.contentSize * 5 * this.scalar
         }
 
         this.parent = parent
@@ -67,10 +71,10 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             const key = entry[0]
 
             this.breezeOffsets[key] = nextBreezeOffset
-            nextBreezeOffset += randomRange(0.3, 0.8) * this.scale
+            nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
 
-            const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.scale)
-            const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.scale)
+            const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize)
+            const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize)
 
             const endPoint = new THREE.Vector3()
             const endNormal = new SmoothVec3(0, 0, 0, 0.5)

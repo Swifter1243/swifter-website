@@ -96,13 +96,16 @@ export class Connection implements IDisposable, IUpdateable {
         removeUpdateable(this)
 
         this.leaves.forEach(leaf => {
+            const worldScale = new THREE.Vector3()
+            leaf.mesh.getWorldScale(worldScale)
+
             leafParticleSystem.add({
                 time: 0,
                 lifetime: randomRange(0.1, 1),
                 mesh: leaf.mesh,
                 velocityY: randomRange(0, 0.2),
-                velocityLocalZ: randomRange(0.3, 0.7),
-                originalScale: new THREE.Vector3().copy(leaf.mesh.scale)
+                velocityLocalZ: randomRange(0.3, 0.7) * worldScale.x,
+                originalScale: worldScale
             }, this.parent)
         })
     }

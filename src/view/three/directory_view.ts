@@ -5,6 +5,8 @@ import { setCameraPivot } from "./camera"
 import { scene } from "./main"
 import { VisualDirectory } from "./visual_directory"
 
+const SHRINK_FACTOR = 0.5
+
 export class DirectoryView {
     visualDirectories: VisualDirectory[] = []
     navigation: Navigation
@@ -18,7 +20,7 @@ export class DirectoryView {
     }
 
     spawnRoot() {
-        this.add(new VisualDirectory(this.navigation.rootNode as DirectoryNode, scene))
+        this.add(new VisualDirectory(this.navigation.rootNode as DirectoryNode, scene, 1, 1))
     }
 
     add(dir: VisualDirectory) {
@@ -51,12 +53,14 @@ export class DirectoryView {
         let newParent: THREE.Object3D = scene
         const currentDir = this.getCurrent()
 
+        let currentScale = 1
         if (currentDir) {
             const visualNode = currentDir.visualNodes[key]
             newParent = visualNode.content
+            currentScale = currentDir.scalar
         }
 
-        const newDir = new VisualDirectory(newNode, newParent)
+        const newDir = new VisualDirectory(newNode, newParent, currentScale * SHRINK_FACTOR, SHRINK_FACTOR)
 
         this.add(newDir)
     }
