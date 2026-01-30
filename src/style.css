@@ -49,7 +49,7 @@ html, body {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	width: min(100%, 120vh);
+	width: min(100%, 1100px);
 	transition: transform 0.5s ease; /* smooth animation */
 	transform: translateY(50px);
 	box-sizing: border-box;
