@@ -22,16 +22,16 @@ export type Project = {
     html: string
     name: string
     key: string
-    categories: Set<Category>
+    category: Category
     skills: Set<Skill>
 }
 
-export function makeProject(name: string, key: string, html: string, categories: Category[], skills: Skill[]): Project {
+export function makeProject(name: string, key: string, html: string, category: Category, skills: Skill[]): Project {
     return {
         name,
         key,
         html,
-        categories: new Set<Category>(categories),
+        category,
         skills: new Set<Skill>(skills)
     }
 }

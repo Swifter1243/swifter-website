@@ -50,12 +50,9 @@ function createProjectNodes(projects: Project[]): INode {
     })
 
     projects.forEach(project => {
-        project.categories.forEach(category => {
-            const directoryNode = categoryNodes[category]!
-            directoryNode.addNode(project.key, nodeFromProject(project))
-        })
+        const directoryNode = categoryNodes[project.category]!
+        directoryNode.addNode(project.key, nodeFromProject(project))
     })
-
 
     return rootNode
 }
