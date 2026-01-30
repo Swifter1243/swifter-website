@@ -13,6 +13,8 @@ import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
 import { getPathKeySequence } from "../navigation/utility"
 
+const title = document.getElementById("title")!
+
 export class View {
     navigation: Navigation
     directoryView: DirectoryView
@@ -112,13 +114,17 @@ export class View {
     }
 
     private onChange() {
-        if (this.dontPushURLHistory) {
+        if (!this.dontPushURLHistory) {
+            const url = this.navigation.headerPath === '.' ? '/' : this.navigation.headerPath.substring(1)
+            history.pushState(null, '', url)
+        } else {
             this.dontPushURLHistory = false
-            return
         }
 
-        const url = this.navigation.headerPath === '.' ? '/' : this.navigation.headerPath.substring(1)
-        history.pushState(null, '', url)
+        if (this.navigation.headerPath !== '.') 
+            title.textContent = 'PORTFOLIO - ' + this.navigation.grabCurrentNode().name.toUpperCase()
+        else
+            title.textContent = 'PORTFOLIO'
     }
     
     private spawnRoot() {
