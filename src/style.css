@@ -50,6 +50,7 @@ html, body {
 
 #page-top-bar {
 	height: 50px;
+	min-height: 50px;
 	background-color: rgba(99, 169, 173, 0.418);
 	border-radius: 5px;
 	display: flex;
@@ -59,7 +60,7 @@ html, body {
 }
 
 #page-close-parent {
-	height: inherit;
+	height: 100%;
 	width: 100%;
 	position: absolute;
 	display: flex;
@@ -85,6 +86,7 @@ html, body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	text-align: center;
 }
 
 #fade {
@@ -98,6 +100,10 @@ html, body {
 /* image pairs */
 .image-pair-left, .image-pair-right {
 	width: 100%;
+}
+
+.image-pair-left {
+	text-align: start;
 }
 
 .image-pair-right {
