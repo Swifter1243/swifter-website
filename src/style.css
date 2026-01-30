@@ -34,36 +34,22 @@ html, body {
 }
 
 #page-panel {
-	display: flex;
-	flex-direction: column;
 	height: 100%;
 	width: min(100%, 90vh);
 	transition: transform 0.5s ease; /* smooth animation */
 	transform: translateY(50px);
-	padding: 20px;
 	box-sizing: border-box;
-}
-
-#page-content-parent {
-	flex: 1 1 auto;
-	overflow-y: auto;
-	min-height: 0;
-	background-color: rgba(0, 0, 0, 0.5);
 	padding: 20px;
+	margin: 0px;
 }
 
 #page-top-bar {
 	height: 50px;
-	display: flex;
-	align-items: center;
 	background-color: rgba(99, 169, 173, 0.418);
 	border-radius: 5px;
-}
-
-#page-title {
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 #page-close {
@@ -72,10 +58,13 @@ html, body {
 	align-items: center;
 	justify-content: center;
 	position: fixed;
-	flex-shrink: 0;
 	aspect-ratio: 1;
 	left: 100%;
 	transform: translate(-100%);
+}
+
+#page-content-parent {
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 #page-content {
