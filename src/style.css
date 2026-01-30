@@ -92,26 +92,25 @@ html, body {
 	pointer-events: none;
 }
 
+/* image pairs */
 .image-pair-left, .image-pair-right {
-	display: flex;
-	align-items: flex-start;
-	gap: 30px;
 	width: 100%;
-	max-width: 100%;
-	overflow-x: hidden;
 }
 
-.image-pair-left img, .image-pair-right img {
-	width: 50%;
-	flex-shrink: 0;
-	display: block;
-}
-
-.image-pair-left div, .image-pair-right div {
-	min-width: 0;
-	word-wrap: break-word;
-}
-
-.image-pair-right div {
+.image-pair-right {
 	text-align: end;
+}
+
+/* image pair images */
+.image-pair-left img, .image-pair-right img {
+	width: 40%;
+	padding: 20px;
+}
+
+.image-pair-left img {
+	float: left;
+}
+
+.image-pair-right img {
+	float: right;
 }
