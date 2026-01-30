@@ -71,6 +71,7 @@ html, body {
 #page-content-parent {
 	flex-grow: 1;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -109,4 +110,8 @@ html, body {
 
 .image-pair-right img {
 	float: right;
+}
+
+.video {
+	border: 0px
 }
