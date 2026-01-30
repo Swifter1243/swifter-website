@@ -9,11 +9,16 @@ const cameraRotX = new SmoothNumber(0, 7)
 const cameraRotY = new SmoothNumber(0, 7)
 const cameraDistance = new SmoothNumber(3)
 
-const pivotPos = new SmoothVec3(0, 0, 0, 5)
-export let pivotObject: THREE.Object3D | undefined = undefined
+export type CameraPivot = {
+    object: THREE.Object3D,
+    distance: number
+}
 
-export function setPivotObject(object?: THREE.Object3D) {
-    pivotObject = object
+const pivotPos = new SmoothVec3(0, 0, 0, 5)
+export let cameraPivot: CameraPivot | undefined = undefined
+
+export function setCameraPivot(pivot?: CameraPivot) {
+    cameraPivot = pivot
 }
 
 export function setCameraDistance(distance: number) {
@@ -42,11 +47,13 @@ export function initCamera() {
         cameraDistance.update(deltaTime)
         pivotPos.update(deltaTime)
 
-        if (pivotObject) {
-            pivotObject?.getWorldPosition(pivotWorldPos)
+        if (cameraPivot) {
+            cameraPivot.object.getWorldPosition(pivotWorldPos)
             pivotPos.copy(pivotWorldPos)
+            cameraDistance.set(cameraPivot.distance)
         } else {
             pivotPos.set(0, 0, 0)
+            cameraDistance.set(3)
         }
 
         pivot.position.copy(pivotPos.current)

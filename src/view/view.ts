@@ -6,7 +6,7 @@ import { DirectoryView } from "./three/directory_view"
 import { PageView } from "./page_view"
 import { BigFlower } from "./three/big_flower"
 import { scene } from "./three/main"
-import { setPivotObject } from "./three/camera"
+import { setCameraPivot } from "./three/camera"
 import { soundState } from "./sound/main"
 import { playOneShot, startAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
@@ -77,7 +77,10 @@ export class View {
             const currentVisualDirectory = this.directoryView.getCurrent()
             if (currentVisualDirectory) {
                 const visualNode = currentVisualDirectory.visualNodes[key]
-                setPivotObject(visualNode.content)
+                setCameraPivot({
+                    object: visualNode.content,
+                    distance: 4
+                })
             }
 
             this.pageView.openPage(newNode)
@@ -94,7 +97,7 @@ export class View {
         else if (this.currentNode instanceof PageNode) {
             const currentVisualDirectory = this.directoryView.getCurrent()
             if (currentVisualDirectory) {
-                setPivotObject(currentVisualDirectory.pivot)
+                setCameraPivot(currentVisualDirectory.cameraPivot)
             }
 
             this.pageView.closePage()

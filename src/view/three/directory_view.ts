@@ -1,7 +1,7 @@
 import type { THREE } from "../../deps"
 import { DirectoryNode } from "../../model/directory_node"
 import type { Navigation } from "../../navigation/navigation"
-import { setPivotObject } from "./camera"
+import { setCameraPivot } from "./camera"
 import { scene } from "./main"
 import { VisualDirectory } from "./visual_directory"
 
@@ -31,7 +31,7 @@ export class DirectoryView {
     onCurrentChanged(): void {
         const current = this.getCurrent()
 
-        setPivotObject(current?.pivot)
+        setCameraPivot(current?.cameraPivot)
 
         this.visualDirectories.forEach((visualDirectory, i) => {
             const depth = this.visualDirectories.length - 1 - i

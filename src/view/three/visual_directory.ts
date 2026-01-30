@@ -1,13 +1,14 @@
 import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
-import { lerp, randomRange } from "../../utilities/math";
+import { randomRange } from "../../utilities/math";
 import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
 import { generateSunflowerArrangement } from "../../utilities/arrangement";
 import { Connection } from "./connection";
 import type { IDisposable } from "./disposable";
 import { VisualNode } from "./visual_node";
 import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
+import type { CameraPivot } from "./camera";
 
 let time = 0
 
@@ -15,13 +16,15 @@ export class VisualDirectory implements IDisposable, IUpdateable {
     directoryNode: DirectoryNode
     content: THREE.Object3D
     parent: THREE.Object3D
-    pivot: THREE.Object3D
+    scale: number
+    pivotObject: THREE.Object3D
+    cameraPivot: CameraPivot
 
     connections: Record<string, Connection> = {}
     visualNodes: Record<string, VisualNode> = {}
     disposables: IDisposable[] = []
     onNodeClicked = new Invokable<[string]>()
-    startNormal = new SmoothVec3(0, 0.8, 0, 0.2)
+    startNormal = new SmoothVec3(0, 0, 0, 0.2)
     endNormals: Record<string, SmoothVec3> = {}
     breezeOffsets: Record<string, number> = {}
     
@@ -31,11 +34,21 @@ export class VisualDirectory implements IDisposable, IUpdateable {
     constructor(directoryNode: DirectoryNode, parent: THREE.Object3D) {
         this.directoryNode = directoryNode
         this.content = new THREE.Object3D()
-        this.pivot = new THREE.Object3D()
-        this.pivot.position.set(0, 1, 0)
+
+        this.scale = Math.max(1, 1 + (Object.keys(this.directoryNode.nodes).length - 3) * 0.1)
+        this.pivotObject = new THREE.Object3D()
+        this.pivotObject.position.set(0, this.scale, 0)
+
+        this.startNormal.copyImmediate(new THREE.Vector3(0, 0.8 * this.scale, 0))
+
+        this.cameraPivot = {
+            object: this.pivotObject,
+            distance: this.scale * 5
+        }
+
         this.parent = parent
         parent.add(this.content)
-        this.content.add(this.pivot)
+        this.content.add(this.pivotObject)
 
         this.generateObjects()
         addUpdateable(this)
@@ -54,20 +67,22 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             const key = entry[0]
 
             this.breezeOffsets[key] = nextBreezeOffset
-            nextBreezeOffset += randomRange(0.3, 0.8)
+            nextBreezeOffset += randomRange(0.3, 0.8) * this.scale
+
+            const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.scale)
+            const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.scale)
 
             const endPoint = new THREE.Vector3()
             const endNormal = new SmoothVec3(0, 0, 0, 0.5)
-            endNormal.copyImmediate(new THREE.Vector3().addScaledVector(o.normal, -0.1))
-            endNormal.copy(new THREE.Vector3().addScaledVector(o.normal, -0.5))
+            endNormal.copyImmediate(new THREE.Vector3().addScaledVector(normal, -0.1))
+            endNormal.copy(new THREE.Vector3().addScaledVector(normal, -0.5))
             this.endNormals[key] = endNormal
 
             const connection = new Connection(this.content, startPoint, this.startNormal.current, endPoint, endNormal.current)
             this.connections[key] = connection
             this.disposables.push(connection)
 
-            const labelSize = Math.max(0.05, lerp(0.4, 0.01, Math.exp(-nodeEntries.length * 0.4)))
-            const visualNode = new VisualNode(entry[1].name, this.content, o.position, o.normal, labelSize)
+            const visualNode = new VisualNode(entry[1].name, this.content, position, o.normal, 0.09)
             this.visualNodes[key] = visualNode
             this.disposables.push(visualNode)
 
@@ -113,7 +128,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             disposable.dispose()
         }) 
 
-        this.content.remove(this.pivot)
+        this.content.remove(this.pivotObject)
         this.parent.remove(this.content)
         removeUpdateable(this)
     }
