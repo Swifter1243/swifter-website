@@ -34,6 +34,8 @@ html, body {
 }
 
 #page-panel {
+	display: flex;
+	flex-direction: column;
 	height: 100%;
 	width: min(100%, 90vh);
 	transition: transform 0.5s ease; /* smooth animation */
@@ -64,6 +66,8 @@ html, body {
 }
 
 #page-content-parent {
+	flex-grow: 1;
+	overflow-y: scroll;
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
