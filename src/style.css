@@ -64,7 +64,12 @@ button {
 #page-top-bar {
 	height: 50px;
 	min-height: 50px;
-	background-color: rgba(99, 169, 173, 0.418);
+	background: linear-gradient(
+		45deg,
+		/* rgba(158, 99, 173, 0.6) 0%, */
+		rgba(173, 164, 99, 0.6) 0%,
+		rgba(99, 169, 173, 0.6) 100%
+	);
 	border-radius: 5px;
 	display: flex;
 	align-items: center;
@@ -89,12 +94,12 @@ button {
 }
 
 #page-project-tags {
-	min-height: 20px;
-	max-height: 20px;
+	min-height: 15px;
+	max-height: 15px;
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	padding: 10px 0 10px 0;
+	padding: 6px 0 4px 0;
 	gap: 4px;
 	background: linear-gradient(
 		90deg,
@@ -102,7 +107,7 @@ button {
 		rgb(30, 0, 60) 10%,
 		rgb(30, 0, 60) 90%,
 		rgba(0, 0, 0, 0.9) 100%
-	);;
+	);
 }
 
 #page-content-parent {
