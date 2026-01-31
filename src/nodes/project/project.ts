@@ -3,7 +3,8 @@ import { PageNode } from "../../model/page_node"
 export const CATEGORIES = {
     'Tools': 'tools',
     'Experiences': 'experiences',
-    'Games': 'games'
+    'Games': 'games',
+    'Experiments': 'experiments'
 } as const
 export type Category = keyof typeof CATEGORIES
 
@@ -15,6 +16,8 @@ export const SKILLS = {
     'Unity': 'unity',
     'Shaders': 'shaders',
     'Teamwork': 'teamwork',
+    'Python': 'python',
+    'Mathematics': 'math',
 }
 export type Skill = keyof typeof SKILLS
 

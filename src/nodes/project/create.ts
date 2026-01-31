@@ -22,6 +22,12 @@ export function createProjects(): Project[] {
         makeProject('Beat Saber Environment Grabber', 'environment-grabber', placeHolderHTML, 'Tools', ['TypeScript']),
         makeProject('Enlighten', 'enlighten', placeHolderHTML, 'Tools', ['Unity', 'C#', 'Shaders']),
         makeProject('My Website', 'my-website', placeHolderHTML, 'Experiences', ['TypeScript']),
-        makeProject('Vivify Template', 'vivify-template', placeHolderHTML, 'Tools', ['C#', 'Unity', 'Teamwork', 'TypeScript'])
+        makeProject('Vivify Template', 'vivify-template', placeHolderHTML, 'Tools', ['C#', 'Unity', 'Teamwork', 'TypeScript']),
+        makeProject('SDL Minecraft', 'sdl-minecraft', placeHolderHTML, 'Games', ['C++', 'Teamwork']),
+        makeProject('Excel Software Renderer', 'excel-software-renderer', placeHolderHTML, 'Experiments', ['Python', 'Mathematics']),
+        makeProject('Magic Nether Portal', 'magic-nether-portal', placeHolderHTML, 'Experiments', ['Mathematics']),
+        makeProject('Greenfoot Tetris', 'magic-nether-portal', placeHolderHTML, 'Games', ['Java']),
+        makeProject('Music Sketch Catalogue', 'music-sketch-catalogue', placeHolderHTML, 'Experiments', ['TypeScript']),
+        makeProject('BoomBox Remastered', 'boombox-remastered', placeHolderHTML, 'Games', ['Unity', 'C#', 'Shaders', 'Teamwork']),
     ]
 }
