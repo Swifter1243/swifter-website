@@ -1,17 +1,17 @@
 import { audioCtx } from "./context";
 
 export const SOUNDS = {
-    LEAF_BREAK: '/leaf break.wav',
-    LEAF_MOVE: '/leaf move.wav',
-    INTRO: '/intro.wav',
-    CHORD_A: '/chord A.wav',
-    CHORD_A_REVERB: '/chord A reverb.wav',
-    CHORD_B: '/chord B.wav',
-    CHORD_B_REVERB: '/chord B reverb.wav',
-    CHORD_C: '/chord C.wav',
-    CHORD_C_REVERB: '/chord C reverb.wav',
-    CHORD_D: '/chord D.wav',
-    CHORD_D_REVERB: '/chord D reverb.wav',
+    LEAF_BREAK: '/sounds/leaf break.wav',
+    LEAF_MOVE: '/sounds/leaf move.wav',
+    INTRO: '/sounds/intro.wav',
+    CHORD_A: '/sounds/chord A.wav',
+    CHORD_A_REVERB: '/sounds/chord A reverb.wav',
+    CHORD_B: '/sounds/chord B.wav',
+    CHORD_B_REVERB: '/sounds/chord B reverb.wav',
+    CHORD_C: '/sounds/chord C.wav',
+    CHORD_C_REVERB: '/sounds/chord C reverb.wav',
+    CHORD_D: '/sounds/chord D.wav',
+    CHORD_D_REVERB: '/sounds/chord D reverb.wav',
 } as const
 
 const rawAudioData = new Map<string, ArrayBuffer>()

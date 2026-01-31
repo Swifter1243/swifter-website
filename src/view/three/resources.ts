@@ -35,7 +35,7 @@ async function loadFont() {
 }
 
 async function loadLeafModel(objLoader: OBJLoader) {
-    const model = await objLoader.loadAsync('/leaf.obj')
+    const model = await objLoader.loadAsync('/models/leaf.obj')
     model.traverse(child => {
         if (child instanceof THREE.Mesh && child.isMesh) {
             leafGeometry = child.geometry 
@@ -44,12 +44,12 @@ async function loadLeafModel(objLoader: OBJLoader) {
 }
 
 async function loadFlowerBaseModel(objLoader: OBJLoader) {
-    const model = await objLoader.loadAsync('/flower base.obj')
+    const model = await objLoader.loadAsync('/models/flower base.obj')
     flowerBaseGeometry = mergeGroupGeometries(model)
 }
 
 async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoader) {
-    const model = await gltfLoader.loadAsync('/petal.glb')
+    const model = await gltfLoader.loadAsync('/models/petal.glb')
     const texture = await textureLoader.loadAsync('/petal.png')
     texture.wrapS = THREE.ClampToEdgeWrapping
     texture.wrapT = THREE.ClampToEdgeWrapping
