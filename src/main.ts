@@ -1,5 +1,4 @@
 import { initMVC } from "./initialize";
-export { navigation } from "./navigation/navigation";
 import { fadeIn } from "./view/fade";
 import { initInput } from "./view/input";
 import { initSound } from "./view/sound/main";

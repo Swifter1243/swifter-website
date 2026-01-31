@@ -1,4 +1,4 @@
-import { navigation } from "../main";
+import { navigation } from "../navigation/navigation";
 import { CATEGORIES, SKILLS, type Project } from "../nodes/project/project";
 
 const div = document.getElementById('page-project-tags')!

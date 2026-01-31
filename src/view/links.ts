@@ -1,4 +1,4 @@
-import { navigation } from "../main"
+import { navigation } from "../navigation/navigation"
 
 export function attachLinks() {
     const pathLinks = document.getElementsByClassName('go-to-path-link')
