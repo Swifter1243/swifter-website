@@ -1,7 +1,7 @@
 import { DirectoryNode } from "../model/directory_node"
 import { PageNode } from "../model/page_node"
 import type { INode } from "../model/node"
-import type { Navigation } from "../navigation/navigation"
+import { navigation } from "../navigation/navigation"
 import { DirectoryView } from "./three/directory_view"
 import { PageView } from "./page_view"
 import { BigFlower } from "./three/big_flower"
@@ -16,7 +16,6 @@ import { getPathKeySequence } from "../navigation/utility"
 const title = document.getElementById("title")!
 
 export class View {
-    navigation: Navigation
     directoryView: DirectoryView
     pageView: PageView
     bigFlower: BigFlower
@@ -25,11 +24,10 @@ export class View {
     private rootSpawned = false
     private dontPushURLHistory = false
 
-    constructor(navigation: Navigation) {
-        this.navigation = navigation
-        this.currentNode = this.navigation.grabCurrentNode()
-        this.directoryView = new DirectoryView(navigation)
-        this.pageView = new PageView(navigation)
+    constructor() {
+        this.currentNode = navigation.grabCurrentNode()
+        this.directoryView = new DirectoryView()
+        this.pageView = new PageView()
         this.bigFlower = new BigFlower(scene)
         this.bigFlower.interactable.onClick.subscribe(async () => {
             await startAudioContext()
@@ -38,16 +36,16 @@ export class View {
     }
 
     initialize() {
-        this.navigation.onAscent.subscribe((key) => this.onAscent(key))
-        this.navigation.onDescent.subscribe(() => this.onDescent())
-        this.navigation.onChange.subscribe(() => this.onChange())
+        navigation.onAscent.subscribe((key) => this.onAscent(key))
+        navigation.onDescent.subscribe(() => this.onDescent())
+        navigation.onChange.subscribe(() => this.onChange())
 
         this.directoryView.initialize()
 
         if (location.pathname !== '/') {
             this.dontPushURLHistory = true
             this.spawnRoot()
-            this.navigation.goToPath('.' + location.pathname)
+            navigation.goToPath('.' + location.pathname)
             soundState.queueOpen = false
         }
 
@@ -58,12 +56,12 @@ export class View {
             if (keys.length > 1) {
                 this.spawnRoot()
             }
-            this.navigation.goToPath(path)
+            navigation.goToPath(path)
         })
     }
 
     private onAscent(key: string) {
-        const newNode = this.navigation.grabCurrentNode()
+        const newNode = navigation.grabCurrentNode()
         this.currentNode = newNode
         soundState.queueOpen = true
 
@@ -110,19 +108,19 @@ export class View {
             currentVisualDirectory.closeNode()
         }
 
-        this.currentNode = this.navigation.grabCurrentNode()
+        this.currentNode = navigation.grabCurrentNode()
     }
 
     private onChange() {
         if (!this.dontPushURLHistory) {
-            const url = this.navigation.headerPath === '.' ? '/' : this.navigation.headerPath.substring(1)
+            const url = navigation.headerPath === '.' ? '/' : navigation.headerPath.substring(1)
             history.pushState(null, '', url)
         } else {
             this.dontPushURLHistory = false
         }
 
-        if (this.navigation.headerPath !== '.') 
-            title.textContent = 'PORTFOLIO - ' + this.navigation.grabCurrentNode().name.toUpperCase()
+        if (navigation.headerPath !== '.') 
+            title.textContent = 'PORTFOLIO - ' + navigation.grabCurrentNode().name.toUpperCase()
         else
             title.textContent = 'PORTFOLIO'
     }

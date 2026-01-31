@@ -1,6 +1,6 @@
 import type { THREE } from "../../deps"
 import { DirectoryNode } from "../../model/directory_node"
-import type { Navigation } from "../../navigation/navigation"
+import { navigation } from "../../navigation/navigation"
 import { setCameraPivot } from "./camera"
 import { scene } from "./main"
 import { VisualDirectory } from "./visual_directory"
@@ -9,23 +9,18 @@ const SHRINK_FACTOR = 0.5
 
 export class DirectoryView {
     visualDirectories: VisualDirectory[] = []
-    navigation: Navigation
-
-    constructor(navigation: Navigation) {
-        this.navigation = navigation
-    }
 
     initialize() {
         
     }
 
     spawnRoot() {
-        this.add(new VisualDirectory(this.navigation.rootNode as DirectoryNode, scene, 1, 1))
+        this.add(new VisualDirectory(navigation.rootNode as DirectoryNode, scene, 1, 1))
     }
 
     add(dir: VisualDirectory) {
-        const rootPath = this.navigation.headerPath
-        dir.onNodeClicked.subscribe((key) => this.navigation.goToPath(`${rootPath}/${key}`))
+        const rootPath = navigation.headerPath
+        dir.onNodeClicked.subscribe((key) => navigation.goToPath(`${rootPath}/${key}`))
         this.visualDirectories.push(dir)
         this.onCurrentChanged()
     }

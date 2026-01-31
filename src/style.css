@@ -17,6 +17,10 @@ html, body {
 	overflow: hidden;
 }
 
+button {
+	font-family: "Palatino Linotype";
+}
+
 #fade {
 	background-color: rgb(0, 0, 0);
 	transition: opacity 1s ease;
@@ -240,17 +244,17 @@ img {
 }
 
 .content-carousel > :first-child > :last-child > *:hover {
-  	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* carousel left control */
 .content-carousel > :first-child > :last-child > :first-child {
-	left: 0px
+	left: 0px;
 }
 
 /* carousel right control */
 .content-carousel > :first-child > :last-child > :last-child {
-	right: -1px
+	right: -1px;
 }
 
 /* carousel dot container */
@@ -271,4 +275,25 @@ img {
 	background-color: white;
 	opacity: 0.2;
 	transition: opacity 0.4s ease;
+}
+
+/* go to path links */
+.go-to-path-link {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+	background-color: #8a2be2;
+	border-style: none;
+	border-radius: 2px;
+	vertical-align: middle;
+	color: white;
+}
+
+.go-to-path-link:hover {
+	background-color: #6d20b5;
+}
+
+.go-to-path-link:active {
+	background-color: #290d43;
 }

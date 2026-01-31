@@ -3,6 +3,12 @@ import type { INode } from "../model/node";
 import { Invokable } from "../utilities/invokable";
 import { getCommonPath, getPathKeySequence } from "./utility";
 
+export let navigation: Navigation
+
+export function createNavigation(rootNode: INode) {
+    navigation = new Navigation(rootNode)
+}
+
 export class Navigation {
     rootNode: INode
     headerPath: string = '.'
@@ -13,10 +19,6 @@ export class Navigation {
 
     constructor(rootNode: INode) {
         this.rootNode = rootNode
-    }
-
-    initialize() {
-        
     }
 
     grabCurrentNode(): INode {
