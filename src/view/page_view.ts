@@ -3,6 +3,7 @@ import { navigation } from "../navigation/navigation";
 import { attachCarousels } from "./carousel";
 import { disableInput, enableInput } from "./input";
 import { attachLinks } from "./links";
+import { loadProjectTags } from "./project_tags";
 
 const pageContent = document.getElementById('page-content')!
 const pagePanel = document.getElementById('page-panel')!
@@ -27,17 +28,17 @@ export class PageView {
         pageContent.innerHTML = node.html
         pageTitle.textContent = node.name
 
+        loadProjectTags(node.project)
+
         if (lastTimeout !== undefined) {
             clearTimeout(lastTimeout)
         }
 
         attachCarousels()
         attachLinks()
-        console.log('open')
     }
 
     closePage(): void {
-        console.log('close')
         page.style.opacity = '0';
         pagePanel.style.transform = "translateY(50px)";
         enableInput()

@@ -88,6 +88,23 @@ button {
 	justify-content: center;
 }
 
+#page-project-tags {
+	min-height: 20px;
+	max-height: 20px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 10px 0 10px 0;
+	gap: 4px;
+	background: linear-gradient(
+		90deg,
+		rgba(0, 0, 0, 0.9) 0%,
+		rgb(30, 0, 60) 10%,
+		rgb(30, 0, 60) 90%,
+		rgba(0, 0, 0, 0.9) 100%
+	);;
+}
+
 #page-content-parent {
 	flex-grow: 1;
 	overflow-y: scroll;
@@ -296,4 +313,44 @@ img {
 
 .go-to-path-link:active {
 	background-color: #290d43;
+}
+
+/* tags */
+.category-tag, .skill-tag {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+	border-style: none;
+	border-radius: 2px;
+	color: rgb(255, 255, 255);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 3px;
+	font-size: 12px;
+}
+
+.category-tag {
+	background-color: #8a2be2;
+}
+
+.category-tag:hover {
+	background-color: #6d20b5;
+}
+
+.category-tag:active {
+	background-color: #290d43;
+}
+
+.skill-tag {
+	background-color: #c76a00;
+}
+
+.skill-tag:hover {
+	background-color: #985100;
+}
+
+.skill-tag:active {
+	background-color: #532c00;
 }

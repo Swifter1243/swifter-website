@@ -37,5 +37,5 @@ export function makeProject(name: string, key: string, html: string, category: C
 }
 
 export function nodeFromProject(project: Project): PageNode {
-    return new PageNode(project.name, project.html)
+    return new PageNode(project.name, project.html, project)
 }
