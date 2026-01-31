@@ -22,6 +22,7 @@ export class Connection implements IDisposable, IUpdateable {
     readonly branchMaterial: THREE.MeshBasicMaterial
     readonly leafMaterial: THREE.MeshBasicMaterial
 
+    private readonly width: number
     private readonly curve: THREE.Curve<THREE.Vector3>
     private readonly startControlPoint = new THREE.Vector3()
     private readonly endControlPoint = new THREE.Vector3()
@@ -33,7 +34,7 @@ export class Connection implements IDisposable, IUpdateable {
     }
 
     private getGeometry() {
-        return new THREE.TubeGeometry( this.curve, 20, 0.005, 4 )
+        return new THREE.TubeGeometry( this.curve, 20, this.width, 4 )
     }
 
     update(_: number) {
@@ -57,13 +58,15 @@ export class Connection implements IDisposable, IUpdateable {
         startPoint: THREE.Vector3,
         startNormal: THREE.Vector3,
         endPoint: THREE.Vector3, 
-        endNormal: THREE.Vector3
+        endNormal: THREE.Vector3,
+        width: number
     ) {
         this.parent = parent
         this.startPoint = startPoint
         this.startNormal = startNormal
         this.endPoint = endPoint
         this.endNormal = endNormal
+        this.width = width
 
         addUpdateable(this)
         

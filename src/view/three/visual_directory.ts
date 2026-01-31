@@ -1,7 +1,7 @@
 import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
-import { randomRange } from "../../utilities/math";
+import { lerp, randomRange } from "../../utilities/math";
 import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
 import { generateSunflowerArrangement } from "../../utilities/arrangement";
 import { Connection } from "./connection";
@@ -36,7 +36,8 @@ export class VisualDirectory implements IDisposable, IUpdateable {
         this.directoryNode = directoryNode
         this.content = new THREE.Object3D()
 
-        this.contentSize = Math.max(1, 1 + (Object.keys(this.directoryNode.nodes).length - 3) * 0.1)
+        const nodeCount = Object.keys(this.directoryNode.nodes).length
+        this.contentSize = Math.max(1, 1 + (nodeCount - 3) * 0.15)
         this.content.scale.setScalar(deltaScale / this.contentSize)
         this.scalar = scale / this.contentSize
 
@@ -47,7 +48,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
 
         this.cameraPivot = {
             object: this.pivotObject,
-            distance: this.contentSize * 5 * this.scalar
+            distance: this.contentSize * (5 - nodeCount * 0.1) * this.scalar
         }
 
         this.parent = parent
@@ -66,9 +67,15 @@ export class VisualDirectory implements IDisposable, IUpdateable {
 
         let nextBreezeOffset = 0
 
+        const maxImportance = nodeEntries
+            .reduce((n, e) => Math.max(n, e[1].getImportance()), 0)
+
         objects.forEach((o, i) => {
             const entry = nodeEntries[i]
             const key = entry[0]
+            const node = entry[1]
+
+            const relativeImportance = node.getImportance() / maxImportance
 
             this.breezeOffsets[key] = nextBreezeOffset
             nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
@@ -82,11 +89,14 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             endNormal.copy(new THREE.Vector3().addScaledVector(normal, -0.5))
             this.endNormals[key] = endNormal
 
-            const connection = new Connection(this.content, startPoint, this.startNormal.current, endPoint, endNormal.current)
+            const connectionWidth = lerp(1, 1.5, relativeImportance) * 0.005
+            const connection = new Connection(this.content, startPoint, this.startNormal.current, endPoint, endNormal.current, connectionWidth)
             this.connections[key] = connection
             this.disposables.push(connection)
 
-            const visualNode = new VisualNode(entry[1].name, this.content, position, o.normal, 0.14)
+            const visualNodeSize = lerp(0.5, 1.5, relativeImportance) * this.contentSize
+            const visualNodeLabelSize = lerp(0.1, 0.2, relativeImportance)
+            const visualNode = new VisualNode(node.name, this.content, position, o.normal, visualNodeSize, visualNodeLabelSize)
             this.visualNodes[key] = visualNode
             this.disposables.push(visualNode)
 

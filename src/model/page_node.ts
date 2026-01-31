@@ -5,10 +5,16 @@ export class PageNode implements INode {
     html: string
     name: string
     project?: Project
+    importance: number
 
-    constructor(name: string, html: string, project?: Project) {
+    constructor(importance: number, name: string, html: string, project?: Project) {
         this.name = name
         this.html = html
         this.project = project
+        this.importance = importance
+    }
+
+    getImportance(): number {
+        return this.importance
     }
 }

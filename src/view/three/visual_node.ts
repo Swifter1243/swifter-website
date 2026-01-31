@@ -8,7 +8,7 @@ import { randomRange } from "../../utilities/math";
 import { Flower } from "./flower";
 import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
-const textOffset = new THREE.Vector3(0, 0.2, 0)
+const textOffset = new THREE.Vector3(0, 0.15, 0)
 const DEFAULT_COLOR = '#9bfff7'
 const DISABLED_COLOR = '#293c3a'
 const OPENED_COLOR = '#293c3a'
@@ -22,12 +22,15 @@ export class VisualNode implements IDisposable, IUpdateable {
 
     position: THREE.Vector3
     smoothedPosition: SmoothVec3
+    size: number
 
-    constructor(name: string, parent: THREE.Object3D, position: THREE.Vector3, normal: THREE.Vector3, labelSize = 0.04) {
+    constructor(name: string, parent: THREE.Object3D, position: THREE.Vector3, normal: THREE.Vector3, size: number, labelSize = 0.04) {
         this.parent = parent
         this.content = new THREE.Object3D()
         this.parent.add(this.content)
         addUpdateable(this)
+
+        this.size = size
 
         this.position = position
         alignLocalUp(this.content, normal)
@@ -35,7 +38,7 @@ export class VisualNode implements IDisposable, IUpdateable {
         this.interactable = new Interactable(0.4, this.content)
 
         this.label = new Label(this.parent, name, labelSize)
-        this.label.content.position.copy(position).add(textOffset)
+        this.label.content.position.copy(position).addScaledVector(textOffset, this.size)
 
         this.smoothedPosition = new SmoothVec3(0, 0, 0, randomRange(3, 5))
         this.smoothedPosition.copy(this.position)
@@ -43,7 +46,7 @@ export class VisualNode implements IDisposable, IUpdateable {
         this.updatePositions()
 
         this.flower = new Flower(this.content, 4, 1)
-        this.flower.content.scale.setScalar(0.1)
+        this.flower.content.scale.setScalar(0.1 * size)
     }
 
     open() {
@@ -71,7 +74,9 @@ export class VisualNode implements IDisposable, IUpdateable {
 
     updatePositions() {
         this.content.position.copy(this.smoothedPosition.current)
-        this.label.content.position.copy(this.smoothedPosition.current).add(textOffset)
+        this.label.content.position
+            .copy(this.smoothedPosition.current)
+            .addScaledVector(textOffset, this.size)
     }
  
     dispose(): void {

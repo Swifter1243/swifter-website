@@ -11,7 +11,7 @@ export function createRootNode(): INode {
 
     const rootNode = new DirectoryNode('Root')
     rootNode.addNode('skills', createSkillNodes(projects))
-    rootNode.addNode('about-me', new PageNode('About Me', aboutMeHTML))
+    rootNode.addNode('about-me', new PageNode(1, 'About Me', aboutMeHTML))
     rootNode.addNode('projects', createProjectNodes(projects))
 
     return rootNode

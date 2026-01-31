@@ -11,4 +11,8 @@ export class DirectoryNode implements INode {
     addNode(key: string, node: INode) {
         this.nodes[key] = node
     }
+
+    getImportance(): number {
+        return Object.keys(this.nodes).length
+    }
 }
