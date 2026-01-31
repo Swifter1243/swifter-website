@@ -16,13 +16,13 @@ export class PageView {
     constructor() {
         const pageClose = document.getElementById('page-close')!
         pageClose.addEventListener('click', () => navigation.descend())
-        pagePanel.remove()
+        pagePanel.style.display = 'none'
     }
 
     openPage(node: PageNode): void {
         disableInput()
         page.hidden = false
-        page.appendChild(pagePanel)
+        pagePanel.style.display = 'flex'
         pagePanel.style.transform = "translateY(0px)";
         page.style.opacity = '1'
         pageContent.innerHTML = node.html
@@ -45,7 +45,7 @@ export class PageView {
 
         lastTimeout = setTimeout(() => {
             page.hidden = true
-            pagePanel.remove()
+            pagePanel.style.display = 'none'
         }, 0.5 * 1000);
     }
 }
