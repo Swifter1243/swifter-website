@@ -19,8 +19,8 @@ export class Connection implements IDisposable, IUpdateable {
     readonly endPoint: THREE.Vector3
     readonly endNormal: THREE.Vector3
     readonly mesh: THREE.Mesh
-    readonly branchMaterial: THREE.Material
-    readonly leafMaterial: THREE.Material
+    readonly branchMaterial: THREE.MeshBasicMaterial
+    readonly leafMaterial: THREE.MeshBasicMaterial
 
     private readonly curve: THREE.Curve<THREE.Vector3>
     private readonly startControlPoint = new THREE.Vector3()
@@ -87,6 +87,16 @@ export class Connection implements IDisposable, IUpdateable {
             mesh.scale.setScalar(randomRange(0.08, 0.12))
             this.leaves.push({ mesh, t, rotation })
         }
+    }
+
+    enable() {
+        this.branchMaterial.color.setScalar(1)
+        this.leafMaterial.color.setScalar(1)
+    }
+
+    disable() {
+        this.branchMaterial.color.setScalar(0.1)
+        this.leafMaterial.color.setScalar(0.1)
     }
 
     dispose() {

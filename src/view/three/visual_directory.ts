@@ -140,11 +140,25 @@ export class VisualDirectory implements IDisposable, IUpdateable {
     openNode(key: string) {
         this.visualNodes[key].open()
         this.currentOpenKey = key
+
+        Object.keys(this.visualNodes).forEach(k => {
+            if (k !== key) {
+                this.visualNodes[k].disable()
+                this.connections[k].disable()
+            }
+        })
     }
 
     closeNode() {
         if (!this.currentOpenKey)
             return
+
+        Object.keys(this.visualNodes).forEach(k => {
+            if (k !== this.currentOpenKey) {
+                this.visualNodes[k].enable()
+                this.connections[k].enable()
+            }
+        })
 
         this.visualNodes[this.currentOpenKey].close()
         this.currentOpenKey = undefined

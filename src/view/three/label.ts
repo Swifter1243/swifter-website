@@ -29,6 +29,10 @@ export class Label implements IDisposable, IUpdateable {
         this.update(0)
     }
 
+    setColor(color: THREE.ColorRepresentation) {
+        this.textObject.color = color
+    }
+
     update(_: number) {
         const camQ = new THREE.Quaternion()
         const parentQ = new THREE.Quaternion()

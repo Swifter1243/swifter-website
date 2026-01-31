@@ -9,6 +9,9 @@ import { Flower } from "./flower";
 import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
 const textOffset = new THREE.Vector3(0, 0.2, 0)
+const DEFAULT_COLOR = '#9bfff7'
+const DISABLED_COLOR = '#293c3a'
+const OPENED_COLOR = '#293c3a'
 
 export class VisualNode implements IDisposable, IUpdateable {
     parent: THREE.Object3D
@@ -45,10 +48,20 @@ export class VisualNode implements IDisposable, IUpdateable {
 
     open() {
         this.flower.open()
+        this.label.setColor(OPENED_COLOR)
     }
 
     close() {
         this.flower.close()
+        this.label.setColor(DEFAULT_COLOR)
+    }
+
+    disable() {
+        this.label.setColor(DISABLED_COLOR)
+    }
+
+    enable() {
+        this.label.setColor(DEFAULT_COLOR)
     }
 
     update(deltaTime: number): void {
