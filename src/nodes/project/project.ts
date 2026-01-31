@@ -2,7 +2,7 @@ import { PageNode } from "../../model/page_node"
 
 export const CATEGORIES = {
     'Tools': 'tools',
-    'Tech Art': 'art',
+    'Experiences': 'experiences',
     'Games': 'games'
 } as const
 export type Category = keyof typeof CATEGORIES
