@@ -1,5 +1,6 @@
 import type { PageNode } from "../model/page_node";
 import type { Navigation } from "../navigation/navigation";
+import { attachCarousels } from "./carousel";
 import { disableInput, enableInput } from "./input";
 
 const pageContent = document.getElementById('page-content')!
@@ -22,6 +23,7 @@ export class PageView {
         page.style.opacity = '1'
         pageContent.innerHTML = node.html
         pageTitle.textContent = node.name
+        attachCarousels()
     }
 
     closePage(): void {

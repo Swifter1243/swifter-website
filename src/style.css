@@ -196,3 +196,79 @@ img {
 	width: 100%;
 	margin: 50px 0 50px 0;
 }
+
+/* carousel */
+.content-carousel {
+	position: relative;
+}
+
+/* carousel viewport */
+.content-carousel > :first-child {
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+/* carousel images */
+.content-carousel > :first-child > :first-child > * {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* carousel controls container */
+.content-carousel > :first-child > :last-child {
+	position: absolute;
+	width: 100%;
+	padding: 0;
+	height: 40px;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	align-items: center;
+}
+
+/* carousel controls */
+.content-carousel > :first-child > :last-child > * {
+	cursor: pointer;
+	position: absolute;
+	width: auto;
+	padding: 10px;
+	font-size: 18px;
+	font-weight: bold;
+	user-select: none;
+}
+
+.content-carousel > :first-child > :last-child > *:hover {
+  	background-color: rgba(0,0,0,0.8);
+}
+
+/* carousel left control */
+.content-carousel > :first-child > :last-child > :first-child {
+	left: 0px
+}
+
+/* carousel right control */
+.content-carousel > :first-child > :last-child > :last-child {
+	right: -1px
+}
+
+/* carousel dot container */
+.content-carousel > :last-child {
+	height: 30px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+}
+
+/* carousel dots */
+.content-carousel > :last-child > * {
+	height: 30%;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background-color: white;
+	opacity: 0.2;
+	transition: opacity 0.4s ease;
+}

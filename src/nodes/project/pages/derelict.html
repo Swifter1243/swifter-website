@@ -1,0 +1,228 @@
+<h2>Derelict was my 3 month capstone project at St. Lawrence College.</h2>
+
+<div class="descripted-item">
+    <iframe
+        class="video"
+        src="https://www.youtube.com/embed/v06z86CEPig"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowfullscreen
+        style="width: 80%; aspect-ratio: 16/9"
+    >
+    </iframe>
+    <p>A video showcasing the concept of Derelict.</p>
+</div>
+
+<div class="spacer"></div>
+
+<p>
+    Derelict was created by 6 students over the course of 3 months. That
+    includes all of planning, as well as production.
+</p>
+
+<p>
+    The concept is simple. You are dropped into the interior of an alien ship,
+    where you'll find weapons as well as "modifiers". You are able to attach
+    these modifiers to weapons to change their behaviour, creating interesting
+    combinations.
+</p>
+
+<div class="spacer"></div>
+
+<h2>My Contributions To Derelict</h2>
+
+<div class="content-pair-right">
+    <div class="content-carousel">
+        <div style="aspect-ratio: 16/9">
+            <div>
+                <img src="/derelict/procedural generation 1.png">
+                <img src="/derelict/procedural generation 2.png">
+                <img src="/derelict/procedural generation 3.png">
+            </div>
+            <div>
+                <a class="prev">&#10094;</a>
+                <a class="next">&#10095;</a>
+            </div>
+        </div>
+        <div></div>
+    </div>
+
+    <div>
+        <p>
+            I was responsible for all of the procedural generation systems,
+            allowing the layout to be unique each time. All of this was also
+            offloaded out of the main thread using <b>UniTask</b>.
+        </p>
+
+        <p>
+            The challenge was having pre-shaped rooms with pre-defined doorways,
+            while connecting them meaningfully for gameplay.
+        </p>
+
+        <p>
+            To help with debugging, I also designed a lot of editor gizmos to
+            visualize the connection of rooms, as well as a testing tool to
+            generate layouts outside of play mode.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img src="/derelict/inventory.png">
+
+    <div>
+        <p>
+            I created an inventory system for the player, both on a data level
+            and a visual/user level.
+        </p>
+
+        <p>
+            This was a technical challenge, because every container would store
+            items in different data structures (e.g. lists vs arrays).
+        </p>
+
+        <p>
+            I also made artwork for the inventory so it would fit with the rest
+            of the game.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <img src="/derelict/pause menu.png">
+
+    <div>
+        <p>
+            I did a lot of the user interface for the game, managing different
+            "windows" (e.g. pause window, inventory window, game over popup).
+        </p>
+
+        <p>
+            I had to ensure their corresponding functionality with the core game
+            was implemented properly (e.g. pause window pauses gameplay
+            elements).
+        </p>
+
+        <p>
+            I also did a lot of tweaking of existing UI elements, such as the
+            buttons, font style, and tooltip implementation.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img src="/derelict/gun particles.png">
+
+    <div>
+        <p>
+            I did a lot of polishing and bug fixing on the game in order to make
+            it feel good to play.
+        </p>
+
+        <p>
+            One of the biggest things for polish were the various particle
+            effects (shooting, enemy death, special modifier actions... etc.)
+            which I set up using a singleton that manages pooled particle
+            systems for each effect type.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <iframe
+        class="video"
+        src="https://www.youtube.com/embed/a_PJydThgRA"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowfullscreen
+        style="aspect-ratio: 16/9"
+    >
+    </iframe>
+
+    <div>
+        <p>
+            I did a lot of polishing and bug fixing on the game in order to make
+            it feel good to play.
+        </p>
+
+        <p>
+            One of the biggest things for polish were the various particle
+            effects (shooting, enemy death, special modifier actions... etc.)
+            which I set up using a singleton that manages pooled particle
+            systems for each effect type.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img src="/derelict/atmospheric rooms.png">
+
+    <div>
+        <p>
+            I was tasked with creating detailed, atmospheric rooms for gameplay.
+        </p>
+
+        <p>
+            I created and placed objects (decals, pipes, lights, wires.. etc) in
+            order to create believable rooms with high attention to detail. I
+            also adjusted material properties to make the lighting feel right.
+        </p>
+
+        <p>
+            In order to speed up the process of creating varying room shapes, I
+            created an editor tool to set the materials of a given room.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <img src="/derelict/title screen.png">
+
+    <div>
+        <p>
+            I spent a lot of time creating an eye-catching environment for the
+            main menu.
+        </p>
+
+        <p>
+            This was important in particular, because we wanted to be
+            interesting from a distance during the Level-Up venue in Toronto.
+        </p>
+
+        <p>
+            I created the skybox, fire, and sun shaders myself, while also
+            creating the ship model using geometry nodes in Blender.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img src="/derelict/jira.png">
+
+    <div>
+        <p>
+            Given the <b>Project Manager</b> role, I was responsible for
+            managing the scope of the project as well as the responsibilities of
+            individuals.
+        </p>
+
+        <p>
+            To achieve this, we managed a <b>JIRA</b> board as well as a <b
+            >Confluence</b>
+            project. I was responsible for assessing sprint objectives, breaking
+            them down into tasks, and distributing those tasks among the team.
+        </p>
+
+        <p>
+            At some points, I had to assess features that must be cut, as well
+            as ensure that content was being delivered in time.
+        </p>
+    </div>
+</div>
+
+<div class="spacer"></div>
+
+<h2>Derelict was a favorite among the capstone projects for that year, with some playing it for multiple hours.</h2>
+
+<div class="descripted-item">
+    <img src="/derelict/team.png", style="width:100%;">
+    <p>A group photo of the creators of Derelict.</p>
+</div>
