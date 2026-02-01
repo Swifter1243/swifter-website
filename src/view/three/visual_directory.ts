@@ -1,7 +1,7 @@
 import { THREE } from "../../deps";
 import type { DirectoryNode } from "../../model/directory_node";
 import { Invokable } from "../../utilities/invokable";
-import { lerp, randomRange } from "../../utilities/math";
+import { inverseLerp, lerp, randomRange } from "../../utilities/math";
 import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
 import { generateSunflowerArrangement } from "../../utilities/arrangement";
 import { Connection } from "./connection";
@@ -70,12 +70,16 @@ export class VisualDirectory implements IDisposable, IUpdateable {
         const maxImportance = nodeEntries
             .reduce((n, e) => Math.max(n, e[1].getImportance()), 0)
 
+        const minImportance = nodeEntries
+            .reduce((n, e) => Math.min(n, e[1].getImportance()), maxImportance)
+
         objects.forEach((o, i) => {
             const entry = nodeEntries[i]
             const key = entry[0]
             const node = entry[1]
 
-            const relativeImportance = node.getImportance() / maxImportance
+            const relativeImportance = 
+                minImportance === maxImportance ? 0.5 : inverseLerp(minImportance, maxImportance, node.getImportance())
 
             this.breezeOffsets[key] = nextBreezeOffset
             nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
