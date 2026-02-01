@@ -23,7 +23,8 @@ export class Label implements IDisposable, IUpdateable {
         this.textObject.anchorX = 'center';
         this.textObject.anchorY = 'middle';
         this.textObject.textAlign = 'center'
-        this.textObject.color = '#9bfff7'
+        this.textObject.color = '#9bfff7';
+        (this.textObject.material as unknown as { depthTest: boolean }).depthTest = false
         this.textObject.sync()
         this.textObject.position.add(offset)
         this.content.add(this.textObject)
