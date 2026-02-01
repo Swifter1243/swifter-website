@@ -9,7 +9,7 @@ export class Label implements IDisposable, IUpdateable {
     textObject: Text
     readonly parent: THREE.Object3D
 
-    constructor(parent: THREE.Object3D, text: string, size = 1) {
+    constructor(parent: THREE.Object3D, text: string, offset: THREE.Vector3, size = 1) {
         this.parent = parent
         addUpdateable(this)
 
@@ -25,6 +25,7 @@ export class Label implements IDisposable, IUpdateable {
         this.textObject.textAlign = 'center'
         this.textObject.color = '#9bfff7'
         this.textObject.sync()
+        this.textObject.position.add(offset)
         this.content.add(this.textObject)
         this.update(0)
     }
@@ -38,10 +39,10 @@ export class Label implements IDisposable, IUpdateable {
         const parentQ = new THREE.Quaternion()
 
         camera.getWorldQuaternion(camQ)
-        if (this.textObject.parent) {
-            this.textObject.parent!.getWorldQuaternion(parentQ).invert()
+        if (this.content.parent) {
+            this.content.parent!.getWorldQuaternion(parentQ).invert()
             camQ.premultiply(parentQ)
-            this.textObject.quaternion.copy(camQ)
+            this.content.quaternion.copy(camQ)
         }
     }
 

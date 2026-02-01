@@ -8,7 +8,10 @@ import { randomRange } from "../../utilities/math";
 import { Flower } from "./flower";
 import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
-const textOffset = new THREE.Vector3(0, 0.15, 0)
+const textWorldOffset = 0.1
+const textNormalOffset = 0.12
+const interactableOffset = new THREE.Vector3(0, 0.05, 0)
+
 const DEFAULT_COLOR = '#9bfff7'
 const DISABLED_COLOR = '#293c3a'
 const OPENED_COLOR = '#293c3a'
@@ -21,6 +24,7 @@ export class VisualNode implements IDisposable, IUpdateable {
     flower: Flower
 
     position: THREE.Vector3
+    normal: THREE.Vector3
     smoothedPosition: SmoothVec3
     size: number
 
@@ -33,12 +37,15 @@ export class VisualNode implements IDisposable, IUpdateable {
         this.size = size
 
         this.position = position
+        this.normal = normal
         alignLocalUp(this.content, normal)
         
         this.interactable = new Interactable(0.4, this.content)
+        this.interactable.mesh.position.addScaledVector(interactableOffset, this.size)
 
-        this.label = new Label(this.parent, name, labelSize)
-        this.label.content.position.copy(position).addScaledVector(textOffset, this.size)
+        const scaledTextOffset =  new THREE.Vector3(0, textWorldOffset, 0)
+        this.label = new Label(this.parent, name, scaledTextOffset, labelSize)
+        this.label.content.position.copy(position).addScaledVector(this.normal, this.size * textNormalOffset)
 
         this.smoothedPosition = new SmoothVec3(0, 0, 0, randomRange(3, 5))
         this.smoothedPosition.copy(this.position)
@@ -75,8 +82,7 @@ export class VisualNode implements IDisposable, IUpdateable {
     updatePositions() {
         this.content.position.copy(this.smoothedPosition.current)
         this.label.content.position
-            .copy(this.smoothedPosition.current)
-            .addScaledVector(textOffset, this.size)
+            .copy(this.smoothedPosition.current).addScaledVector(this.normal, this.size * textNormalOffset)
     }
  
     dispose(): void {
