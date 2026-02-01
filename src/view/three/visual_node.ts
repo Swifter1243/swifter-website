@@ -8,8 +8,8 @@ import { randomRange } from "../../utilities/math";
 import { Flower } from "./flower";
 import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
-const textWorldOffset = 0.1
-const textNormalOffset = 0.12
+const textWorldOffset = 0.14
+const textNormalOffset = 0.06
 const interactableOffset = new THREE.Vector3(0, 0.05, 0)
 
 const DEFAULT_COLOR = '#9bfff7'
