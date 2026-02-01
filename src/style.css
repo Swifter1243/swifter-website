@@ -248,8 +248,6 @@ img {
 	width: 100%;
 	padding: 0;
 	height: 40px;
-	top: 50%;
-	transform: translateY(-50%);
 	display: flex;
 	align-items: center;
 }
@@ -263,6 +261,7 @@ img {
 	font-size: 18px;
 	font-weight: bold;
 	user-select: none;
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 .content-carousel > :first-child > :last-child > *:hover {
