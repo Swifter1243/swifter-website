@@ -5,7 +5,7 @@ import { setCameraPivot } from "./camera"
 import { scene } from "./main"
 import { VisualDirectory } from "./visual_directory"
 
-const SHRINK_FACTOR = 0.5
+const GROW_FACTOR = 1.5
 
 export class DirectoryView {
     visualDirectories: VisualDirectory[] = []
@@ -55,7 +55,7 @@ export class DirectoryView {
             currentScale = currentDir.scalar
         }
 
-        const newDir = new VisualDirectory(newNode, newParent, currentScale * SHRINK_FACTOR, SHRINK_FACTOR)
+        const newDir = new VisualDirectory(newNode, newParent, currentScale * GROW_FACTOR, GROW_FACTOR)
 
         this.add(newDir)
     }

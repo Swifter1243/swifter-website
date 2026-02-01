@@ -24,7 +24,7 @@ export class VisualNode implements IDisposable, IUpdateable {
     smoothedPosition: SmoothVec3
     size: number
 
-    constructor(name: string, parent: THREE.Object3D, position: THREE.Vector3, normal: THREE.Vector3, size: number, labelSize = 0.04) {
+    constructor(name: string, parent: THREE.Object3D, position: THREE.Vector3, normal: THREE.Vector3, pedals: number, size: number, labelSize = 0.04) {
         this.parent = parent
         this.content = new THREE.Object3D()
         this.parent.add(this.content)
@@ -45,7 +45,7 @@ export class VisualNode implements IDisposable, IUpdateable {
 
         this.updatePositions()
 
-        this.flower = new Flower(this.content, 4, 1)
+        this.flower = new Flower(this.content, pedals, 1)
         this.flower.content.scale.setScalar(0.1 * size)
     }
 

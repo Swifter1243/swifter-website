@@ -36,7 +36,8 @@ export function initCamera() {
     pivot.add(camera)
     camera.position.set(0, 0, cameraDistance.current)
     camera.fov = 40
-    camera.far = 100
+    camera.near = 0.1
+    camera.far = 1000
 
     const pivotWorldPos = new THREE.Vector3()
     onRender.subscribe(deltaTime => {

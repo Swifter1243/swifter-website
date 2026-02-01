@@ -38,8 +38,8 @@ export class VisualDirectory implements IDisposable, IUpdateable {
 
         const nodeCount = Object.keys(this.directoryNode.nodes).length
         this.contentSize = Math.max(1, 1 + (nodeCount - 3) * 0.15)
-        this.content.scale.setScalar(deltaScale / this.contentSize)
-        this.scalar = scale / this.contentSize
+        this.content.scale.setScalar(deltaScale)
+        this.scalar = scale
 
         this.pivotObject = new THREE.Object3D()
         this.pivotObject.position.set(0, this.contentSize, 0)
@@ -100,7 +100,8 @@ export class VisualDirectory implements IDisposable, IUpdateable {
 
             const visualNodeSize = lerp(0.5, 1.5, relativeImportance) * this.contentSize
             const visualNodeLabelSize = lerp(0.1, 0.2, relativeImportance)
-            const visualNode = new VisualNode(node.name, this.content, position, o.normal, visualNodeSize, visualNodeLabelSize)
+            const visualNodePedals = Math.round(lerp(2, 4, relativeImportance))
+            const visualNode = new VisualNode(node.name, this.content, position, o.normal, visualNodePedals, visualNodeSize, visualNodeLabelSize)
             this.visualNodes[key] = visualNode
             this.disposables.push(visualNode)
 
