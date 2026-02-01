@@ -1,6 +1,7 @@
 import type { THREE } from "../../deps"
 import { DirectoryNode } from "../../model/directory_node"
 import { navigation } from "../../navigation/navigation"
+import { lerp } from "../../utilities/math"
 import { setCameraPivot } from "./camera"
 import { scene } from "./main"
 import { VisualDirectory } from "./visual_directory"
@@ -48,14 +49,17 @@ export class DirectoryView {
         let newParent: THREE.Object3D = scene
         const currentDir = this.getCurrent()
 
+        let growFactor = 1
         let currentScale = 1
         if (currentDir) {
             const visualNode = currentDir.visualNodes[key]
             newParent = visualNode.content
+            growFactor = lerp(0.5, 1, visualNode.relativeImportance)
             currentScale = currentDir.scalar
         }
-
-        const newDir = new VisualDirectory(newNode, newParent, currentScale * GROW_FACTOR, GROW_FACTOR)
+        
+        growFactor *= GROW_FACTOR
+        const newDir = new VisualDirectory(newNode, newParent, currentScale * growFactor, growFactor)
 
         this.add(newDir)
     }

@@ -102,6 +102,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             const visualNodeLabelSize = lerp(0.1, 0.2, relativeImportance)
             const visualNodePedals = Math.round(lerp(2, 4, relativeImportance))
             const visualNode = new VisualNode(node.name, this.content, position, o.normal, visualNodePedals, visualNodeSize, visualNodeLabelSize)
+            visualNode.relativeImportance = relativeImportance
             this.visualNodes[key] = visualNode
             this.disposables.push(visualNode)
 

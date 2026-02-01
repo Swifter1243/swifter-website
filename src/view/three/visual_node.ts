@@ -22,6 +22,7 @@ export class VisualNode implements IDisposable, IUpdateable {
     interactable: Interactable
     label: Label
     flower: Flower
+    relativeImportance = 1
 
     position: THREE.Vector3
     normal: THREE.Vector3
