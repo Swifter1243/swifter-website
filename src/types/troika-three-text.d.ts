@@ -10,6 +10,9 @@ declare module 'troika-three-text' {
     color?: THREE.ColorRepresentation;
     maxWidth?: number;
     textAlign?: 'left' | 'right' | 'center' | 'justify';
+    outlineWidth: number;
+    outlineColor: THREE.ColorRepresentation;
+    outlineBlur: number;
     sync(): void;
     dispose():
 
