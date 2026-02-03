@@ -6,7 +6,7 @@ import { setCameraPivot } from "./camera"
 import { scene } from "./main"
 import { VisualDirectory } from "./visual_directory"
 
-const GROW_FACTOR = 1.5
+const GROW_FACTOR = 1.2
 
 export class DirectoryView {
     visualDirectories: VisualDirectory[] = []
