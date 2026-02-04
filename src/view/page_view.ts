@@ -6,6 +6,7 @@ import { attachLinks } from "./links";
 import { loadProjectTags } from "./project_tags";
 
 const pageContent = document.getElementById('page-content')!
+const pageContentParent = document.getElementById('page-content-parent')!
 const pagePanel = document.getElementById('page-panel')!
 const page = document.getElementById('page')!
 const pageTitle = document.getElementById('page-title')!
@@ -27,6 +28,7 @@ export class PageView {
         page.style.opacity = '1'
         pageContent.innerHTML = node.html
         pageTitle.textContent = node.name
+        pageContentParent.scrollTop = 0
 
         loadProjectTags(node.project)
 
