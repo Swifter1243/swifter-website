@@ -21,6 +21,14 @@ button {
 	font-family: "Palatino Linotype";
 }
 
+a:link {
+	color: #9bfff7;
+}
+
+a:visited {
+	color: #5a52d7;
+}
+
 #fade {
 	background-color: rgb(0, 0, 0);
 	transition: opacity 1s ease;
