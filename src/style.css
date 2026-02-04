@@ -427,7 +427,7 @@ img {
 
 .demo-button {
 	padding: 5px 80px;
-	color: black;
+	color: black !important;
 	font-size: 40px;
 	border-radius: 5px;
     background: linear-gradient(
