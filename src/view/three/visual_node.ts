@@ -40,7 +40,7 @@ export class VisualNode implements IDisposable, IUpdateable {
         this.normal = normal
         alignLocalUp(this.content, normal)
         
-        this.interactable = new Interactable(0.4, this.content)
+        this.interactable = new Interactable(0.6, this.content)
         this.interactable.mesh.position.addScaledVector(interactableOffset, this.size)
 
         const scaledTextOffset =  new THREE.Vector3(0, textWorldOffset, 0)
