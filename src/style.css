@@ -140,6 +140,11 @@ img {
 	width: 90%;
 }
 
+.landscape-media {
+	aspect-ratio: 16/9;
+	object-fit: cover;
+}
+
 /* content pairs */
 .content-pair-left, .content-pair-right {
 	width: 100%;
