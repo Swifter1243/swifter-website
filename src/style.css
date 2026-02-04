@@ -358,3 +358,23 @@ img {
 .skill-tag:active {
 	background-color: #532c00;
 }
+
+/* tutorial */
+#tutorial {
+	position: absolute;
+	pointer-events: none;
+	width: 100%;
+	top: 50%;
+	opacity: 0;
+	margin: 0;
+	transition: opacity 2s;
+}
+
+#tutorial p {
+	font-size: 30px;
+	text-shadow: #000000 0 0 5px;
+	text-align: center;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}

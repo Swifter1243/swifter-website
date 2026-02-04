@@ -12,6 +12,8 @@ import { playOneShot, startAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
 import { getPathKeySequence } from "../navigation/utility"
+import { BUD_TUTORIAL, initTutorials, ORBIT_TUTORIAL } from "./tutorial"
+import { onDragEnd } from "./input"
 
 const title = document.getElementById("title")!
 
@@ -31,7 +33,9 @@ export class View {
         this.bigFlower = new BigFlower(scene)
         this.bigFlower.interactable.onClick.subscribe(async () => {
             await startAudioContext()
+            onDragEnd.subscribe(() => ORBIT_TUTORIAL.complete())
             this.spawnRoot()
+            this.bigFlower.interactable.dispose()
         })
     }
 
@@ -47,6 +51,8 @@ export class View {
             this.spawnRoot()
             navigation.goToPath('.' + location.pathname)
             soundState.queueOpen = false
+        } else {
+            initTutorials([BUD_TUTORIAL, ORBIT_TUTORIAL])
         }
 
         window.addEventListener('popstate', _ => {
@@ -128,6 +134,8 @@ export class View {
     private spawnRoot() {
         if (this.rootSpawned)
             return
+
+        BUD_TUTORIAL.complete()
 
         playOneShot(sounds.get(SOUNDS.INTRO)!)
         playOneShot(sounds.get(SOUNDS.LEAF_MOVE)!, {
