@@ -1,0 +1,118 @@
+<h2>
+    PlasmaShift is a game developed by me and my friends Evan and Josh in 48
+    hours for a game jam.
+</h2>
+
+<div class="descripted-item">
+    <iframe
+        class="video"
+        src="https://www.youtube.com/embed/W_0MIj3_PXc"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowfullscreen
+        style="width: 80%; aspect-ratio: 16/9"
+    >
+    </iframe>
+    <p>A short run of PlastmaShift.</p>
+</div>
+
+<br>
+
+<p>
+    You are a white blood cell and a foreign virus has attacked your host. Your
+    job is to eradicate the virus to the best of your ability.
+</p>
+
+<div class="spacer"></div>
+
+<div class="content-pair-left">
+    <img
+        src="/plasmashift/bullet.gif"
+        style="aspect-ratio: 16/9; object-fit: cover"
+    >
+
+    <div>
+        <p>
+            One thing I took on for this project was creating a lot of visual
+            effects to make the game feel interesting to look at.
+        </p>
+        <p>
+            An example of an effect I worked on was this "bullet" sprite that
+            comes from the alien virus. I wrote the shader myself using HLSL.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <img
+        src="/plasmashift/jeff.gif"
+        style="aspect-ratio: 16/9; object-fit: cover"
+    >
+
+    <div>
+        <p>
+            Another fun effect I made were these alien cells. I used voronoi
+            noise and some nice colors in a custom shader to make them feel very
+            vibrant and odd.
+        </p>
+        <p>
+            This cell (lovingly nicknamed 'Jeff'), also utilizes a fun cube
+            shuffle animation I made using a script.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img
+        src="/plasmashift/background scroll.gif"
+        style="aspect-ratio: 16/9; object-fit: cover"
+    >
+
+    <div>
+        <p>
+            I also created all background elements. The background is composed
+            of a fleshy 'sky' layer, as well as two foreground layers which move
+            at different paces in order to create a sense of scale from the
+            parallax.
+        </p>
+        <p>
+            The vein models I created are endlessly being spawned, moved, and
+            discarded when they head offscreen to allow the game to feel like
+            it's progressing forever.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <img
+        src="/plasmashift/boids.gif"
+        style="aspect-ratio: 16/9; object-fit: cover"
+    >
+
+    <div>
+        <p>
+            As a fun experiment, I decided to implement the boids algorithm into
+            the movement of the cells in the background.
+        </p>
+        <p>
+            I use Unity's collider system to create a 'neighborhood' for the
+            cell, reducing the complexity of each individual boid.
+        </p>
+        <p>
+            In addition to three rules of the algorithm (separation, alignment,
+            and cohesion) the cells will steer away from the borders of the
+            screen.
+        </p>
+    </div>
+</div>
+
+<div class="spacer"></div>
+
+<a
+    class="demo-button"
+    target="_blank"
+    href="https://catsandwich1259.itch.io/plasmashift"
+>
+    DEMO
+</a>
+
+<p>Here's a link to a web demo!</p>

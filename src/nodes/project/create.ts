@@ -7,6 +7,7 @@ import aetherHTML from './pages/aether.html?raw'
 import graspingAtStrawsHTML from './pages/grasping_at_straws.html?raw'
 import zeroIncHTML from './pages/zero_inc.html?raw'
 import bloonManHTML from './pages/bloon_man.html?raw'
+import plasmaShiftHTML from './pages/plasmashift.html?raw'
 
 export function createProjects(): Project[] {
     return [
@@ -17,7 +18,7 @@ export function createProjects(): Project[] {
         makeProject(2, 'Grasping At Straws', 'grasping-at-straws', graspingAtStrawsHTML, 'Games', ['C#', 'Shaders', 'Unity', 'Audio']),
         makeProject(2, 'ZERO Inc.', 'zero-inc', zeroIncHTML, 'Games', ['C#', 'Shaders', 'Teamwork']),
         makeProject(2, 'BLOON MAN', 'bloon-man', bloonManHTML, 'Games', ['C#', 'Teamwork', 'Unity', 'Audio']),
-        makeProject(1, 'PlasmaShift', 'plasmashift', placeHolderHTML, 'Games', ['C#', 'Teamwork', 'Unity']),
+        makeProject(1, 'PlasmaShift', 'plasmashift', plasmaShiftHTML, 'Games', ['C#', 'Teamwork', 'Unity', 'Shaders']),
         makeProject(3, 'BeatCraft', 'beat-craft', placeHolderHTML, 'Games', ['Java', 'Teamwork']),
         makeProject(5, 'ReMapper', 'remapper', placeHolderHTML, 'Tools', ['TypeScript']),
         makeProject(2, 'BRLCTAP', 'blood-rushing', placeHolderHTML, 'Experiences', ['TypeScript', 'Unity', 'Teamwork']),
