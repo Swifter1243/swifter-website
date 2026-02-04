@@ -13,6 +13,7 @@ const raycaster = new THREE.Raycaster()
 export class Interactable implements IDisposable {
     mesh: THREE.Mesh
     parent: THREE.Object3D
+    enabled = true
     readonly onHoverStart = new Invokable()
     readonly onHoverEnd = new Invokable()
     readonly onClick = new Invokable()
@@ -86,7 +87,10 @@ function doRaycast(clientX: number, clientY: number): Interactable | undefined {
 
     raycaster.setFromCamera(new THREE.Vector2(uvX, uvY), camera)
 
-    const result = raycaster.intersectObjects([...interactables.keys()], false)
+    const enabledObjects = [...interactables.entries()]
+        .filter(e => e[1].enabled) // filter enabled
+        .map(e => e[0]) // pick object3Ds
+    const result = raycaster.intersectObjects(enabledObjects, false)
 
     if (result.length > 0) {
         const interactable = interactables.get(result[0].object)

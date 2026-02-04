@@ -34,6 +34,14 @@ export class Label implements IDisposable, IUpdateable {
         this.update(0)
     }
 
+    disable() {
+        this.content.remove(this.textObject)
+    }
+
+    enable() {
+        this.content.add(this.textObject)
+    }
+
     setColor(color: THREE.ColorRepresentation) {
         this.textObject.color = color
     }

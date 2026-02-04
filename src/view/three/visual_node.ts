@@ -13,8 +13,7 @@ const textNormalOffset = 0.06
 const interactableOffset = new THREE.Vector3(0, 0.05, 0)
 
 const DEFAULT_COLOR = '#9bfff7'
-const DISABLED_COLOR = '#293c3a'
-const OPENED_COLOR = '#293c3a'
+const OPENED_COLOR = '#60938e'
 
 export class VisualNode implements IDisposable, IUpdateable {
     parent: THREE.Object3D
@@ -68,11 +67,13 @@ export class VisualNode implements IDisposable, IUpdateable {
     }
 
     disable() {
-        this.label.setColor(DISABLED_COLOR)
+        this.label.disable()
+        this.interactable.enabled = false
     }
 
     enable() {
-        this.label.setColor(DEFAULT_COLOR)
+        this.label.enable()
+        this.interactable.enabled = true
     }
 
     update(deltaTime: number): void {
