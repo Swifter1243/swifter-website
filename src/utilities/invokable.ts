@@ -12,4 +12,8 @@ export class Invokable<Args extends unknown[] = []> {
     invoke(...args: Args) {
         this.listeners.forEach(fn => fn(...args));
     }
+
+    clear() {
+        this.listeners.clear()
+    }
 }

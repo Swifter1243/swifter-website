@@ -29,6 +29,9 @@ export class Interactable implements IDisposable {
     }
 
     dispose() {
+        this.onClick.clear()
+        this.onHoverStart.clear()
+        this.onHoverEnd.clear()
         interactables.delete(this.mesh)
         this.parent.remove(this.mesh)
     }
