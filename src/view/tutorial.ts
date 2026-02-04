@@ -30,7 +30,7 @@ class Tutorial {
 
 export const BUD_TUTORIAL = new Tutorial(`${isMobile() ? 'tap' : 'click'} on a bud to open it.`, 1, 0.6)
 BUD_TUTORIAL.transitionOut = 0.25
-export const ORBIT_TUTORIAL = new Tutorial(`${isMobile() ? 'use your finger' : 'click'} and drag to move the camera.`, 2, 0.2)
+export const ORBIT_TUTORIAL = new Tutorial(`${isMobile() ? 'use your finger' : 'click'} and drag to move the camera.`, 2, 0.1)
 
 let tutorialQueue: Tutorial[]
 let currTimeout = 0
