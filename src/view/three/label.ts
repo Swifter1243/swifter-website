@@ -24,9 +24,9 @@ export class Label implements IDisposable, IUpdateable {
         this.textObject.anchorY = 'middle';
         this.textObject.textAlign = 'center'
         this.textObject.color = '#9bfff7';
-        this.textObject.outlineWidth = size * 0.1;
+        this.textObject.outlineWidth = size * 0.25;
         this.textObject.outlineColor = '#000000';
-        this.textObject.outlineBlur = size * 0.04;
+        this.textObject.outlineBlur = size * 0.3;
         (this.textObject.material as unknown as { depthTest: boolean }[])[1].depthTest = false;
         this.textObject.sync();
         this.textObject.position.add(offset)
