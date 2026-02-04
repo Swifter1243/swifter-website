@@ -1,7 +1,7 @@
 import { camera, scene } from "../three/main";
 import { onRender } from "./renderer";
 import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
-import { inputState, onDragMove, onDragStart } from "../input";
+import { inputState, onDragMove, onDragStart } from "./input";
 import { THREE } from "../../deps";
 import { clamp } from "../../utilities/math";
 

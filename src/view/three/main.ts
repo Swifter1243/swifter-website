@@ -7,6 +7,7 @@ import { initInteractables } from "./interactable";
 import { initLeafParticleSystem } from "./leaf_particle_system";
 import { initResources } from "./resources";
 import { initUpdateables } from "./updateable";
+import { initInput } from "./input";
 
 export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera();
@@ -15,6 +16,7 @@ export const composer = new EffectComposer(renderer)
 
 export async function initThree() {
     const resourcesPromise = initResources()
+    initInput()
     initScene()
     initCamera()
     initRenderer()

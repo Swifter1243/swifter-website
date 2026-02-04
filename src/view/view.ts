@@ -13,7 +13,7 @@ import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
 import { getPathKeySequence } from "../navigation/utility"
 import { BUD_TUTORIAL, initTutorials, ORBIT_TUTORIAL } from "./tutorial"
-import { onDragEnd } from "./input"
+import { onDragEnd } from "./three/input"
 
 const title = document.getElementById("title")!
 

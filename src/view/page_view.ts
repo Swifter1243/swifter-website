@@ -1,7 +1,7 @@
 import type { PageNode } from "../model/page_node";
 import { navigation } from "../navigation/navigation";
 import { attachCarousels } from "./carousel";
-import { disableInput, enableInput } from "./input";
+import { disableInput, enableInput } from "./three/input";
 import { attachLinks } from "./links";
 import { loadProjectTags } from "./project_tags";
 

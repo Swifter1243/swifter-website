@@ -1,4 +1,4 @@
-import { Invokable } from "../utilities/invokable";
+import { Invokable } from "../../utilities/invokable";
 
 export const onDragStart = new Invokable()
 export const onDragEnd = new Invokable()

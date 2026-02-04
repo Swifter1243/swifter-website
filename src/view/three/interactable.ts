@@ -1,7 +1,7 @@
 import { THREE } from "../../deps";
 import { Invokable } from "../../utilities/invokable";
 import { onRender } from "./renderer";
-import { inputState, onClick, onHoverEnd } from "../input";
+import { inputState, onClick, onHoverEnd } from "./input";
 import { camera } from "./main";
 import type { IDisposable } from "./disposable";
 
