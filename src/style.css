@@ -57,7 +57,7 @@ button {
 	transition: transform 0.5s ease; /* smooth animation */
 	transform: translateY(50px);
 	box-sizing: border-box;
-	padding: 20px;
+	padding: 10px 0 10px 0;
 	margin: 0px;
 }
 
