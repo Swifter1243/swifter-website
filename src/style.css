@@ -159,6 +159,7 @@ img {
 
 .content-pair-left > :first-child, .content-pair-right > :first-child {
 	width: 40%;
+	margin: 0;
 }
 
 .content-pair-right > :last-child {
