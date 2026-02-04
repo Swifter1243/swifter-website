@@ -18,6 +18,7 @@ export const SKILLS = {
     'Teamwork': 'teamwork',
     'Python': 'python',
     'Mathematics': 'math',
+    'Audio' : 'audio'
 }
 export type Skill = keyof typeof SKILLS
 
