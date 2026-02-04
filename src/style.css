@@ -366,15 +366,15 @@ img {
 }
 
 .category-tag {
-	background-color: #8a2be2;
+	background-color: #229d4d;
 }
 
 .category-tag:hover {
-	background-color: #6d20b5;
+	background-color: #177538;
 }
 
 .category-tag:active {
-	background-color: #290d43;
+	background-color: #0f4522;
 }
 
 .skill-tag {
