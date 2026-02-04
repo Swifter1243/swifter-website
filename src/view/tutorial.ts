@@ -6,15 +6,17 @@ const tutorialText = document.getElementById('tutorial-text')!
 
 class Tutorial {
     message: string
-    warmup: number
+    delay: number
+    transitionIn = 2
+    transitionOut = 1.5
     horizontalPosition: number
     
     onComplete = new Invokable()
     isCompleted = false
 
-    constructor(message: string, warmup: number, horizontalPosition: number) {
+    constructor(message: string, delay: number, horizontalPosition: number) {
         this.message = message
-        this.warmup = warmup
+        this.delay = delay
         this.horizontalPosition = horizontalPosition
     }
     
@@ -27,6 +29,7 @@ class Tutorial {
 }
 
 export const BUD_TUTORIAL = new Tutorial(`${isMobile() ? 'tap' : 'click'} on a bud to open it.`, 2, 0.6)
+BUD_TUTORIAL.transitionOut = 0.25
 export const ORBIT_TUTORIAL = new Tutorial(`${isMobile() ? 'use your finger' : 'click'} and drag to move the camera.`, 2, 0.2)
 
 let tutorialQueue: Tutorial[]
@@ -58,10 +61,11 @@ function startNextTutorial() {
 
     currTimeout = setTimeout(() => {
         tutorialDiv.style.opacity = '1'
+        tutorialDiv.style.transition = `opacity ${curr.transitionIn}s`
         tutorialDiv.style.top = `${curr.horizontalPosition * 100}%`
         void tutorialDiv.offsetWidth // force reflow since transition cuts off text on mobile. rendering bug!!!
         tutorialText.textContent = curr.message
-    }, curr.warmup * 1000)
+    }, curr.delay * 1000)
 }
 
 function finishCurrentTutorial() {
@@ -72,6 +76,7 @@ function finishCurrentTutorial() {
 
     clearTimeout(currTimeout)
     curr.onComplete.unsubscribe(finishCurrentTutorial)
+    tutorialDiv.style.transition = `opacity ${curr.transitionOut}s`
     tutorialDiv.style.opacity = '0'
     startNextTutorial()
 }
