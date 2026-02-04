@@ -2,13 +2,14 @@ import { makeProject, type Project } from "./project";
 import placeHolderHTML from '../pages/placeholder.html?raw'
 import extraSensory2HTML from './pages/extra_sensory_2.html?raw'
 import derelictHTML from './pages/derelict.html?raw'
+import synergyHTML from './pages/synergy.html?raw'
 import aetherHTML from './pages/aether.html?raw'
 
 export function createProjects(): Project[] {
     return [
         makeProject(5, 'Extra Sensory II', 'extra-sensory-ii', extraSensory2HTML, 'Experiences', ['C#', 'Shaders', 'Unity', 'TypeScript', 'Teamwork']),
         makeProject(4, 'Derelict', 'derelict', derelictHTML, 'Games', ['C#', 'Unity', 'Teamwork', 'Shaders']),
-        makeProject(4, 'SYNERGY', 'synergy', placeHolderHTML, 'Games', ['C#', 'Unity', 'Shaders']),
+        makeProject(4, 'SYNERGY', 'synergy', synergyHTML, 'Games', ['C#', 'Unity', 'Shaders']),
         makeProject(3, '743⁺Aether*✧ . * ¹¹¹} ⁺ , .', 'aether', aetherHTML, 'Experiences', ['C#', 'Shaders', 'Unity']),
         makeProject(2, 'Grasping At Straws', 'grasping-at-straws', placeHolderHTML, 'Games', ['C#', 'Shaders', 'Unity']),
         makeProject(2, 'ZERO Inc.', 'zero-inc', placeHolderHTML, 'Games', ['C#', 'Shaders', 'Teamwork']),

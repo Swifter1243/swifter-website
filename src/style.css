@@ -137,6 +137,7 @@ p {
 
 img {
 	margin: 30px 0 30px 0;
+	width: 90%;
 }
 
 /* content pairs */
@@ -201,9 +202,9 @@ img {
 }
 
 .descripted-item p {
-	margin: 10px;
+	margin: 5px;
 	font-style: italic;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .descripted-item > * {
@@ -298,6 +299,21 @@ img {
 	transition: opacity 0.4s ease;
 }
 
+/* content row */
+.content-row {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+
+.content-row > * {
+	flex: 1;
+	min-width: 300px;
+}
+
 /* go to path links */
 .go-to-path-link {
 	-webkit-user-select: text;
@@ -378,4 +394,40 @@ img {
 	margin: 0;
 	padding: 0;
 	user-select: none;
+}
+
+/* demo button */
+@property --rotate {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-gradient {
+  from {
+    --rotate: 0deg;
+  }
+  to {
+    --rotate: 360deg;
+  }
+}
+
+.demo-button {
+	padding: 5px 80px;
+	color: black;
+	font-size: 40px;
+	border-radius: 5px;
+    background: linear-gradient(
+		var(--rotate),
+		rgb(213, 46, 255) 0%,
+		rgb(198, 203, 160) 50%,
+		rgb(99, 169, 173) 100%
+	);
+	background-size: 120% 400%;
+	background-position: center;
+    text-decoration: none;
+	animation: rotate-gradient;
+	animation-duration: 4s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
 }
