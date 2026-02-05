@@ -38,7 +38,8 @@ export class PageView {
         }
 
         attachCarousels()
-        attachLinks(node.project)
+        attachLinks(node.project);
+        (window as any).___redditEmbed?.load();
     }
 
     closePage(): void {

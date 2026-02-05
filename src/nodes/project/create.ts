@@ -8,6 +8,7 @@ import graspingAtStrawsHTML from './pages/grasping_at_straws.html?raw'
 import zeroIncHTML from './pages/zero_inc.html?raw'
 import bloonManHTML from './pages/bloon_man.html?raw'
 import plasmaShiftHTML from './pages/plasmashift.html?raw'
+import beatCraftHTML from './pages/beatcraft.html?raw'
 
 const projects: Project[] = [
     {
@@ -87,12 +88,12 @@ const projects: Project[] = [
         sourceLink: 'https://github.com/CatSandwich/PlasmaShift'
     },
     {
-        importance: 3,
+        importance: 5,
         name: 'BeatCraft',
-        key: 'beat-craft',
-        html: placeHolderHTML,
-        category: 'Games',
-        skills: ['Java', 'Teamwork'],
+        key: 'beatcraft',
+        html: beatCraftHTML,
+        category: 'Experiments',
+        skills: ['Java', 'Teamwork', 'Mathematics'],
         demoLink: 'https://modrinth.com/mod/beatcraft',
         sourceLink: 'https://github.com/Swifter1243/BeatCraft'
     },

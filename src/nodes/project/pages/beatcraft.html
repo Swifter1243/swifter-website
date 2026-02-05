@@ -1,0 +1,460 @@
+<h2>
+    BeatCraft is an experimental attempt at re-creating the virtual reality game
+    Beat Saber inside of the sandbox game Minecraft
+</h2>
+
+<div class="descripted-item">
+    <div class="content-row">
+        <iframe
+            class="video"
+            src="https://www.youtube.com/embed/dnoKyY3HeP8"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowfullscreen
+            style="width: 80%; aspect-ratio: 16/9"
+        >
+        </iframe>
+        <iframe
+            class="video"
+            src="https://www.youtube.com/embed/LCD4xWgQez4"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowfullscreen
+            style="width: 80%; aspect-ratio: 16/9"
+        >
+        </iframe>
+    </div>
+    <p>Here are some gameplay videos of BeatCraft in action!</p>
+</div>
+
+<div class="spacer"></div>
+
+<h2>Story Time</h2>
+
+<p>
+    BeatCraft started out as a random but ambitious idea: "how much of Beat
+    Saber could I port inside of Minecraft while <i>actually</i> working in VR"?
+    It turned out to be a rabbit hole that I spent 4-5 years traversing, while
+    learning about how to mod for the first time.
+</p>
+
+<p>
+    At the time, there was a mod that existed known as <a
+        href="https://modrinth.com/mod/vivecraft"
+    >ViveCraft</a>. This mod was the go-to way to play Minecraft in VR. I
+    figured this would be my entrypoint for creating the mod.
+</p>
+
+<div class="content-pair-right">
+    <div class="descripted-item">
+        <img src="/beatcraft/slimecraft.png">
+        <p>My slimy attempt at creating hit detection.</p>
+    </div>
+    <div>
+        <p>
+            I was very familiar with Minecraft's built-in "programming"
+            (resource packs, data packs) so I was looking to achieve this
+            project using <i>just</i> ViveCraft and vanilla Minecraft commands.
+        </p>
+
+        <p>
+            My plan was to utilize the swing gestures implemented in Vivecraft
+            along with an entity with a big hitbox (e.g. a slime) to detect
+            hits.
+        </p>
+
+        <p>
+            This was a fun idea, but I very quickly ran into the issue that I
+            couldn't identity which hand hit a block. I tried to cheese it by
+            using the player's looking direction (which the primary hand faces
+            toward) to rule out which hand was responsible, but it simply wasn't
+            doing the trick.
+        </p>
+    </div>
+</div>
+
+<p>
+    Even if I could somehow figure out this issue, the 20 ticks-per-second
+    restraint of Minecraft's world processing wasn't going to be granular enough
+    for quick swings, I knew I had to mod the game. The only problem is that
+    ViveCraft was a fork of Optifine (another massively popular Minecraft mod),
+    which worked off of the decompiled* code of the game.<br>
+    <small style="font-style: italic; color: gray"
+    >* okay, it's not quite decompiled, but it required me to essentially work
+        with Minecraft's codebase directly rather than patching what I
+        needed.</small>
+</p>
+
+<div class="content-pair-left">
+    <div class="descripted-item">
+        <img src="/beatcraft/coding.png">
+        <p><i>*typing*</i> ... I'm in.</p>
+    </div>
+    <div>
+        <p>
+            At this point I was quite a newbie programmer, so it was going to be
+            rather hopeless for me to do this on my own. I mean, I couldn't even
+            understand what a class was, let alone make my own or modify
+            existing ones.
+        </p>
+
+        <p>
+            Thankfully, <b>Techjar</b>, one of the primary developers of
+            BeatCraft, assisted me rather thoroughly on how to set up a custom
+            development environment as well as <i>significantly</i> helped me
+            during the project. <small style="font-style: italic"
+            >(Bless you, seriously.)</small>
+        </p>
+
+        <p>
+            At first I was planning on quite literally just boosting the tick
+            speed of the game <b style="color: rgb(255, 154, 154)"
+            >(VERY BAD IDEA)</b> but I quickly ruled that out after realizing I
+            could do things slightly differently.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <div class="descripted-item">
+        <img src="/beatcraft/armorstand blocks.png">
+        <p>A faint armorstand carrying the note visuals.</p>
+    </div>
+    <div>
+        <p>
+            I was still set on using Minecraft's command system, but I at least
+            realized I should move my logic to the client in order to take
+            advantage of per-frame calculations.
+        </p>
+
+        <p>
+            I planned on using the commands as a sort of core system, and
+            broadcasting events from the client to the commands.
+        </p>
+
+        <p>
+            I was using invisible slimes with armor stands in order to display
+            my notes (and lights now!) and I used area effect clouds, which are
+            essentially a dummy entity, to communicate events.
+        </p>
+    </div>
+</div>
+
+<p>
+    Side Note: around this point I made a reddit post on the r/Minecraft
+    subreddit which really blew up.
+</p>
+
+<blockquote class="reddit-card" data-card-platform="reddit" style="width: 90%">
+    <a
+        href="https://www.reddit.com/r/Minecraft/comments/l4w7of/working_on_making_beat_saber_in_minecraft/"
+    >
+        Working on making Beat Saber in Minecraft
+    </a>
+</blockquote>
+
+<p>
+    It ended up getting almost 30,000 upvotes and a ton of interest from the
+    general public. It even got articles written from the likes of <a
+        href="https://screenrant.com/minecraft-beat-saber-remake-vr-playable/"
+    >ScreenRant</a>
+    and <a href="https://vrscout.com/news/play-beat-saber-in-minecraft-in-vr/"
+    >VRScout</a>. This was a huge boost to my morale and gave me the motivation
+    to continue!
+</p>
+
+<div class="content-pair-left">
+    <div class="descripted-item">
+        <img src="/beatcraft/unity app.png">
+        <p>A Unity application for playing a song.</p>
+    </div>
+    <div>
+        <p>
+            At this point, the project was structured very strangely. I had
+            multiple components of the project working in tandem with each
+            other:
+        </p>
+        <ul>
+            <li>
+                A resource pack which was handling note textures (with colors)
+                as well as biome colors for the grass.
+            </li>
+            <li>
+                A datapack for handling the core gameplay flow and spawning
+                objects from the map.
+            </li>
+            <li>
+                A modded ViveCraft client that was transmitting frame-sensitive
+                events to the datapack.
+            </li>
+            <li>
+                A Unity application that generated the datapack and resourcepack
+                from a beatmap.
+            </li>
+        </ul>
+    </div>
+</div>
+
+<p>
+    In retrospect, <i>all</i> of this should have been done in the mod. I was
+    really caught up with how resource packs handled dynamically changing assets
+    like audio files and biome colors that I really didn't consider any other
+    option.
+</p>
+
+<p>
+    Eventually I decided to just make entirely new entities instead of using
+    slimes, and that was a step in the right direction of not relying on the
+    command system so much. Eventually I ported all visuals to custom entities!
+</p>
+
+<div class="content-pair-right">
+    <div class="descripted-item">
+        <img src="/beatcraft/gameplay.gif">
+        <p>My colorfully lit environment with custom sabers.</p>
+    </div>
+    <div>
+        <p>
+            The project was turning out nicely. I had custom colors for
+            everything going, I had walls implemented as well, I even had a few
+            basic modchart features implemented such as <a
+                href="https://bsmg.wiki/mapping/extended-mapping.html#precision-placement"
+            >precision placement</a>.
+        </p>
+
+        <p>
+            I also made some nice sabers that changed with the custom colors of
+            the player and objects! I had to dive deep into matrix math in order
+            to display these properly, which was my introduction to demistifying
+            a large part of graphics programming.
+        </p>
+    </div>
+</div>
+
+<p>
+    That said, the project was becoming a mixed bag to work on.
+</p>
+
+<p>
+    On one hand, it was extremely fulfilling to watch the features all come
+    together in Minecraft and the <a
+        href="https://www.reddit.com/r/Minecraft/comments/m8qy2h/beat_saber_in_minecraft_progress_update_lights/"
+    >public reception continued to be extremely positive</a>. On the other hand,
+    the project was becoming really cumbersome to work on with the very
+    scattered implementations across a datapack, resourcepack, Unity project,
+    and Minecraft mod. I also was not using version control... <i>yikes!</i>
+    Minecraft was also taking a hit with it's GC lag spikes, but I obviously
+    didn't have any idea how to debug that at the time.
+</p>
+
+<h2>
+    The final straw for me is when the strap on my headset broke. After all
+    that, I decided to drop the project.
+</h2>
+
+<div>
+    <h1>2021</h1>
+    <div style="display: flex; justify-content: center; flex-direction: row">
+        <div
+            style="height: 400px; width: 2px; margin: 0; background: linear-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    rgba(255, 255, 255, 1) 20%,
+    rgba(255, 255, 255, 1) 80%,
+    rgba(0, 0, 0, 0) 100%
+)"
+        >
+        </div>
+    </div>
+    <h1>2024</h1>
+</div>
+
+<p>
+    Flash forward many years later, I am now a fully fledged game developer with
+    experience developing multiple games and am responsible for creating a
+    decently influential tool in the Beat Saber community, <button
+        class="go-to-path-link"
+        href="./projects/tools/remapper"
+    >
+        ReMapper
+    </button>.
+</p>
+
+<p>
+    During this time I also have become quite a significant figure in the
+    community, pushing the envelope on visual maps and creating <button
+        class="go-to-path-link"
+        href="./projects/experiences/blood-rushing"
+    >
+        some of the most popular maps
+    </button> in the community. A lot of people would remember BeatCraft and
+    later realize I'm the same person who made it, which I find really insane
+    and funny.
+</p>
+
+<p>
+    Anyway, with my newfound software development skills, I randomly decided it
+    was time to reboot this project and build it like it should have been built
+    from the start, <u>entirely contained within the mod</u>.
+</p>
+
+<div class="content-pair-left">
+    <img
+        src="/beatcraft/fabric.png"
+        style="aspect-ratio: 1; max-height: 250px; width: unset"
+    >
+    <div>
+        <p>
+            To start things off, I was going to do things very differently this
+            time and make my development environment actually proper:
+        </p>
+
+        <ul style="text-align: left">
+            <li>Proper version control using git.</li>
+            <li>Project hosted on GitHub for others to contribute.</li>
+            <li>
+                Custom mod using Fabric that <i>depends</i> on ViveCraft instead
+                of being mangled into it.
+            </li>
+        </ul>
+    </div>
+</div>
+
+<small style="font-style: italic"
+>* That last one technically wasn't possible before but in all those years the
+    ViveCraft developers actually made Vivecraft a standalone mod!</small>
+
+<br><br>
+
+<div class="content-pair-right">
+    <div class="descripted-item">
+        <img src="/beatcraft/rendering fun.jpg">
+        <p>Throwing things straight into the world renderer.</p>
+    </div>
+    <div>
+        <p>
+            In order to render all of my BeatCraft stuff, I wasn't even going to
+            use entities, <i>why not just throw triangles straight into the
+                renderer?
+            </i>
+        </p>
+
+        <p>
+            In fact, why not just separate basically the entirety of the
+            BeatCraft stuff from Minecraft aside from the handful of
+            interactions that need to be made between them (e.g. rendering,
+            player input, etc).
+        </p>
+
+        <p>
+            The flexibility with this approach was now <i>enourmous</i> and I
+            was able to get back to where I was fairly quickly, save for the
+            lighting system.
+        </p>
+    </div>
+</div>
+
+<p>
+    Load audio from a resource pack? Nope, just load it asynchronously from disk
+    and play it using the audio API. Parse level data into commands that spawn
+    objects? Just load the JSON from disk and parse it straight into beatmap
+    objects.
+</p>
+
+<h2>
+    The benefits were becoming incredibly clear from this new system, and it
+    finally gave me the courage to take on one of the biggest feats of the
+    project, <a href="https://github.com/Aeroluna/Heck">Heck Suite</a> support.
+</h2>
+
+<div class="content-pair-left">
+    <div class="descripted-item">
+        <img src="/beatcraft/modchart.gif">
+        <p>Behold, Beat Saber modcharts in Minecraft.</p>
+    </div>
+    <div>
+        <p>
+            For those unfamiliar, Heck is the suite of mods (Noodle Extensions,
+            Chroma) that runs modcharts in Beat Saber.
+        </p>
+        <p>
+            Modcharts are levels which take advantage of advanced animation and
+            scripting workflows to create unique experiences which change the
+            gameplay of levels significantly.
+        </p>
+        <p>
+            I have <i>extensive</i> knowledge of this suite given my work on
+            ReMapper, so I was able to implement everything with shockingly
+            accurate results.
+        </p>
+    </div>
+</div>
+
+<p>
+    After this initial burst of productivity, I got a little burnt out and
+    things were ramping up with <button
+        class="go-to-path-link"
+        href="./projects/experiences/extra-sensory-ii"
+    >
+        Extra Sensory II
+    </button> so my work on the project died down a lot. But shortly after the
+    new year, I got a message from someone explaining that they have been
+    creating their own Beat Saber in Minecraft mod and were interested in
+    working together with mine instead.
+</p>
+
+<img src="/beatcraft/westbot message.png" style="margin: 0">
+
+<p>Huh, sure, why not.</p>
+
+<div class="content-pair-right">
+    <div class="descripted-item">
+        <iframe
+            class="video"
+            src="https://www.youtube.com/embed/DVfEUFvL14I"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowfullscreen
+            style="width: 100%; aspect-ratio: 16/9"
+        >
+        </iframe>
+        <p>This is Minecraft.</p>
+    </div>
+
+    <div>
+        <p>
+            Westbot went on to go absolutely ham with the project, adding a
+            proper gameplay loop with UI, implementing walls and sabers and
+            everything I really didn't feel like doing.
+        </p>
+
+        <p>
+            Later on he even created a 1:1 recreation of beat saber's fog
+            lighting effects, so the game looked genuinely almost
+            indistinguishable stylistically.
+        </p>
+
+        <p>
+            When he told me he wanted to potentially make it survival friendly
+            with a crafting table, I knew this is the kind of psychopath I could
+            trust with the project going forward.
+        </p>
+    </div>
+</div>
+
+<p>
+    He has done an incredible job carrying the vision of the mod forward and has
+    added more features than I could list here.
+</p>
+
+<h2>
+    That being said, Westbot is basically entirely carrying the project going
+    forward. I've had my fun.
+</h2>
+
+<div class="spacer"></div>
+
+<a class="demo-button" target="_blank">
+    DEMO
+</a>
+
+<p>
+    Thanks to our efforts after all this time, you are able to play this mod
+    right now! Thanks for reading!
+</p>
