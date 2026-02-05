@@ -3,6 +3,7 @@ import { THREE } from "../../deps";
 import type { IDisposable } from "./disposable";
 import { Text } from "troika-three-text";
 import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
+import { MAIN_FONT_PATH } from "./resources";
 
 export class Label implements IDisposable, IUpdateable {
     content: THREE.Object3D
@@ -18,7 +19,7 @@ export class Label implements IDisposable, IUpdateable {
 
         this.textObject = new Text()
         this.textObject.text = text
-        this.textObject.font = '/pala.ttf'
+        this.textObject.font = MAIN_FONT_PATH
         this.textObject.fontSize = size
         this.textObject.anchorX = 'center';
         this.textObject.anchorY = 'middle';

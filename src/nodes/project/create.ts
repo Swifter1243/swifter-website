@@ -14,7 +14,7 @@ export function createProjects(): Project[] {
         makeProject(5, 'Extra Sensory II', 'extra-sensory-ii', extraSensory2HTML, 'Experiences', ['C#', 'Shaders', 'Unity', 'TypeScript', 'Teamwork', 'Audio']),
         makeProject(4, 'Derelict', 'derelict', derelictHTML, 'Games', ['C#', 'Unity', 'Teamwork', 'Shaders']),
         makeProject(4, 'SYNERGY', 'synergy', synergyHTML, 'Games', ['C#', 'Unity', 'Shaders']),
-        makeProject(3, '743⁺Aether*✧ . * ¹¹¹} ⁺ , .', 'aether', aetherHTML, 'Experiences', ['C#', 'Shaders', 'Unity']),
+        makeProject(3, '743+Aether*✧ . * ¹¹¹} + , .', 'aether', aetherHTML, 'Experiences', ['C#', 'Shaders', 'Unity']),
         makeProject(2, 'Grasping At Straws', 'grasping-at-straws', graspingAtStrawsHTML, 'Games', ['C#', 'Shaders', 'Unity', 'Audio']),
         makeProject(2, 'ZERO Inc.', 'zero-inc', zeroIncHTML, 'Games', ['C#', 'Shaders', 'Teamwork']),
         makeProject(2, 'BLOON MAN', 'bloon-man', bloonManHTML, 'Games', ['C#', 'Teamwork', 'Unity', 'Audio']),

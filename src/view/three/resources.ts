@@ -24,11 +24,12 @@ export async function initResources() {
         loadPetalModel(gltfLoader, textureLoader)
     ])
 }
+export const MAIN_FONT_PATH = '/fonts/texgyrepagella-regular.otf'
 
 async function loadFont() {
     const promise = new Promise((resolve) => {
         preloadFont({
-            font: '/pala.ttf',
+            font: MAIN_FONT_PATH,
         }, () => resolve(undefined))
     })
     return promise

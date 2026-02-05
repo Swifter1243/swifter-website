@@ -1,13 +1,37 @@
 @font-face {
-	font-family: "Palatino Linotype";
-	src: url("/pala.ttf") format("truetype");
+	font-family: "Pagella";
+	src: url("/fonts/texgyrepagella-regular.otf") format("opentype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Pagella";
+	src: url("/fonts/texgyrepagella-italic.otf") format("opentype");
+	font-weight: 400;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "Pagella";
+	src: url("/fonts/texgyrepagella-bold.otf") format("opentype");
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Pagella";
+	src: url("/fonts/texgyrepagella-bolditalic.otf") format("opentype");
+	font-weight: 700;
+	font-style: italic;
 }
 
 body {
 	margin: 0;
 	background-color: #000;
 	color: #fff;
-	font-family: "Palatino Linotype";
+	font-family: "Pagella", "Palatino Linotype", Palatino, serif;
 	font-size: 18px;
 }
 
@@ -18,7 +42,7 @@ html, body {
 }
 
 button {
-	font-family: "Palatino Linotype";
+  	font-family: "Pagella", "Palatino Linotype", Palatino, serif;
 }
 
 a:link {
