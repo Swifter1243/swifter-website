@@ -27,19 +27,10 @@ export type Project = {
     name: string
     key: string
     category: Category
-    skills: Set<Skill>
+    skills: Skill[]
     importance: number
-}
-
-export function makeProject(importance: number, name: string, key: string, html: string, category: Category, skills: Skill[]): Project {
-    return {
-        name,
-        key,
-        html,
-        category,
-        skills: new Set<Skill>(skills),
-        importance
-    }
+    demoLink?: string
+    sourceLink?: string
 }
 
 export function nodeFromProject(project: Project): PageNode {

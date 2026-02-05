@@ -38,7 +38,7 @@ export class PageView {
         }
 
         attachCarousels()
-        attachLinks()
+        attachLinks(node.project)
     }
 
     closePage(): void {
