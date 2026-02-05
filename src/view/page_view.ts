@@ -4,6 +4,7 @@ import { attachCarousels } from "./carousel";
 import { disableInput, enableInput } from "./three/input";
 import { attachLinks } from "./links";
 import { loadProjectTags } from "./project_tags";
+import { setChordPadsAudible } from "./sound/chord";
 
 const pageContent = document.getElementById('page-content')!
 const pageContentParent = document.getElementById('page-content-parent')!
@@ -22,6 +23,7 @@ export class PageView {
 
     openPage(node: PageNode): void {
         disableInput()
+        setChordPadsAudible(false, 3)
         page.hidden = false
         pagePanel.style.display = 'flex'
         pagePanel.style.transform = "translateY(0px)";
@@ -44,6 +46,7 @@ export class PageView {
         page.style.opacity = '0';
         pagePanel.style.transform = "translateY(50px)";
         enableInput()
+        setChordPadsAudible(true)
 
         lastTimeout = setTimeout(() => {
             page.hidden = true

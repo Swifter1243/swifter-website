@@ -2,7 +2,7 @@ import { rampAudioParam } from "../../utilities/audio";
 import { audioContextReady, audioCtx, masterGain, playOneShot } from "./context";
 import { SOUNDS, sounds } from "./resources";
 
-const PAD_GAIN = 0.8
+const PAD_DEFAULT_GAIN = 0.8
 
 class Chord {
     oneShotName: string
@@ -10,7 +10,7 @@ class Chord {
 
     oneShotSound?: AudioBuffer
 
-    padGain?: GainNode
+    padSourceGain?: GainNode
     padSound?: AudioBuffer
 
     constructor(oneShotName: string, padName: string) {
@@ -19,20 +19,20 @@ class Chord {
     }
 
     setup() {
-        if (!audioCtx || !masterGain)
+        if (!audioCtx || !padGain)
             return
 
         this.padSound = sounds.get(this.padName)
         this.oneShotSound = sounds.get(this.oneShotName)
 
-        this.padGain = audioCtx.createGain()
-        this.padGain.gain.setValueAtTime(0, audioCtx.currentTime)
-        this.padGain.connect(masterGain)
+        this.padSourceGain = audioCtx.createGain()
+        this.padSourceGain.gain.setValueAtTime(0, audioCtx.currentTime)
+        this.padSourceGain.connect(padGain)
 
         const padSource = audioCtx.createBufferSource()
         padSource.buffer = this.padSound!
         padSource.loop = true
-        padSource.connect(this.padGain)
+        padSource.connect(this.padSourceGain)
         padSource.start()
     }
 
@@ -44,17 +44,17 @@ class Chord {
     }
 
     fadePadIn(fadeTime = 3) {
-        if (!audioCtx || !this.padGain)
+        if (!audioCtx || !this.padSourceGain)
             return
 
-        rampAudioParam(audioCtx, this.padGain.gain, PAD_GAIN, fadeTime)
+        rampAudioParam(audioCtx, this.padSourceGain.gain, 1, fadeTime)
     }
 
     fadePadOut(fadeTime = 1) {
-        if (!audioCtx || !this.padGain)
+        if (!audioCtx || !this.padSourceGain)
             return
 
-        rampAudioParam(audioCtx, this.padGain.gain, 0, fadeTime)
+        rampAudioParam(audioCtx, this.padSourceGain.gain, 0, fadeTime)
     }
 }
 
@@ -66,6 +66,7 @@ const chords = [
 ]
 let currentChord = chords[0]
 let firstChordQueued = false
+export let padGain: GainNode | undefined = undefined
 
 export function changeChord() {
     if (audioContextReady) {
@@ -104,7 +105,22 @@ export function fadeFirstChordIn() {
     }
 }
 
+export function setChordPadsAudible(isAudible: boolean, fadeTime = 1) {
+    if (!audioCtx || !padGain)
+        return
+
+    const newGain = isAudible ? PAD_DEFAULT_GAIN : 0
+    rampAudioParam(audioCtx, padGain.gain, newGain, fadeTime)
+}
+
 export function setupChords() {
+    if (!audioCtx || !masterGain)
+        return
+
+    padGain = audioCtx.createGain()
+    padGain.gain.setValueAtTime(PAD_DEFAULT_GAIN, audioCtx.currentTime)
+    padGain.connect(masterGain)
+
     chords.forEach(chord => {
         chord.setup()
     })
