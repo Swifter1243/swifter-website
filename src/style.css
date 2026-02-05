@@ -99,9 +99,8 @@ a:visited {
 	min-height: 50px;
 	background: linear-gradient(
 		45deg,
-		/* rgba(158, 99, 173, 0.6) 0%, */
-		rgba(173, 164, 99, 0.6) 0%,
-		rgba(99, 169, 173, 0.6) 100%
+		rgba(173, 164, 99, 0.6) 20%,
+		rgba(99, 169, 173, 0.6) 80%
 	);
 	border-radius: 5px;
 	display: flex;
@@ -115,15 +114,22 @@ a:visited {
 	width: 100%;
 	position: absolute;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: flex-start;
 }
 
 #page-close {
-	height: inherit;
 	aspect-ratio: 1;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	color: white;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.3);
+	border-style: none;
+}
+
+#page-close:hover {
+	background-color: rgba(0, 0, 0, 0.6);
 }
 
 #page-project-tags {
@@ -137,8 +143,8 @@ a:visited {
 	background: linear-gradient(
 		90deg,
 		rgba(0, 0, 0, 0.9) 0%,
-		rgb(30, 0, 60) 10%,
-		rgb(30, 0, 60) 90%,
+		rgb(53, 59, 35) 20%,
+		rgb(35, 43, 59) 80%,
 		rgba(0, 0, 0, 0.9) 100%
 	);
 }
@@ -391,27 +397,27 @@ img {
 }
 
 .category-tag {
-	background-color: #229d4d;
+	background-color: rgba(173, 164, 99);
 }
 
 .category-tag:hover {
-	background-color: #177538;
+	background-color: #876b17;
 }
 
 .category-tag:active {
-	background-color: #0f4522;
+	background-color: #3c2f0f;
 }
 
 .skill-tag {
-	background-color: #c76a00;
+	background-color: rgb(99, 169, 173);
 }
 
 .skill-tag:hover {
-	background-color: #985100;
+	background-color: #255e9a;
 }
 
 .skill-tag:active {
-	background-color: #532c00;
+	background-color: #0f253c;
 }
 
 /* tutorial */
