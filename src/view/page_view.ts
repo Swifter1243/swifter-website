@@ -1,5 +1,4 @@
 import type { PageNode } from "../model/page_node";
-import { navigation } from "../navigation/navigation";
 import { attachCarousels } from "./carousel";
 import { disableInput, enableInput } from "./three/input";
 import { attachLinks } from "./links";
@@ -17,7 +16,7 @@ let lastTimeout: number | undefined = undefined
 export class PageView {
     constructor() {
         const pageClose = document.getElementById('page-close')!
-        pageClose.addEventListener('click', () => navigation.descend())
+        pageClose.addEventListener('click', () => history.back())
         pagePanel.style.display = 'none'
     }
 
