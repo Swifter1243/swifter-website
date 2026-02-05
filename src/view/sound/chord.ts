@@ -66,6 +66,7 @@ const chords = [
 ]
 let currentChord = chords[0]
 let firstChordQueued = false
+let chordPadMuteQueued = false
 export let padGain: GainNode | undefined = undefined
 
 export function changeChord() {
@@ -105,12 +106,21 @@ export function fadeFirstChordIn() {
     }
 }
 
-export function setChordPadsAudible(isAudible: boolean, fadeTime = 1) {
+export function muteChordPads(fadeTime = 1) {
+    if (!audioCtx || !padGain)
+    {
+        chordPadMuteQueued = true
+        return
+    }
+
+    rampAudioParam(audioCtx, padGain.gain, 0, fadeTime)
+}
+
+export function unmuteChordPads(fadeTime = 1) {
     if (!audioCtx || !padGain)
         return
-
-    const newGain = isAudible ? PAD_DEFAULT_GAIN : 0
-    rampAudioParam(audioCtx, padGain.gain, newGain, fadeTime)
+    
+    rampAudioParam(audioCtx, padGain.gain, 1, fadeTime)
 }
 
 export function setupChords() {
@@ -127,5 +137,9 @@ export function setupChords() {
 
     if (firstChordQueued) {
         currentChord.fadePadIn(3)
+    }
+
+    if (chordPadMuteQueued) {
+        muteChordPads()
     }
 }
