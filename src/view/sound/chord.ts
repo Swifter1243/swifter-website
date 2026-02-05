@@ -1,3 +1,4 @@
+import { rampAudioParam } from "../../utilities/audio";
 import { audioContextReady, audioCtx, masterGain, playOneShot } from "./context";
 import { SOUNDS, sounds } from "./resources";
 
@@ -42,25 +43,18 @@ class Chord {
         playOneShot(this.oneShotSound)
     }
 
-    fadePadIn(fadeTime = 3, cancelPrevious = true) {
+    fadePadIn(fadeTime = 3) {
         if (!audioCtx || !this.padGain)
             return
 
-        const now = audioCtx.currentTime
-        if (cancelPrevious)
-            this.padGain.gain.cancelScheduledValues(now)
-        this.padGain.gain.setValueAtTime(0, now)
-        this.padGain.gain.linearRampToValueAtTime(PAD_GAIN, now + fadeTime)
+        rampAudioParam(audioCtx, this.padGain.gain, PAD_GAIN, fadeTime)
     }
 
     fadePadOut(fadeTime = 1) {
         if (!audioCtx || !this.padGain)
             return
 
-        const now = audioCtx.currentTime
-        this.padGain.gain.cancelScheduledValues(now)
-        this.padGain.gain.setValueAtTime(PAD_GAIN, now)
-        this.padGain.gain.linearRampToValueAtTime(0, now + fadeTime)
+        rampAudioParam(audioCtx, this.padGain.gain, 0, fadeTime)
     }
 }
 
@@ -116,6 +110,6 @@ export function setupChords() {
     })
 
     if (firstChordQueued) {
-        currentChord.fadePadIn(3, false)
+        currentChord.fadePadIn(3)
     }
 }
