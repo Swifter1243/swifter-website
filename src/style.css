@@ -33,6 +33,7 @@ body {
 	color: #fff;
 	font-family: "Pagella", "Palatino Linotype", Palatino, serif;
 	font-size: 18px;
+	scrollbar-color: rgb(99, 169, 173) rgba(0, 0, 0, 0.221);
 }
 
 html, body {
