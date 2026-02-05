@@ -4,6 +4,7 @@ import { disableInput, enableInput } from "./three/input";
 import { attachLinks } from "./links";
 import { loadProjectTags } from "./project_tags";
 import { muteChordPads, unmuteChordPads } from "./sound/chord";
+import { navigation } from "../navigation/navigation";
 
 const pageContent = document.getElementById('page-content')!
 const pageContentParent = document.getElementById('page-content-parent')!
@@ -16,7 +17,7 @@ let lastTimeout: number | undefined = undefined
 export class PageView {
     constructor() {
         const pageClose = document.getElementById('page-close')!
-        pageClose.addEventListener('click', () => history.back())
+        pageClose.addEventListener('click', () => navigation.descend())
         pagePanel.style.display = 'none'
     }
 
