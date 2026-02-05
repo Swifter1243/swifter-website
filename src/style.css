@@ -371,6 +371,7 @@ img {
 	border-radius: 2px;
 	vertical-align: middle;
 	color: white;
+	cursor: pointer;
 }
 
 .go-to-path-link:hover {
@@ -395,6 +396,7 @@ img {
 	justify-content: center;
 	padding: 3px;
 	font-size: 12px;
+	cursor: pointer;
 }
 
 .category-tag {
