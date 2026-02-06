@@ -9,6 +9,7 @@ import zeroIncHTML from './pages/zero_inc.html?raw'
 import bloonManHTML from './pages/bloon_man.html?raw'
 import plasmaShiftHTML from './pages/plasmashift.html?raw'
 import beatCraftHTML from './pages/beatcraft.html?raw'
+import remapperHTML from './pages/remapper.html?raw'
 
 const projects: Project[] = [
     {
@@ -101,9 +102,9 @@ const projects: Project[] = [
         importance: 5,
         name: 'ReMapper',
         key: 'remapper',
-        html: placeHolderHTML,
+        html: remapperHTML,
         category: 'Tools',
-        skills: ['TypeScript'],
+        skills: ['TypeScript', 'Python', 'Mathematics'],
         sourceLink: 'https://github.com/Swifter1243/ReMapper'
     },
     {
