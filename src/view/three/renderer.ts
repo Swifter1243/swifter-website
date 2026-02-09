@@ -20,10 +20,14 @@ export function initRenderer() {
     composer.addPass(new OutputPass())
     
     const clock = new THREE.Clock()
+
+    document.addEventListener('visibilitychange', () => {
+        clock.running = document.visibilityState === 'visible'
+    })
     
     function render() {
-      composer.render()
-      const deltaTime = clock.getDelta()
-      onRender.invoke(deltaTime)
+        composer.render()
+        const deltaTime = clock.getDelta()
+        onRender.invoke(deltaTime)
     }
 }
