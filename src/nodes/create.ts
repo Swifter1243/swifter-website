@@ -1,10 +1,10 @@
 import { DirectoryNode } from '../model/directory_node'
 import { type INode } from '../model/node'
 import { PageNode } from '../model/page_node'
-
-import aboutMeHTML from './pages/placeholder.html?raw'
 import { createProjects } from './project/create'
 import { CATEGORIES, nodeFromProject, SKILLS, type Category, type Project, type Skill } from './project/project'
+
+import aboutMeHTML from './pages/about_me.html?raw'
 
 export function createRootNode(): INode {
     const projects = createProjects()

@@ -346,18 +346,32 @@ img {
 }
 
 /* content row */
-.content-row {
+.content-row, .content-row-small {
 	position: relative;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: 15px;
 	flex-wrap: wrap;
+}
+
+.content-row {
+	gap: 15px;
+}
+
+.content-row-small {
+	gap: 15px;
+	justify-content: center;
 }
 
 .content-row > * {
 	flex: 1;
 	min-width: 300px;
+}
+
+.content-row-small * {
+	width: 200px;
+	font-size: 16px;
+	font-style: italic;
 }
 
 /* go to path links */
