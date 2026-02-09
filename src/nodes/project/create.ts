@@ -10,6 +10,7 @@ import bloonManHTML from './pages/bloon_man.html?raw'
 import plasmaShiftHTML from './pages/plasmashift.html?raw'
 import beatCraftHTML from './pages/beatcraft.html?raw'
 import remapperHTML from './pages/remapper.html?raw'
+import bloodRushingHTML from './pages/blood_rushing.html?raw'
 
 const projects: Project[] = [
     {
@@ -111,7 +112,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'BRLCTAP',
         key: 'blood-rushing',
-        html: placeHolderHTML,
+        html: bloodRushingHTML,
         category: 'Experiences',
         skills: ['TypeScript', 'Unity', 'Teamwork'],
         demoLink: 'https://beatsaver.com/playlists/8713',
