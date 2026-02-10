@@ -14,7 +14,6 @@ export function createNavigation(rootNode: INode, projects: Project[]) {
         
         navigation.addResolution(getProjectCategoryPath(project), alias)
         getProjectSkillPaths(project).forEach(skillPath => {
-            console.log(skillPath)
             navigation.addResolution(skillPath, alias)
         })
         navigation.addAlias(alias, getProjectCategoryPath(project))

@@ -11,7 +11,7 @@ import { soundState } from "./sound/main"
 import { playOneShot, startAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
-import { getPathKeySequence } from "../navigation/utility"
+import { getPathKeySequence, locationToNavigationPath } from "../navigation/utility"
 import { BUD_TUTORIAL, initTutorials, ORBIT_TUTORIAL } from "./tutorial"
 import { onDragEnd } from "./three/input"
 
@@ -49,7 +49,8 @@ export class View {
         if (location.pathname !== '/') {
             this.dontPushURLHistory = true
             this.spawnRoot()
-            navigation.goToPath('.' + location.pathname)
+            const path = locationToNavigationPath(location.pathname)
+            navigation.goToPath(path)
             soundState.queueOpen = false
         } else {
             initTutorials([BUD_TUTORIAL, ORBIT_TUTORIAL])
@@ -57,7 +58,7 @@ export class View {
 
         window.addEventListener('popstate', _ => {
             this.dontPushURLHistory = true
-            const path = '.' + location.pathname
+            const path = locationToNavigationPath(location.pathname)
             const keys = getPathKeySequence(path)
             if (keys.length > 1) {
                 this.spawnRoot()

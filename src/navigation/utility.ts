@@ -28,3 +28,11 @@ export function getCommonPath(a: string, b: string): string {
 
     return commonPath.join('/')
 }
+
+export function locationToNavigationPath(location: string): string {
+    if (location[location.length - 1] === '/') { // clear leading '/'
+        location = location.substring(0, location.length - 1)
+    }
+
+    return '.' + location
+}
