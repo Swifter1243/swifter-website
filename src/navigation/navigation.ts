@@ -1,6 +1,6 @@
 import { DirectoryNode } from "../model/directory_node";
 import type { INode } from "../model/node";
-import { pathFromProject, type Project } from "../nodes/project/project";
+import { getProjectCategoryPath, getProjectSkillPaths, type Project } from "../nodes/project/project";
 import { Invokable } from "../utilities/invokable";
 import { getCommonPath, getPathKeySequence } from "./utility";
 
@@ -11,7 +11,13 @@ export function createNavigation(rootNode: INode, projects: Project[]) {
 
     projects.forEach(project => {
         const alias = `./${project.key}`
-        navigation.pathAliases[alias] = pathFromProject(project)
+        
+        navigation.addResolution(getProjectCategoryPath(project), alias)
+        getProjectSkillPaths(project).forEach(skillPath => {
+            console.log(skillPath)
+            navigation.addResolution(skillPath, alias)
+        })
+        navigation.addAlias(alias, getProjectCategoryPath(project))
     })
 }
 
@@ -23,10 +29,25 @@ export class Navigation {
     readonly onAscent = new Invokable<[string]>()
     readonly onChange = new Invokable()
 
-    readonly pathAliases: Record<string, string> = {}
+    private readonly pathAliasToResolution: Record<string, string> = {}
+    private readonly pathResolutionToAlias: Record<string, string> = {}
 
     constructor(rootNode: INode) {
         this.rootNode = rootNode
+    }
+
+    /** expands path internally */
+    addAlias(alias: string, resolution: string) {
+        this.pathAliasToResolution[alias] = resolution
+    }
+    
+    /** shortens path, only when using {@link getAliasedHeaderPath} */
+    addResolution(resolution: string, alias: string) {
+        this.pathResolutionToAlias[resolution] = alias
+    }
+
+    getAliasedHeaderPath() {
+        return this.pathResolutionToAlias[this.headerPath] ?? this.headerPath
     }
 
     grabCurrentNode(): INode {
@@ -38,6 +59,7 @@ export class Navigation {
 
         if (currentNode instanceof DirectoryNode && currentNode.nodes[key] !== undefined) {
             this.headerPath += `/${key}`
+            this.headerPath = this.pathAliasToResolution[this.headerPath] ?? this.headerPath
             this.onAscent.invoke(key)
             this.onChange.invoke()
             return true
@@ -54,12 +76,15 @@ export class Navigation {
 
         nodes.pop()
         this.headerPath = nodes.join('/')
+        this.headerPath = this.pathAliasToResolution[this.headerPath] ?? this.headerPath
         this.onDescent.invoke()
         this.onChange.invoke()
         return true
     }
 
     fetchNode(path: string): INode {
+        path = this.pathAliasToResolution[path] ?? path
+
         let lastNode = this.rootNode
 
         for (const key of getPathKeySequence(path)) {
@@ -91,17 +116,14 @@ export class Navigation {
         return result.join('/')
     }
 
-    tryResolveAlias(path: string) {
-        return this.pathAliases[path] ?? path
-    }
-
     goToPath(path: string) {
+        path = this.pathAliasToResolution[path] ?? path
+
         if (path === this.headerPath) {
             this.descend()
             return
         }
 
-        path = this.tryResolveAlias(path)
         path = this.truncatePathToValidated(path)
 
         const a = this.headerPath

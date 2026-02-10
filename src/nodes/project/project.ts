@@ -37,7 +37,18 @@ export function nodeFromProject(project: Project): PageNode {
     return new PageNode(project.importance, project.name, project.html, project)
 }
 
-export function pathFromProject(project: Project): string {
+export function getProjectCategoryPath(project: Project): string {
     const categoryKey = CATEGORIES[project.category]
     return `./projects/${categoryKey}/${project.key}`
+}
+
+export function getProjectSkillPaths(project: Project): string[] {
+    const result: string[] = []
+
+    project.skills.forEach(skill => {
+        const skillKey = SKILLS[skill]
+        result.push(`./skills/${skillKey}/${project.key}`)
+    })
+
+    return result
 }

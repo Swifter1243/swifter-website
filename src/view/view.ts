@@ -118,14 +118,16 @@ export class View {
     }
 
     private onChange() {
+        const headerPath = navigation.getAliasedHeaderPath()
+
         if (!this.dontPushURLHistory) {
-            const url = navigation.headerPath === '.' ? '/' : navigation.headerPath.substring(1)
+            const url = headerPath === '.' ? '/' : headerPath.substring(1)
             history.pushState(null, '', url)
         } else {
             this.dontPushURLHistory = false
         }
 
-        if (navigation.headerPath !== '.') 
+        if (headerPath !== '.') 
             title.textContent = 'PORTFOLIO - ' + navigation.grabCurrentNode().name.toUpperCase()
         else
             title.textContent = 'PORTFOLIO'
