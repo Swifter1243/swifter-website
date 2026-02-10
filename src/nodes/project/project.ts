@@ -36,3 +36,8 @@ export type Project = {
 export function nodeFromProject(project: Project): PageNode {
     return new PageNode(project.importance, project.name, project.html, project)
 }
+
+export function pathFromProject(project: Project): string {
+    const categoryKey = CATEGORIES[project.category]
+    return `./projects/${categoryKey}/${project.key}`
+}

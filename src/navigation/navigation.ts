@@ -1,12 +1,18 @@
 import { DirectoryNode } from "../model/directory_node";
 import type { INode } from "../model/node";
+import { pathFromProject, type Project } from "../nodes/project/project";
 import { Invokable } from "../utilities/invokable";
 import { getCommonPath, getPathKeySequence } from "./utility";
 
 export let navigation: Navigation
 
-export function createNavigation(rootNode: INode) {
+export function createNavigation(rootNode: INode, projects: Project[]) {
     navigation = new Navigation(rootNode)
+
+    projects.forEach(project => {
+        const alias = `./${project.key}`
+        navigation.pathAliases[alias] = pathFromProject(project)
+    })
 }
 
 export class Navigation {
@@ -16,6 +22,8 @@ export class Navigation {
     readonly onDescent = new Invokable()
     readonly onAscent = new Invokable<[string]>()
     readonly onChange = new Invokable()
+
+    readonly pathAliases: Record<string, string> = {}
 
     constructor(rootNode: INode) {
         this.rootNode = rootNode
@@ -83,12 +91,17 @@ export class Navigation {
         return result.join('/')
     }
 
+    tryResolveAlias(path: string) {
+        return this.pathAliases[path] ?? path
+    }
+
     goToPath(path: string) {
         if (path === this.headerPath) {
             this.descend()
             return
         }
 
+        path = this.tryResolveAlias(path)
         path = this.truncatePathToValidated(path)
 
         const a = this.headerPath

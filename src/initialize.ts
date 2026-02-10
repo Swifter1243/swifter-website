@@ -1,10 +1,12 @@
 import { createNavigation } from "./navigation/navigation"
 import { createRootNode } from "./nodes/create"
+import { createProjects } from "./nodes/project/create"
 import { View } from "./view/view"
 
-export function initMVC() {
-    const rootNode = createRootNode()
-    createNavigation(rootNode)
+export function initSystems() {
+    const projects = createProjects()
+    const rootNode = createRootNode(projects)
+    createNavigation(rootNode, projects)
     createView()
 }
 
