@@ -12,6 +12,7 @@ import beatCraftHTML from './pages/beatcraft.html?raw'
 import remapperHTML from './pages/remapper.html?raw'
 import bloodRushingHTML from './pages/blood_rushing.html?raw'
 import ricochetHTML from './pages/ricochet.html?raw'
+import shadertoyShadersHTML from './pages/shadertoy_shaders.html?raw'
 
 const projects: Project[] = [
     {
@@ -133,9 +134,9 @@ const projects: Project[] = [
         importance: 3.5,
         name: 'Shadertoy Shaders',
         key: 'shadertoy-shaders',
-        html: placeHolderHTML,
-        category: 'Experiences',
-        skills: ['Shaders'],
+        html: shadertoyShadersHTML,
+        category: 'Experiments',
+        skills: ['Shaders', 'Mathematics'],
     },
     {
         importance: 2,
