@@ -7,6 +7,7 @@ export function attachLinks(project?: Project) {
         const elem = pathLinks[i] as HTMLElement
         const path = elem.getAttribute('href')!
         elem.onclick = () => navigation.goToPath(path)
+        elem.removeAttribute('href')
     }
 
     if (project?.demoLink) {

@@ -397,20 +397,26 @@ img {
 	-moz-user-select: text;
 	-ms-user-select: text;
 	user-select: text;
-	background-color: #8a2be2;
+	background: linear-gradient(
+		45deg,
+		rgba(173, 164, 99, 0.6) 20%,
+		rgba(99, 169, 173, 0.6) 80%
+	);
 	border-style: none;
 	border-radius: 2px;
-	vertical-align: middle;
+	font-size: 16px;
+	text-decoration: underline;
+	padding: 2px;
 	color: white;
 	cursor: pointer;
 }
 
 .go-to-path-link:hover {
-	background-color: #6d20b5;
+	background-color: #6a98a9;
 }
 
 .go-to-path-link:active {
-	background-color: #290d43;
+	background-color: #1d343c;
 }
 
 /* tags */
