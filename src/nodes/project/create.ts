@@ -11,6 +11,7 @@ import plasmaShiftHTML from './pages/plasmashift.html?raw'
 import beatCraftHTML from './pages/beatcraft.html?raw'
 import remapperHTML from './pages/remapper.html?raw'
 import bloodRushingHTML from './pages/blood_rushing.html?raw'
+import ricochetHTML from './pages/ricochet.html?raw'
 
 const projects: Project[] = [
     {
@@ -122,10 +123,11 @@ const projects: Project[] = [
         importance: 3,
         name: 'ricochet',
         key: 'ricochet',
-        html: placeHolderHTML,
+        html: ricochetHTML,
         category: 'Experiences',
-        skills: ['Shaders', 'Unity'],
+        skills: ['Shaders', 'Unity', 'Mathematics'],
         demoLink: 'https://vrchat.com/home/world/wrld_257dfd01-d3ac-45be-9a09-d7a7ef1ed68b/info',
+        sourceLink: 'https://github.com/Swifter1243/ricochet'
     },
     {
         importance: 3.5,

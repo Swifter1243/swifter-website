@@ -1,0 +1,141 @@
+<h2>
+    ricochet is a 5 minute atmospheric Virtual Reality experience in VRChat.
+</h2>
+
+<div class="descripted-item">
+    <iframe
+        class="video"
+        src="https://www.youtube.com/embed/efFjC995RDM"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowfullscreen
+        style="width: 80%; aspect-ratio: 16/9"
+    >
+    </iframe>
+    <p>A demo of ricochet, viewed from VRChat's desktop client.</p>
+</div>
+
+<p>
+    I created all assets in Unity myself, including shaders, models, particle
+    effects, etc.
+</p>
+
+<div class="spacer"></div>
+
+<div class="content-pair-right">
+    <img src="/ricochet/day cycle.gif" alt="">
+    <div>
+        <p>
+            To keep things interesting during the 5 minute runtime, every
+            element in the scene reacts to a day/night cycle.
+        </p>
+        <p>
+            Sky colors change, fog density decreases, smoke clears, and the
+            overall palette of the scene changes depending on the time of day.
+        </p>
+        <p>
+            Most objects are hooked up to the directional light in the scene,
+            which is moved based on the video player progress.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img src="/ricochet/ray convergence.png" alt="">
+    <div>
+        <p>
+            The light rays in the scene always point towards the sun, while also
+            facing flat in your view.
+        </p>
+        <p>
+            Unity does not have a rendering mode for something this specific, so
+            I had to transform the light rays myself using a custom shader.
+        </p>
+        <p>
+            I had to learn how to construct a matrix from basis vectors (while
+            keeping them all perpendicular), and I needed to use custom vertex
+            streams in order to perform this rotation around each particle's
+            center.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <img src="/ricochet/sky.png" alt="">
+    <div>
+        <p>
+            The visuals of the sky were all created from different layers of
+            procedural noise. There was one big layer for the larger shapes of
+            the clouds, and two smaller layers for the finer details that would
+            evolve over time.
+        </p>
+        <p>
+            The edge lighting of the clouds were calculated by computing a
+            normal from the tangent and bitangent gradients, and checking it's
+            alignment with the direction to the sun.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img src="/ricochet/underside.png" alt="">
+    <div>
+        <p>
+            The ocean's reflections were made by using the output of a camera
+            facing the same way as the player's head, but flipped upside down
+            and mirrored equidistantly under the ocean.
+        </p>
+        <p>
+            I had to pass camera matrices from the CPU to the GPU in order to
+            transform points in the player's view to UVs in the mirrored view,
+            which was a mathematical challenge.
+        </p>
+        <p>
+            I also had to make sure all of my geometry was clipped at the ocean
+            level so that it couldn't block the mirrored view when it shouldn't.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <img src="/ricochet/foam.png" alt="">
+    <div>
+        <p>
+            This stylized foam also forms at edges of the terrain touching the
+            water.
+        </p>
+        <p>
+            I made it by taking the difference between the fragment's distance
+            in view space and the depth stored in the depth buffer to find the
+            distance to opaque geometry behind it.
+        </p>
+        <p>
+            Running that distance through some sine waves and noise functions
+            gets you a pretty convincing result.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img src="/ricochet/flower.png" alt="">
+    <div>
+        <p>
+            This flower was modeled by me, and the shader was created in part by
+            my friend TKMaida.
+        </p>
+        <p>
+            I later made adjustments to fit my scene better with the day/night
+            cycle and atmosphere, but they later provided a map for the ambient
+            occlusion.
+        </p>
+        <p>
+            I also had to implement tangent to local space normal conversion so
+            that I could add some detail to the normals, really selling the
+            metallic look.
+        </p>
+    </div>
+</div>
+
+<h2>
+    Overall, ricochet taught me a lot about graphics programming and how to
+    implement advanced effects to produce a realistic scene.
+</h2>
