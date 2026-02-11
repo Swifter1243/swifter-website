@@ -13,6 +13,7 @@ import remapperHTML from './pages/remapper.html?raw'
 import bloodRushingHTML from './pages/blood_rushing.html?raw'
 import ricochetHTML from './pages/ricochet.html?raw'
 import shadertoyShadersHTML from './pages/shadertoy_shaders.html?raw'
+import beatSaberLevelsHTML from './pages/beat_saber_levels.html?raw'
 
 const projects: Project[] = [
     {
@@ -142,7 +143,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Beat Saber Levels',
         key: 'beat-saber-levels',
-        html: placeHolderHTML,
+        html: beatSaberLevelsHTML,
         category: 'Experiences',
         skills: ['Unity', 'TypeScript', 'Shaders'],
         demoLink: 'https://beatsaver.com/profile/4284246'
