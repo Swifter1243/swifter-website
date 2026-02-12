@@ -25,7 +25,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
     visualNodes: Record<string, VisualNode> = {}
     disposables: IDisposable[] = []
     onNodeClicked = new Invokable<[string]>()
-    startNormal = new SmoothVec3(0, 0, 0, 0.2)
+    startNormal = new SmoothVec3(0, 0.0001, 0, 5)
     endNormals: Record<string, SmoothVec3> = {}
     breezeOffsets: Record<string, number> = {}
     
@@ -44,7 +44,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
         this.pivotObject = new THREE.Object3D()
         this.pivotObject.position.set(0, this.contentSize, 0)
 
-        this.startNormal.copyImmediate(new THREE.Vector3(0, 0.8 * this.contentSize, 0))
+        this.startNormal.copy(new THREE.Vector3(0, 0.8 * this.contentSize, 0))
 
         this.cameraPivot = {
             object: this.pivotObject,
@@ -88,8 +88,8 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize)
 
             const endPoint = new THREE.Vector3()
-            const endNormal = new SmoothVec3(0, 0, 0, 0.5)
-            endNormal.copyImmediate(new THREE.Vector3().addScaledVector(normal, -0.1))
+            const endNormal = new SmoothVec3(0, 0, 0, 5)
+            endNormal.copyImmediate(new THREE.Vector3().addScaledVector(normal, -0.001))
             endNormal.copy(new THREE.Vector3().addScaledVector(normal, -0.5))
             this.endNormals[key] = endNormal
 
