@@ -10,55 +10,53 @@ const projectDemoLink = document.getElementById('project-demo-link')!
 const projectTimeline = document.getElementById('project-timeline')!
 
 export function loadPageProjectInfo(project: Project | undefined) {
-    pageProjectInfoDiv.style.display = project ? 'flex' : 'none'
-
-    loadProjectLinks(project)
-    loadProjectTags(project)
-    loadProjectTimeline(project)
+    if (project) {
+        pageProjectInfoDiv.style.display = 'flex'
+        loadProjectLinks(project)
+        loadProjectTags(project)
+        loadProjectTimeline(project)
+    } else {
+        pageProjectInfoDiv.style.display = 'none'
+    }
 }
 
-function loadProjectLinks(project: Project | undefined) {
-    const hasLinks = project?.demoLink !== undefined || project?.sourceLink !== undefined
+function loadProjectLinks(project: Project) {
+    const hasLinks = project.demoLink !== undefined || project.sourceLink !== undefined
     pageProjectLinksDiv.style.display = hasLinks ? 'flex' : 'none'
 
-    projectSourceLink.style.display = project?.sourceLink !== undefined ? 'flex' : 'none'
-    projectDemoLink.style.display = project?.demoLink !== undefined ? 'flex' : 'none'
+    projectSourceLink.style.display = project.sourceLink !== undefined ? 'flex' : 'none'
+    projectDemoLink.style.display = project.demoLink !== undefined ? 'flex' : 'none'
 
-    if (project?.sourceLink !== undefined) {
+    if (project.sourceLink !== undefined) {
         projectSourceLink.setAttribute('href', project.sourceLink)
     }
 
-    if (project?.demoLink !== undefined) {
+    if (project.demoLink !== undefined) {
         projectDemoLink.setAttribute('href', project.demoLink)
     }
 }
 
-function loadProjectTags(project: Project | undefined) {
-    if (project) {
-        pageProjectTagsDiv.replaceChildren()
+function loadProjectTags(project: Project) {
+    pageProjectTagsDiv.replaceChildren()
 
-        const categoryTag = document.createElement('button')
-        const categoryPath = './projects/' + CATEGORIES[project.category]
-        categoryTag.className = 'category-tag'
-        categoryTag.textContent = project.category
-        categoryTag.onclick = () => navigation.goToPath(categoryPath)
-        pageProjectTagsDiv.appendChild(categoryTag)
+    const categoryTag = document.createElement('button')
+    const categoryPath = './projects/' + CATEGORIES[project.category]
+    categoryTag.className = 'category-tag'
+    categoryTag.textContent = project.category
+    categoryTag.onclick = () => navigation.goToPath(categoryPath)
+    pageProjectTagsDiv.appendChild(categoryTag)
 
-        project.skills.forEach(skill => {
-            const skillTag = document.createElement('button')
-            const skillPath = './skills/' + SKILLS[skill]
-            skillTag.className = 'skill-tag'
-            skillTag.textContent = skill
-            skillTag.onclick = () => navigation.goToPath(skillPath)
-            pageProjectTagsDiv.appendChild(skillTag)
-        })
-    }
+    project.skills.forEach(skill => {
+        const skillTag = document.createElement('button')
+        const skillPath = './skills/' + SKILLS[skill]
+        skillTag.className = 'skill-tag'
+        skillTag.textContent = skill
+        skillTag.onclick = () => navigation.goToPath(skillPath)
+        pageProjectTagsDiv.appendChild(skillTag)
+    })
 }
 
-function loadProjectTimeline(project: Project | undefined) {
-    if (!project)
-        return
-
+function loadProjectTimeline(project: Project) {
     function formatDate(date: Date) {
         const monthName = getDateMonthName(date)
         const year = date.getFullYear()
