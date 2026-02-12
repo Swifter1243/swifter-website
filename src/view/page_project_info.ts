@@ -2,6 +2,7 @@ import { navigation } from "../navigation/navigation";
 import { CATEGORIES, SKILLS, type Project } from "../nodes/project/project";
 import { getDateMonthName } from "../utilities/date";
 
+const pageProjectInfoDiv = document.getElementById('page-project-info')!
 const pageProjectTagsDiv = document.getElementById('page-project-tags')!
 const pageProjectLinksDiv = document.getElementById('page-project-links')!
 const projectSourceLink = document.getElementById('project-source-link')!
@@ -9,6 +10,8 @@ const projectDemoLink = document.getElementById('project-demo-link')!
 const projectTimeline = document.getElementById('project-timeline')!
 
 export function loadPageProjectInfo(project: Project | undefined) {
+    pageProjectInfoDiv.style.display = project ? 'flex' : 'none'
+
     loadProjectLinks(project)
     loadProjectTags(project)
     loadProjectTimeline(project)
@@ -31,8 +34,6 @@ function loadProjectLinks(project: Project | undefined) {
 }
 
 function loadProjectTags(project: Project | undefined) {
-    pageProjectTagsDiv.style.display = project ? 'flex' : 'none'
-
     if (project) {
         pageProjectTagsDiv.replaceChildren()
 
