@@ -71,7 +71,9 @@ function loadProjectTimeline(project: Project | undefined) {
         endText = formatDate(project.endDate)
     }
 
-    if (startText && endText) {
+    if (startText == endText) {
+        projectTimeline.textContent = `${startText}`
+    } else if (startText && endText) {
         projectTimeline.textContent = `${startText} - ${endText}`
     } else {
         projectTimeline.textContent = `${startText} - Present`
