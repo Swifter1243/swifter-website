@@ -1,7 +1,7 @@
 import type { PageNode } from "../model/page_node";
 import { attachCarousels } from "./carousel";
 import { disableInput, enableInput } from "./three/input";
-import { attachLinks } from "./links";
+import { attachLinks, setLinksToOpenNewTab } from "./links";
 import { loadPageProjectInfo } from "./page_project_info";
 import { muteChordPads, unmuteChordPads } from "./sound/chord";
 import { navigation } from "../navigation/navigation";
@@ -39,6 +39,7 @@ export class PageView {
         loadPageProjectInfo(node.project)
         attachCarousels()
         attachLinks(node.project);
+        setLinksToOpenNewTab();
         (window as any).___redditEmbed?.load();
     }
 

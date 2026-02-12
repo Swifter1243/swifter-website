@@ -18,3 +18,10 @@ export function attachLinks(project?: Project) {
         }
     }
 }
+
+export function setLinksToOpenNewTab() {
+    const links = document.querySelectorAll('a') as NodeListOf<HTMLAnchorElement>
+    links.forEach(link => {
+        link.target = '_blank'
+    })
+}
