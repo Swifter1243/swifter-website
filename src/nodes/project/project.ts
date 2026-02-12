@@ -31,6 +31,8 @@ export type Project = {
     importance: number
     demoLink?: string
     sourceLink?: string
+    startDate: Date
+    endDate?: Date
 }
 
 export function nodeFromProject(project: Project): PageNode {

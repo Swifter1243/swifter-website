@@ -14,6 +14,7 @@ import bloodRushingHTML from './pages/blood_rushing.html?raw'
 import ricochetHTML from './pages/ricochet.html?raw'
 import shadertoyShadersHTML from './pages/shadertoy_shaders.html?raw'
 import beatSaberLevelsHTML from './pages/beat_saber_levels.html?raw'
+import { dateFromMonthYear } from "../../utilities/date";
 
 const projects: Project[] = [
     {
@@ -24,6 +25,8 @@ const projects: Project[] = [
         category: 'Experiences',
         skills: ['C#', 'Shaders', 'Unity', 'TypeScript', 'Teamwork', 'Audio'],
         demoLink: 'https://beatsaver.com/playlists/797071',
+        startDate: dateFromMonthYear('September 2022'),
+        endDate: dateFromMonthYear('January 2025')
     },
     {
         importance: 4,
@@ -31,7 +34,9 @@ const projects: Project[] = [
         key: 'derelict',
         html: derelictHTML,
         category: 'Games',
-        skills: ['C#', 'Unity', 'Teamwork', 'Shaders']
+        skills: ['C#', 'Unity', 'Teamwork', 'Shaders'],
+        startDate: dateFromMonthYear('January 2025'),
+        endDate: dateFromMonthYear('April 2025')
     },
     {
         importance: 4,
@@ -41,7 +46,9 @@ const projects: Project[] = [
         category: 'Games',
         skills: ['C#', 'Unity', 'Shaders'],
         demoLink: 'https://github.com/Swifter1243/SYNERGY/releases/latest',
-        sourceLink: 'https://github.com/Swifter1243/SYNERGY'
+        sourceLink: 'https://github.com/Swifter1243/SYNERGY',
+        startDate: dateFromMonthYear('September 2022'),
+        endDate: dateFromMonthYear('January 2023')
     },
     {
         importance: 3,
@@ -51,7 +58,9 @@ const projects: Project[] = [
         category: 'Experiences',
         skills: ['C#', 'Shaders', 'Unity'],
         demoLink: 'https://beatsaver.com/maps/4968d',
-        sourceLink: 'https://github.com/Swifter1243/aether_map'
+        sourceLink: 'https://github.com/Swifter1243/aether_map',
+        startDate: dateFromMonthYear('May 2025'),
+        endDate: dateFromMonthYear('August 2025')
     },
     {
         importance: 2,
@@ -61,7 +70,9 @@ const projects: Project[] = [
         category: 'Games',
         skills: ['C#', 'Shaders', 'Unity', 'Audio'],
         demoLink: 'https://github.com/Swifter1243/Grasping-At-Straws/releases/latest',
-        sourceLink: 'https://github.com/Swifter1243/Grasping-At-Straws'
+        sourceLink: 'https://github.com/Swifter1243/Grasping-At-Straws',
+        startDate: dateFromMonthYear('February 2025'),
+        endDate: dateFromMonthYear('February 2025')
     },
     {
         importance: 2,
@@ -71,6 +82,8 @@ const projects: Project[] = [
         category: 'Games',
         skills: ['C#', 'Shaders', 'Teamwork'],
         demoLink: 'https://drive.google.com/drive/u/0/folders/15qEAkHTWxyTDABXE9rn7VNDnCzREBMpl',
+        startDate: dateFromMonthYear('February 2024'),
+        endDate: dateFromMonthYear('February 2024')
     },
     {
         importance: 2,
@@ -80,7 +93,9 @@ const projects: Project[] = [
         category: 'Games',
         skills: ['C#', 'Teamwork', 'Unity', 'Audio'],
         demoLink: 'https://github.com/Swifter1243/SLC_GAMEJAM_SEM3/releases/latest',
-        sourceLink: 'https://github.com/Swifter1243/SLC_GAMEJAM_SEM3'
+        sourceLink: 'https://github.com/Swifter1243/SLC_GAMEJAM_SEM3',
+        startDate: dateFromMonthYear('October 2024'),
+        endDate: dateFromMonthYear('October 2024')
     },
     {
         importance: 1,
@@ -90,7 +105,9 @@ const projects: Project[] = [
         category: 'Games',
         skills: ['C#', 'Teamwork', 'Unity', 'Shaders'],
         demoLink: 'https://catsandwich1259.itch.io/plasmashift',
-        sourceLink: 'https://github.com/CatSandwich/PlasmaShift'
+        sourceLink: 'https://github.com/CatSandwich/PlasmaShift',
+        startDate: dateFromMonthYear('September 2023'),
+        endDate: dateFromMonthYear('September 2023')
     },
     {
         importance: 5,
@@ -100,7 +117,8 @@ const projects: Project[] = [
         category: 'Experiments',
         skills: ['Java', 'Teamwork', 'Mathematics'],
         demoLink: 'https://modrinth.com/mod/beatcraft',
-        sourceLink: 'https://github.com/Swifter1243/BeatCraft'
+        sourceLink: 'https://github.com/Swifter1243/BeatCraft',
+        startDate: dateFromMonthYear('January 2021')
     },
     {
         importance: 5,
@@ -109,7 +127,8 @@ const projects: Project[] = [
         html: remapperHTML,
         category: 'Tools',
         skills: ['TypeScript', 'Python', 'Mathematics'],
-        sourceLink: 'https://github.com/Swifter1243/ReMapper'
+        sourceLink: 'https://github.com/Swifter1243/ReMapper',
+        startDate: dateFromMonthYear('January 2022')
     },
     {
         importance: 2,
@@ -119,7 +138,9 @@ const projects: Project[] = [
         category: 'Experiences',
         skills: ['TypeScript', 'Unity', 'Teamwork'],
         demoLink: 'https://beatsaver.com/playlists/8713',
-        sourceLink: 'https://github.com/Swifter1243/MapScripts'
+        sourceLink: 'https://github.com/Swifter1243/MapScripts',
+        startDate: dateFromMonthYear('September 2021'),
+        endDate: dateFromMonthYear('September 2022')
     },
     {
         importance: 3,
@@ -129,7 +150,9 @@ const projects: Project[] = [
         category: 'Experiences',
         skills: ['Shaders', 'Unity', 'Mathematics'],
         demoLink: 'https://vrchat.com/home/world/wrld_257dfd01-d3ac-45be-9a09-d7a7ef1ed68b/info',
-        sourceLink: 'https://github.com/Swifter1243/ricochet'
+        sourceLink: 'https://github.com/Swifter1243/ricochet',
+        startDate: dateFromMonthYear('December 2023'),
+        endDate: dateFromMonthYear('March 2024')
     },
     {
         importance: 3.5,
@@ -138,6 +161,7 @@ const projects: Project[] = [
         html: shadertoyShadersHTML,
         category: 'Experiments',
         skills: ['Shaders', 'Mathematics'],
+        startDate: dateFromMonthYear('January 2023')
     },
     {
         importance: 2,
@@ -146,7 +170,8 @@ const projects: Project[] = [
         html: beatSaberLevelsHTML,
         category: 'Experiences',
         skills: ['Unity', 'TypeScript', 'Shaders'],
-        demoLink: 'https://beatsaver.com/profile/4284246'
+        demoLink: 'https://beatsaver.com/profile/4284246',
+        startDate: dateFromMonthYear('November 2019')
     },
     {
         importance: 1,
@@ -155,7 +180,9 @@ const projects: Project[] = [
         html: placeHolderHTML,
         category: 'Tools',
         skills: ['TypeScript'],
-        sourceLink: 'https://github.com/Swifter1243/EnvironmentGrabber'
+        sourceLink: 'https://github.com/Swifter1243/EnvironmentGrabber',
+        startDate: dateFromMonthYear('October 2023'),
+        endDate: dateFromMonthYear('October 2023')
     },
     {
         importance: 2,
@@ -164,7 +191,8 @@ const projects: Project[] = [
         html: placeHolderHTML,
         category: 'Tools',
         skills: ['Unity', 'C#', 'Shaders'],
-        sourceLink: 'https://github.com/Swifter1243/Enlighten'
+        sourceLink: 'https://github.com/Swifter1243/Enlighten',
+        startDate: dateFromMonthYear('August 2023')
     },
     {
         importance: 3,
@@ -173,6 +201,8 @@ const projects: Project[] = [
         html: placeHolderHTML,
         category: 'Experiences',
         skills: ['TypeScript', 'Audio'],
+        sourceLink: 'https://github.com/Swifter1243/swifter-website',
+        startDate: dateFromMonthYear('November 2025')
     },
     {
         importance: 3.5,
@@ -181,7 +211,8 @@ const projects: Project[] = [
         html: placeHolderHTML,
         category: 'Tools',
         skills: ['C#', 'Unity', 'Teamwork', 'TypeScript'],
-        sourceLink: 'https://github.com/Swifter1243/VivifyTemplate'
+        sourceLink: 'https://github.com/Swifter1243/VivifyTemplate',
+        startDate: dateFromMonthYear('February 2024')
     },
     {
         importance: 2.5,
@@ -189,7 +220,9 @@ const projects: Project[] = [
         key: 'sdl-minecraft',
         html: placeHolderHTML,
         category: 'Games',
-        skills: ['C++', 'Teamwork']
+        skills: ['C++', 'Teamwork'],
+        startDate: dateFromMonthYear('February 2024'),
+        endDate: dateFromMonthYear('February 2024')
     },
     {
         importance: 2,
@@ -197,7 +230,9 @@ const projects: Project[] = [
         key: 'excel-software-renderer',
         html: placeHolderHTML,
         category: 'Experiments',
-        skills: ['Python', 'Mathematics']
+        skills: ['Python', 'Mathematics'],
+        startDate: dateFromMonthYear('April 2025'),
+        endDate: dateFromMonthYear('April 2025')
     },
     {
         importance: 2,
@@ -207,7 +242,9 @@ const projects: Project[] = [
         category: 'Experiments',
         skills: ['Mathematics'],
         demoLink: 'https://github.com/Swifter1243/magic-nether-portal/releases/latest',
-        sourceLink: 'https://github.com/Swifter1243/magic-nether-portal'
+        sourceLink: 'https://github.com/Swifter1243/magic-nether-portal',
+        startDate: dateFromMonthYear('April 2025'),
+        endDate: dateFromMonthYear('April 2025')
     },
     {
         importance: 2,
@@ -216,7 +253,9 @@ const projects: Project[] = [
         html: placeHolderHTML,
         category: 'Games',
         skills: ['Java'],
-        sourceLink: 'https://github.com/ElijahStafford/GreenFootTetris'
+        sourceLink: 'https://github.com/ElijahStafford/GreenFootTetris',
+        startDate: dateFromMonthYear('April 2023'),
+        endDate: dateFromMonthYear('April 2023')
     },
     {
         importance: 1.5,
@@ -225,7 +264,8 @@ const projects: Project[] = [
         html: placeHolderHTML,
         category: 'Experiments',
         skills: ['TypeScript', 'Audio'],
-        demoLink: 'https://soundcloud.com/swifter1243'
+        demoLink: 'https://soundcloud.com/swifter1243',
+        startDate: dateFromMonthYear('October 2021')
     },
     {
         importance: 5,
@@ -234,7 +274,8 @@ const projects: Project[] = [
         html: placeHolderHTML,
         category: 'Games',
         skills: ['Unity', 'C#', 'Shaders', 'Teamwork'],
-        demoLink: 'https://store.steampowered.com/app/4223390/BoomBox_Remastered'
+        demoLink: 'https://store.steampowered.com/app/4223390/BoomBox_Remastered',
+        startDate: dateFromMonthYear('May 2025')
     },
     {
         importance: 2,
@@ -243,7 +284,9 @@ const projects: Project[] = [
         html: placeHolderHTML,
         category: 'Tools',
         skills: ['Unity', 'C#'],
-        sourceLink: 'https://github.com/Swifter1243/UnityAnimationWindow'
+        sourceLink: 'https://github.com/Swifter1243/UnityAnimationWindow',
+        startDate: dateFromMonthYear('December 2024'),
+        endDate: dateFromMonthYear('August 2025')
     }
 ]
 

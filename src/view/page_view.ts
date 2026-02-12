@@ -2,7 +2,7 @@ import type { PageNode } from "../model/page_node";
 import { attachCarousels } from "./carousel";
 import { disableInput, enableInput } from "./three/input";
 import { attachLinks } from "./links";
-import { loadProjectTags } from "./project_tags";
+import { loadPageProjectInfo } from "./page_project_info";
 import { muteChordPads, unmuteChordPads } from "./sound/chord";
 import { navigation } from "../navigation/navigation";
 
@@ -32,12 +32,11 @@ export class PageView {
         pageTitle.textContent = node.name
         pageContentParent.scrollTop = 0
 
-        loadProjectTags(node.project)
-
         if (lastTimeout !== undefined) {
             clearTimeout(lastTimeout)
         }
-
+        
+        loadPageProjectInfo(node.project)
         attachCarousels()
         attachLinks(node.project);
         (window as any).___redditEmbed?.load();
