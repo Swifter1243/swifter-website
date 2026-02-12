@@ -1,4 +1,6 @@
 import { type Project } from "./project";
+import { dateFromMonthYear } from "../../utilities/date";
+
 import placeHolderHTML from '../pages/placeholder.html?raw'
 import extraSensory2HTML from './pages/extra_sensory_2.html?raw'
 import derelictHTML from './pages/derelict.html?raw'
@@ -14,7 +16,7 @@ import bloodRushingHTML from './pages/blood_rushing.html?raw'
 import ricochetHTML from './pages/ricochet.html?raw'
 import shadertoyShadersHTML from './pages/shadertoy_shaders.html?raw'
 import beatSaberLevelsHTML from './pages/beat_saber_levels.html?raw'
-import { dateFromMonthYear } from "../../utilities/date";
+import beatSaberEnvironmentGrabberHTML from './pages/beat_saber_environment_grabber.html?raw'
 
 const projects: Project[] = [
     {
@@ -177,7 +179,7 @@ const projects: Project[] = [
         importance: 1,
         name: 'Beat Saber Environment Grabber',
         key: 'environment-grabber',
-        html: placeHolderHTML,
+        html: beatSaberEnvironmentGrabberHTML,
         category: 'Tools',
         skills: ['TypeScript'],
         sourceLink: 'https://github.com/Swifter1243/EnvironmentGrabber',
