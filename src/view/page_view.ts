@@ -40,7 +40,6 @@ export class PageView {
         attachCarousels()
         attachLinks(node.project);
         setLinksToOpenNewTab();
-        (window as any).___redditEmbed?.load();
     }
 
     closePage(): void {
