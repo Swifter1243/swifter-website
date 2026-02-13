@@ -17,6 +17,7 @@ import ricochetHTML from './pages/ricochet.html?raw'
 import shadertoyShadersHTML from './pages/shadertoy_shaders.html?raw'
 import beatSaberLevelsHTML from './pages/beat_saber_levels.html?raw'
 import beatSaberEnvironmentGrabberHTML from './pages/beat_saber_environment_grabber.html?raw'
+import enlightenHTML from './pages/enlighten.html?raw'
 
 const projects: Project[] = [
     {
@@ -190,7 +191,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Enlighten',
         key: 'enlighten',
-        html: placeHolderHTML,
+        html: enlightenHTML,
         category: 'Tools',
         skills: ['Unity', 'C#', 'Shaders'],
         sourceLink: 'https://github.com/Swifter1243/Enlighten',
