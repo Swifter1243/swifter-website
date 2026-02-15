@@ -18,6 +18,7 @@ import shadertoyShadersHTML from './pages/shadertoy_shaders.html?raw'
 import beatSaberLevelsHTML from './pages/beat_saber_levels.html?raw'
 import beatSaberEnvironmentGrabberHTML from './pages/beat_saber_environment_grabber.html?raw'
 import enlightenHTML from './pages/enlighten.html?raw'
+import sdlMinecraftHTML from './pages/sdl_minecraft.html?raw'
 
 const projects: Project[] = [
     {
@@ -221,7 +222,7 @@ const projects: Project[] = [
         importance: 2.5,
         name: 'SDL Minecraft',
         key: 'sdl-minecraft',
-        html: placeHolderHTML,
+        html: sdlMinecraftHTML,
         category: 'Games',
         skills: ['C++', 'Teamwork'],
         startDate: dateFromMonthYear('February 2024'),
