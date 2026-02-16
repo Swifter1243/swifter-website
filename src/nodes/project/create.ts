@@ -18,6 +18,7 @@ import shadertoyShadersHTML from './pages/shadertoy_shaders.html?raw'
 import beatSaberLevelsHTML from './pages/beat_saber_levels.html?raw'
 import beatSaberEnvironmentGrabberHTML from './pages/beat_saber_environment_grabber.html?raw'
 import enlightenHTML from './pages/enlighten.html?raw'
+import vivifyTemplateHTML from './pages/vivify_template.html?raw'
 import sdlMinecraftHTML from './pages/sdl_minecraft.html?raw'
 
 const projects: Project[] = [
@@ -212,9 +213,9 @@ const projects: Project[] = [
         importance: 3.5,
         name: 'Vivify Template',
         key: 'vivify-template',
-        html: placeHolderHTML,
+        html: vivifyTemplateHTML,
         category: 'Tools',
-        skills: ['C#', 'Unity', 'Teamwork', 'TypeScript'],
+        skills: ['C#', 'Unity', 'Shaders', 'Teamwork', 'TypeScript'],
         sourceLink: 'https://github.com/Swifter1243/VivifyTemplate',
         startDate: dateFromMonthYear('February 2024')
     },
