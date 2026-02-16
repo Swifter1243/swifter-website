@@ -1,0 +1,73 @@
+<h2>
+    Excel Software Renderer is an experimental renderer which draws to "pixels"
+    in an excel sheet.
+</h2>
+
+<p>
+    For an assignment in our python course at school, we were tasked with
+    writing some program that utilizes <i>any</i> three python packages. I
+    decided this was an opportunity to showcase my knowledge of the graphics
+    pipeline, and utilized openpyxl, pywavefront, and numpy to create a software
+    renderer.
+</p>
+
+<div class="content-row" style="align-items: end;">
+    <div class="descripted-item">
+        <img src="/excel software renderer/scene.png" alt="" style="width: 100%;">
+        <p>The model inside of Blender.</p>
+    </div>
+    <div class="descripted-item">
+        <img src="/excel software renderer/final.png" alt="" style="width: 100%;">
+        <p>The final render inside of Excel.</p>
+    </div>
+</div>
+
+<p>
+    The program would load an obj model using pywavefront, render it, and draw
+    it to "pixels" (square cells) in an output Excel sheet.
+</p>
+
+<div class="spacer"></div>
+
+<p>The program executes the following steps:</p>
+<div style="display: flex; justify-content: center">
+    <ol style="max-width: 650px; text-align: left">
+        <li>Initialize destination and depth buffers.</li>
+        <li>Load the obj file.</li>
+        <li>Run "vertex shader" on every vertex.</li>
+        <li>
+            Project vertices to screen using <a
+                href="https://en.wikipedia.org/wiki/Orthographic_projection"
+            >Orthographic Projection</a>.
+        </li>
+        <li>
+            Connect triangle edges using <a
+                href="https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm"
+            >Bresenham's Algorithm</a>.
+        </li>
+        <li>
+            Interpolate edges using <a
+                href="https://en.wikipedia.org/wiki/Scanline_rendering"
+            >Scanline Rendering</a> to produce fragments.
+        </li>
+        <li>Run fragments through "fragment shader".</li>
+        <li>
+            Discard fragments which are behind objects based on the depth
+            buffer.
+        </li>
+        <li>Write remaining fragments to the depth and destination buffers.</li>
+        <li>Finalize destination buffer to excel sheet.</li>
+    </ol>
+</div>
+
+<div class="spacer"></div>
+
+<p>
+    The program isn't really performant or practical, but it was a fun
+    experiment to learn how to render objects from beginning to end. In the
+    future I could improve this program with things like perspective projection,
+    triangle clipping, frustum culling, and more.
+</p>
+<h2>
+    My professor didn't know how to run the program but gave me a 100% anyway.
+</h2>

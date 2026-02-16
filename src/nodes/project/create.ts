@@ -20,6 +20,8 @@ import beatSaberEnvironmentGrabberHTML from './pages/beat_saber_environment_grab
 import enlightenHTML from './pages/enlighten.html?raw'
 import vivifyTemplateHTML from './pages/vivify_template.html?raw'
 import sdlMinecraftHTML from './pages/sdl_minecraft.html?raw'
+import excelSoftwareRendererHTML from './pages/excel_software_renderer.html?raw'
+
 
 const projects: Project[] = [
     {
@@ -233,9 +235,10 @@ const projects: Project[] = [
         importance: 2,
         name: 'Excel Software Renderer',
         key: 'excel-software-renderer',
-        html: placeHolderHTML,
+        html: excelSoftwareRendererHTML,
         category: 'Experiments',
         skills: ['Python', 'Mathematics'],
+        demoLink: 'https://drive.google.com/file/d/1lVavDQJT7eWCB3lB4XpUlI5SrQxJMPJM/view?usp=sharing',
         startDate: dateFromMonthYear('April 2025'),
         endDate: dateFromMonthYear('April 2025')
     },
