@@ -32,7 +32,7 @@ const projects: Project[] = [
         category: 'Experiences',
         skills: ['C#', 'Shaders', 'Unity', 'TypeScript', 'Teamwork', 'Audio'],
         demoLink: 'https://beatsaver.com/playlists/797071',
-        startDate: dateFromMonthYear('September 2022'),
+        startDate: dateFromMonthYear('September 2023'),
         endDate: dateFromMonthYear('January 2025')
     },
     {
