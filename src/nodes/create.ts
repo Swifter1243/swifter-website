@@ -15,7 +15,7 @@ export function createRootNode(projects: Project[]): INode {
 }
 
 function createSkillNodes(projects: Project[]): INode {
-    const rootNode = new DirectoryNode('Skills')
+    const rootNode = new DirectoryNode('Skills', 1)
 
     const skillNodes: Partial<Record<Skill, DirectoryNode>> = {}
 
@@ -36,12 +36,12 @@ function createSkillNodes(projects: Project[]): INode {
 }
 
 function createProjectNodes(projects: Project[]): INode {
-    const rootNode = new DirectoryNode('Projects')
+    const rootNode = new DirectoryNode('Projects', 1)
 
     const categoryNodes: Partial<Record<Category, DirectoryNode>> = {}
 
     Object.entries(CATEGORIES).forEach(([name, key]) => {
-        const node = new DirectoryNode(name)
+        const node = new DirectoryNode(name, 1)
         rootNode.addNode(key, node)
         categoryNodes[name as Category] = node
     })
