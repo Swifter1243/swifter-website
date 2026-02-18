@@ -25,7 +25,7 @@ import excelSoftwareRendererHTML from './pages/excel_software_renderer.html?raw'
 
 const projects: Project[] = [
     {
-        importance: 5,
+        importance: 10,
         name: 'Extra Sensory II',
         key: 'extra-sensory-ii',
         html: extraSensory2HTML,
@@ -46,7 +46,7 @@ const projects: Project[] = [
         endDate: dateFromMonthYear('April 2025')
     },
     {
-        importance: 4,
+        importance: 2,
         name: 'SYNERGY',
         key: 'synergy',
         html: synergyHTML,
@@ -82,7 +82,7 @@ const projects: Project[] = [
         endDate: dateFromMonthYear('February 2025')
     },
     {
-        importance: 2,
+        importance: 1,
         name: 'ZERO Inc.',
         key: 'zero-inc',
         html: zeroIncHTML,
@@ -105,7 +105,7 @@ const projects: Project[] = [
         endDate: dateFromMonthYear('October 2024')
     },
     {
-        importance: 1,
+        importance: 0.3,
         name: 'PlasmaShift',
         key: 'plasmashift',
         html: plasmaShiftHTML,
@@ -171,7 +171,7 @@ const projects: Project[] = [
         startDate: dateFromMonthYear('January 2023')
     },
     {
-        importance: 2,
+        importance: 1,
         name: 'Beat Saber Levels',
         key: 'beat-saber-levels',
         html: beatSaberLevelsHTML,
@@ -192,7 +192,7 @@ const projects: Project[] = [
         endDate: dateFromMonthYear('October 2023')
     },
     {
-        importance: 2,
+        importance: 1,
         name: 'Enlighten',
         key: 'enlighten',
         html: enlightenHTML,
@@ -222,7 +222,7 @@ const projects: Project[] = [
         startDate: dateFromMonthYear('February 2024')
     },
     {
-        importance: 2.5,
+        importance: 1,
         name: 'SDL Minecraft',
         key: 'sdl-minecraft',
         html: sdlMinecraftHTML,
@@ -276,7 +276,7 @@ const projects: Project[] = [
         startDate: dateFromMonthYear('October 2021')
     },
     {
-        importance: 5,
+        importance: 10,
         name: 'BoomBox Remastered',
         key: 'boombox-remastered',
         html: placeHolderHTML,
