@@ -25,7 +25,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
     visualNodes: Record<string, VisualNode> = {}
     disposables: IDisposable[] = []
     onNodeClicked = new Invokable<[string]>()
-    startNormal = new SmoothVec3(0, 0.0001, 0, 5)
+    startNormals: Record<string, SmoothVec3> = {}
     endNormals: Record<string, SmoothVec3> = {}
     breezeOffsets: Record<string, number> = {}
     
@@ -43,8 +43,6 @@ export class VisualDirectory implements IDisposable, IUpdateable {
 
         this.pivotObject = new THREE.Object3D()
         this.pivotObject.position.set(0, this.contentSize, 0)
-
-        this.startNormal.copy(new THREE.Vector3(0, 0.8 * this.contentSize, 0))
 
         this.cameraPivot = {
             object: this.pivotObject,
@@ -84,8 +82,13 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             this.breezeOffsets[key] = nextBreezeOffset
             nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
 
-            const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize)
-            const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize)
+            const importanceLengthScalar = lerp(0.5, 1, 1 - Math.exp(-(relativeImportance * 3)))
+            const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
+            const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
+
+            const startNormal = new SmoothVec3(0, 0.0001, 0, 5)
+            startNormal.set(0, 0.8 * this.contentSize * importanceLengthScalar, 0)
+            this.startNormals[key] = startNormal
 
             const endPoint = new THREE.Vector3()
             const endNormal = new SmoothVec3(0, 0, 0, 5)
@@ -93,13 +96,12 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             endNormal.copy(new THREE.Vector3().addScaledVector(normal, -0.5))
             this.endNormals[key] = endNormal
 
-            const connectionWidth = lerp(1, 1.5, relativeImportance) * 0.005
-            const connection = new Connection(this.content, startPoint, this.startNormal.current, endPoint, endNormal.current, connectionWidth)
+            const connection = new Connection(this.content, startPoint, startNormal.current, endPoint, endNormal.current, relativeImportance)
             this.connections[key] = connection
             this.disposables.push(connection)
 
             const visualNodeSize = lerp(0.5, 1.5, relativeImportance) * this.contentSize
-            const visualNodeLabelSize = lerp(0.1, 0.2, relativeImportance)
+            const visualNodeLabelSize = lerp(0.03, 0.2, relativeImportance)
             const visualNodePedals = Math.round(lerp(2, 4, relativeImportance))
             const visualNode = new VisualNode(node.name, this.content, position, o.normal, visualNodePedals, visualNodeSize, visualNodeLabelSize)
             visualNode.relativeImportance = relativeImportance
@@ -113,7 +115,6 @@ export class VisualDirectory implements IDisposable, IUpdateable {
     }
 
     update(deltaTime: number): void {
-        this.startNormal.update(deltaTime)
         this.breezeAmount.update(deltaTime)
 
         time += deltaTime
@@ -122,8 +123,10 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             const key = entry[0]
             const visualNode = entry[1]
             const connection = this.connections[key]
+            const startNormal = this.startNormals[key]
             const endNormal = this.endNormals[key]
 
+            startNormal.update(deltaTime)
             endNormal.update(deltaTime)
             connection.endPoint.copy(visualNode.smoothedPosition.current)
 

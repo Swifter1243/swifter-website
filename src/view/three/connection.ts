@@ -1,5 +1,5 @@
 import { THREE } from "../../deps";
-import { randomRange } from "../../utilities/math";
+import { lerp, randomRange } from "../../utilities/math";
 import { alignLocalUp } from "../../utilities/three";
 import type { IDisposable } from "./disposable";
 import { leafParticleSystem } from "./leaf_particle_system";
@@ -23,6 +23,7 @@ export class Connection implements IDisposable, IUpdateable {
     readonly leafMaterial: THREE.MeshBasicMaterial
 
     private readonly width: number
+    private readonly brightness: number
     private readonly curve: THREE.Curve<THREE.Vector3>
     private readonly startControlPoint = new THREE.Vector3()
     private readonly endControlPoint = new THREE.Vector3()
@@ -59,14 +60,15 @@ export class Connection implements IDisposable, IUpdateable {
         startNormal: THREE.Vector3,
         endPoint: THREE.Vector3, 
         endNormal: THREE.Vector3,
-        width: number
+        importance: number
     ) {
         this.parent = parent
         this.startPoint = startPoint
         this.startNormal = startNormal
         this.endPoint = endPoint
         this.endNormal = endNormal
-        this.width = width
+        this.width = lerp(0.6, 1.3, importance) * 0.005
+        this.brightness = 1
 
         addUpdateable(this)
         
@@ -74,12 +76,17 @@ export class Connection implements IDisposable, IUpdateable {
         this.curve = new THREE.CubicBezierCurve3(startPoint, this.startControlPoint, this.endControlPoint, endPoint)
 
         this.branchMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' })
+        this.branchMaterial.color.setScalar(this.brightness)
         this.mesh = new THREE.Mesh( this.getGeometry(), this.branchMaterial )
 
         parent.add(this.mesh)
 
         this.leafMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', side: THREE.DoubleSide })
-        for (let t = randomRange(0.2, 0.5); t < 1; t += randomRange(0.1, 0.3)) {
+        this.leafMaterial.color.setScalar(this.brightness)
+
+        const max = lerp(0.5, 1, importance)
+        for (let u = randomRange(0.05, 0.2); u < max; u += randomRange(0.1, 0.3)) {
+            const t = u / max
             const mesh = new THREE.Mesh(leafGeometry, this.leafMaterial)
             this.parent.add(mesh)
 
@@ -93,8 +100,8 @@ export class Connection implements IDisposable, IUpdateable {
     }
 
     enable() {
-        this.branchMaterial.color.setScalar(1)
-        this.leafMaterial.color.setScalar(1)
+        this.branchMaterial.color.setScalar(this.brightness)
+        this.leafMaterial.color.setScalar(this.brightness)
     }
 
     disable() {
