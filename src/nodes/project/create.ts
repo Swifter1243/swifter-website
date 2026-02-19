@@ -21,6 +21,7 @@ import enlightenHTML from './pages/enlighten.html?raw'
 import vivifyTemplateHTML from './pages/vivify_template.html?raw'
 import sdlMinecraftHTML from './pages/sdl_minecraft.html?raw'
 import excelSoftwareRendererHTML from './pages/excel_software_renderer.html?raw'
+import greenfootTetrisHTML from './pages/greenfoot_tetris.html?raw'
 
 
 const projects: Project[] = [
@@ -257,9 +258,9 @@ const projects: Project[] = [
     {
         importance: 2,
         name: 'Greenfoot Tetris',
-        key: 'magic-nether-portal',
-        html: placeHolderHTML,
-        category: 'Games',
+        key: 'greenfoot-tetris',
+        html: greenfootTetrisHTML,
+        category: 'Experiments',
         skills: ['Java'],
         sourceLink: 'https://github.com/ElijahStafford/GreenFootTetris',
         startDate: dateFromMonthYear('April 2023'),
