@@ -22,6 +22,7 @@ import vivifyTemplateHTML from './pages/vivify_template.html?raw'
 import sdlMinecraftHTML from './pages/sdl_minecraft.html?raw'
 import excelSoftwareRendererHTML from './pages/excel_software_renderer.html?raw'
 import greenfootTetrisHTML from './pages/greenfoot_tetris.html?raw'
+import myMusicHTML from './pages/my_music.html?raw'
 
 
 const projects: Project[] = [
@@ -270,7 +271,7 @@ const projects: Project[] = [
         importance: 1.5,
         name: 'My Music',
         key: 'my-music',
-        html: placeHolderHTML,
+        html: myMusicHTML,
         category: 'Experiments',
         skills: ['TypeScript', 'Audio'],
         demoLink: 'https://soundcloud.com/swifter1243',
