@@ -41,6 +41,8 @@ export class PageView {
         attachCarousels()
         attachLinks(node.project);
         setLinksToOpenNewTab();
+
+        (window as any).twttr.widgets.load();
     }
 
     closePage(): void {

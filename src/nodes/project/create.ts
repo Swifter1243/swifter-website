@@ -23,6 +23,7 @@ import sdlMinecraftHTML from './pages/sdl_minecraft.html?raw'
 import excelSoftwareRendererHTML from './pages/excel_software_renderer.html?raw'
 import greenfootTetrisHTML from './pages/greenfoot_tetris.html?raw'
 import myMusicHTML from './pages/my_music.html?raw'
+import magicNetherPortalHTML from './pages/magic_nether_portal.html?raw'
 
 
 const projects: Project[] = [
@@ -248,7 +249,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Magic Nether Portal',
         key: 'magic-nether-portal',
-        html: placeHolderHTML,
+        html: magicNetherPortalHTML,
         category: 'Experiments',
         skills: ['Mathematics'],
         demoLink: 'https://github.com/Swifter1243/magic-nether-portal/releases/latest',

@@ -1,0 +1,223 @@
+<h2>
+    Magic Nether Portal is an experimental Minecraft project that creates a
+    portal illusion without any mods.
+</h2>
+
+<div class="descripted-item">
+    <div style="display: flex; justify-content: center; padding: 0 5% 0 5%">
+        <blockquote class="twitter-tweet" data-theme="dark">
+            <h2>Loading tweet...</h2>
+            <a
+                href="https://twitter.com/Swifter1243/status/1917094003725475844?ref_src=twsrc%5Etfw"
+            ></a>
+        </blockquote>
+    </div>
+    <p>A tweet I made about the project, which unexpectedly blew up!</p>
+</div>
+
+<div class="spacer"></div>
+
+<p>
+    This project was inspired by SethBling's Magic Nether Portal he made years
+    ago. It works by replacing blocks dynamically based on the view of player.
+    It was great for what was available at the time, but has some obvious
+    limitations.
+</p>
+
+<iframe
+    class="video"
+    src="https://www.youtube.com/embed/xewQL6CkMWI"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+    allowfullscreen
+    style="width: 80%; aspect-ratio: 16/9"
+>
+</iframe>
+
+<p>
+    His was pretty slow. If you didn't crouch to reduce your movement speed, you
+    could easily see the leftover blocks spoiling the effect. This is because he
+    relied on <a href="https://minecraft.wiki/w/Redstone_Comparator"
+    >comparator</a> output from command blocks, which takes 3 game-ticks (0.15
+    seconds) to update. His also was baked on the 2D plane that you stand, so
+    the effect was only evaluated per-block.
+</p>
+
+<h3>
+    For my version, I wanted full 20 ticks per second updates, with sub-block
+    precision. I also wanted the player to be able to actually go <i>through</i>
+    the portal and come back.
+</h3>
+
+<div class="spacer"></div>
+
+<h3>
+    If you aren't familiar with Minecraft's "coding" system, it basically takes
+    advantage of very verbose in-game commands.
+</h3>
+
+<div class="descripted-item" style="margin-bottom: 50px">
+    <div
+        class="content-row"
+        style="align-items: stretch"
+    >
+        <div
+            style="margin: 10px; padding: 20px; flex: 1; background-color: rgba(156, 156, 156, 0.111); border-radius: 5px"
+        >
+            <b>JavaScript</b>
+            <br>
+            <br>
+            <div style="text-align: left">
+                <code>
+                    console.log(`Sum: ${2 + 4}`)
+                </code>
+            </div>
+        </div>
+
+        <div
+            style="margin: 10px; padding: 20px; flex: 3; background-color: rgba(156, 156, 156, 0.111); border-radius: 5px; min-width: 630px"
+        >
+            <b>Minecraft Commands</b>
+            <br>
+            <br>
+            <div style="text-align: left">
+                <code>
+                    scoreboard objectives add variables dummy <br>
+                    scoreboard players set CONST_2 variables 2 <br>
+                    scoreboard players set CONST_4 variables 4 <br>
+                    scoreboard players operation temp1 variables = CONST_2
+                    variables
+                    <br>
+                    scoreboard players operation temp1 variables += CONST4
+                    variables
+                    <br>
+                    tellraw @a
+                    [{"text":"Sum:"},{"score":{"name":"temp1","objective":"variables"}}]
+                </code>
+            </div>
+        </div>
+    </div>
+    <p>
+        Here's some code written in JavaScript, with the equivalent code in
+        Minecraft commands.
+    </p>
+</div>
+
+<p>
+    As you can see, it's quite a pain to work with. Unfortunately this is how I
+    learned to program in 2015. <br>
+    However, I am an actual programmer now, so I employed the use of a
+    TypeScript library called <a href="https://sandstone.dev/">Sandstone</a>,
+    which compiles to commands. This makes it 10x easier to create, but there's
+    still considerations for what the game has available of course.
+</p>
+
+<div class="spacer"></div>
+
+<p>
+    In order to move to a sub-block approach, I was going to need to evaluate
+    the "visiblity" of every block through the portal view in real time. In
+    order to achieve this, I decided to go with a specialized <a
+        href="https://en.wikipedia.org/wiki/3D_projection"
+    >perspective projection matrix</a> approach.
+</p>
+
+<img src="/magic nether portal/matrix.png" alt="">
+
+<p>
+    I spent some time deriving a matrix which would transform a point from world
+    space to the "view frustum" of the portal, where I could easily check if it
+    was out of bounds, similarly to how vertices get clipped in renderers.
+</p>
+
+<img src="/magic nether portal/unity demo.gif" alt="">
+
+<p>
+    I created a demo in Unity which displays points evaluated to be "inside" the
+    frustum. It also shows the matrix at various steps of the transformation
+    steps, which are:
+</p>
+
+<div style="display: flex; justify-content: center">
+    <ol style="max-width: 650px; text-align: left">
+        <li>Translate player head to origin</li>
+        <li>
+            Skew XZ plane so portal frame is centered on the forward (Z) axis
+        </li>
+        <li>Scale portal frame to 1 by 1 unit</li>
+        <li>Move portal frame to Z = 0</li>
+        <li>Store Z in W component to divide point by W afterward.</li>
+    </ol>
+</div>
+
+<div class="spacer"></div>
+
+<p>
+    Now that I have a method of testing whether a block is viewable through the
+    portal, I needed to port it into the game. This came with a very big
+    probablem, which is that scoreboards (variables) do not store decimal
+    places.
+</p>
+
+<p>
+    In order to get around this, I decided to go with a "fixed point" number
+    approach, which is basically where you pretend there's a decimal place and
+    scale your numbers accordingly.
+</p>
+
+<div>
+    <p style="margin: 0">0.0001 → 1</p>
+    <p style="margin: 0">0.5 → 5000</p>
+    <p style="margin: 0">1 → 10000</p>
+    <p style="margin: 0">20 → 200000</p>
+</div>
+
+<p>
+    With that as a base, I was able to make Vector4 and Matrix classes which
+    would allow me to actually do the math through commands.
+</p>
+
+<div class="spacer"></div>
+
+<p>
+    I use two "buffer" structures to represent what the "overworld" and "nether"
+    should look like. I then test blocks in a small area around the nether
+    portal to see if they're being viewed by the player, and clone from the
+    respective structure.
+</p>
+
+<div style="display: flex; justify-content: center">
+    <div class="descripted-item" style="margin-bottom: 50px; width: 90%">
+        <div class="content-carousel">
+            <div style="aspect-ratio: 16/9">
+                <div>
+                    <img src="/magic nether portal/overworld buffer.png">
+                    <img src="/magic nether portal/nether buffer.png">
+                </div>
+                <div>
+                    <a class="prev">&#10094;</a>
+                    <a class="next">&#10095;</a>
+                </div>
+            </div>
+            <div></div>
+        </div>
+        <p>Buffer structures (and their original copies)</p>
+    </div>
+</div>
+
+<p>
+    In order to allow the player to "enter" the nether, I check whether they
+    were inside of the portal and their Z value flipped, and call a function
+    which swaps the "nether" and "overworld" structures.
+</p>
+
+<img src="/magic nether portal/swap.png" alt="">
+
+<p>
+    The far plane of the transformation matrix starts to become parallel with
+    the plane of the portal the closer you get to the center, so I need to
+    handle that logic explicitly once you get too close.
+</p>
+
+<img src="/magic nether portal/test.png" alt="">
+
+<h2>And with that, the illusion is complete!</h2>
