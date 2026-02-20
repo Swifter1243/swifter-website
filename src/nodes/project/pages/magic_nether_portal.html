@@ -38,7 +38,7 @@
     could easily see the leftover blocks spoiling the effect. This is because he
     relied on <a href="https://minecraft.wiki/w/Redstone_Comparator"
     >comparator</a> output from command blocks, which takes 3 game-ticks (0.15
-    seconds) to update. His also was baked on the 2D plane that you stand, so
+    seconds) to update. His calculations were also pre-baked, so
     the effect was only evaluated per-block.
 </p>
 
@@ -84,14 +84,14 @@
                     scoreboard objectives add variables dummy <br>
                     scoreboard players set CONST_2 variables 2 <br>
                     scoreboard players set CONST_4 variables 4 <br>
-                    scoreboard players operation temp1 variables = CONST_2
+                    scoreboard players operation x variables = CONST_2
                     variables
                     <br>
-                    scoreboard players operation temp1 variables += CONST4
+                    scoreboard players operation x variables += CONST_4
                     variables
                     <br>
                     tellraw @a
-                    [{"text":"Sum:"},{"score":{"name":"temp1","objective":"variables"}}]
+                    [{"text":"Sum:"},{"score":{"name":"x","objective":"variables"}}]
                 </code>
             </div>
         </div>
