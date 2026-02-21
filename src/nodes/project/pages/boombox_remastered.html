@@ -1,0 +1,214 @@
+<h2>
+    BoomBox Remastered is a virtual reality rhythm game about hitting drums with
+    drumsticks.
+</h2>
+
+<iframe
+    class="video"
+    src="https://www.youtube.com/embed/17WGkOJ7-_k"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+    allowfullscreen
+    style="width: 90%; aspect-ratio: 16/9"
+>
+</iframe>
+
+<p>
+    It originally released in 2021, but after some struggling with the
+    publisher, it was taken offline to be released independently. <br>
+    I was hired as a <b>Technical Artist & Programmer</b> to help rebuild the
+    project.
+</p>
+
+<div class="spacer"></div>
+
+<h2>My Contributions to BoomBox Remastered</h2>
+
+<div class="content-pair-left">
+    <div class="content-carousel">
+        <div style="aspect-ratio: 16/9">
+            <div style="margin-bottom: 15px">
+                <div class="descripted-item">
+                    <img
+                        class="landscape-media"
+                        src="/boombox remastered/simple japan before.png"
+                    >
+                    <p>"Simple Japan" - Before</p>
+                </div>
+                <div class="descripted-item">
+                    <img
+                        class="landscape-media"
+                        src="/boombox remastered/simple japan after.png"
+                    >
+                    <p>"Simple Japan" - After</p>
+                </div>
+                <div class="descripted-item">
+                    <img
+                        class="landscape-media"
+                        src="/boombox remastered/simple city before.png"
+                    >
+                    <p>"Simple City" - Before</p>
+                </div>
+                <div class="descripted-item">
+                    <img
+                        class="landscape-media"
+                        src="/boombox remastered/simple city after.png"
+                    >
+                    <p>"Simple City" - After</p>
+                </div>
+                <div class="descripted-item">
+                    <img
+                        class="landscape-media"
+                        src="/boombox remastered/simple alien before.png"
+                    >
+                    <p>"Simple Alien" - Before</p>
+                </div>
+                <div class="descripted-item">
+                    <img
+                        class="landscape-media"
+                        src="/boombox remastered/simple alien after.png"
+                    >
+                    <p>"Simple Alien" - After</p>
+                </div>
+            </div>
+            <div>
+                <a class="prev">&#10094;</a>
+                <a class="next">&#10095;</a>
+            </div>
+        </div>
+        <div></div>
+    </div>
+
+    <div>
+        <p>
+            For this project, I took all of the old environments and moved them
+            into the new project with updated visuals.
+        </p>
+
+        <p>
+            I utilized Unity's ShaderGraph to create a standard Lit shader for
+            the project, as well as a few other shaders, like my stylized water
+            shader.
+        </p>
+
+        <p>
+            I additionally adjusted lighting, added subtle fog and smoke VFX,
+            and made other tweaks to add to the feel of the environment.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <img src="/boombox remastered/environment scrolling.gif" alt="">
+    <div>
+        <p>
+            The original game's environments only had a fixed length, so I
+            created a system to procedurally fit chunks of the environment
+            together as the song goes on.
+        </p>
+
+        <p>
+            It automatically hides and spawns pieces (with a nice little
+            animation) and always ensures you start at the start piece and end
+            at the end piece.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <div class="content-carousel">
+        <div style="aspect-ratio: 16/9">
+            <div style="margin-bottom: 15px">
+                <div class="descripted-item">
+                    <img
+                        class="landscape-media"
+                        src="/boombox remastered/baked before.png"
+                    >
+                    <p>Broken/missing lightmap UVs.</p>
+                </div>
+                <div class="descripted-item">
+                    <img
+                        class="landscape-media"
+                        src="/boombox remastered/baked after.png"
+                    >
+                    <p>Fixed lightmap UVs.</p>
+                </div>
+            </div>
+            <div>
+                <a class="prev">&#10094;</a>
+                <a class="next">&#10095;</a>
+            </div>
+        </div>
+        <div></div>
+    </div>
+    <div>
+        <p>
+            Since we were targetting a full framerate on standalone mobile
+            headsets, I needed to pivot from realtime to baked lighting for the
+            environments.
+        </p>
+
+        <p>
+            This introduced some problems with the dynamic environment chunks,
+            but after looking into how baked lighting works in Unity, I created
+            a system that transfers the lightmap data to the instantiated
+            pieces.
+        </p>
+
+        <p>
+            I learned how to effectively utilize baked lighting, fixing broken
+            UVs and balancing memory footprint with fidelity.
+        </p>
+    </div>
+</div>
+
+<p>
+    I was responsible for some small gameplay polish and features around the
+    game, which required an understanding of the large codebase, and was an
+    introduction to Dependency Injection. For these features, I had to sometimes
+    create proprietary shaders along with script behavior to control the
+    visuals.
+</p>
+
+<div class="content-row">
+    <div class="descripted-item">
+        <img src="/boombox remastered/tv animations.gif" alt="">
+        <p>Preview shader and animations I made for the TV.</p>
+    </div>
+    <div class="descripted-item">
+        <img src="/boombox remastered/timing indicators.gif" alt="">
+        <p>Drum timing, score, spawn, and link effects I made.</p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <div class="descripted-item">
+        <img src="/boombox remastered/achievement UI.png" alt="">
+        <p>Achievement window that I made.</p>
+    </div>
+    <div>
+        <p>
+            During this project, I learned how to use <a
+                href="https://docs.unity3d.com/6000.3/Documentation/Manual/UIElements.html"
+            >UI Toolkit</a> to create functional UI views. Since I was also
+            creating <a
+                class="go-to-path-link"
+                href="./my-website"
+            >this website</a> at the time, I was able to easily understand how
+            to create dynamic layouts and styles.
+        </p>
+
+        <p>
+            I also learned how UI Toolkit binds with the underlying scripting,
+            creating efficient UI flows that efficiently updated elements using
+            an event based approach.
+        </p>
+    </div>
+</div>
+
+<div class="spacer"></div>
+
+<h2>BoomBox Remastered launched December 25th, 2025 on Meta and Steam.</h2>
+
+<a class="demo-button">PLAY</a>
+
+<div style="height: 40px"></div>

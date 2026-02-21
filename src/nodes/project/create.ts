@@ -24,6 +24,7 @@ import excelSoftwareRendererHTML from './pages/excel_software_renderer.html?raw'
 import greenfootTetrisHTML from './pages/greenfoot_tetris.html?raw'
 import myMusicHTML from './pages/my_music.html?raw'
 import magicNetherPortalHTML from './pages/magic_nether_portal.html?raw'
+import boomboxRemasteredHTML from './pages/boombox_remastered.html?raw'
 
 
 const projects: Project[] = [
@@ -282,7 +283,7 @@ const projects: Project[] = [
         importance: 5,
         name: 'BoomBox Remastered',
         key: 'boombox-remastered',
-        html: placeHolderHTML,
+        html: boomboxRemasteredHTML,
         category: 'Games',
         skills: ['Unity', 'C#', 'Shaders', 'Teamwork'],
         demoLink: 'https://store.steampowered.com/app/4223390/BoomBox_Remastered',
