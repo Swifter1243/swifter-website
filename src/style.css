@@ -470,30 +470,18 @@ img {
 
 /* go to path links */
 .go-to-path-link {
-	-webkit-user-select: text;
-	-moz-user-select: text;
-	-ms-user-select: text;
-	user-select: text;
-	background: linear-gradient(
-		45deg,
-		rgba(173, 164, 99, 0.6) 20%,
-		rgba(99, 169, 173, 0.6) 80%
-	);
-	border-style: none;
-	border-radius: 2px;
-	font-size: 16px;
+	text-shadow: #51fff1 0 0 20px, #fcffbd 0 0 8px;
 	text-decoration: underline;
-	padding: 2px;
 	color: white;
 	cursor: pointer;
 }
 
 .go-to-path-link:hover {
-	background-color: #6a98a9;
+	filter: brightness(0.7);
 }
 
 .go-to-path-link:active {
-	background-color: #1d343c;
+	filter: brightness(0.4);
 }
 
 /* tutorial */
