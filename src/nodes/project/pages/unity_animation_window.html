@@ -1,0 +1,70 @@
+<h2>
+    Unity Animation Window is a fork of Unity's built-in animation window, which
+    implements audio and particle playback.
+</h2>
+
+<p>
+    The repository is a fork of <a
+        href="https://github.com/forestrf/UnityAnimationWindow"
+    >forestrf's Unity Animation Window</a>, which already included some playback
+    features.
+</p>
+
+<div class="spacer"></div>
+
+<div class="content-pair-left">
+    <img src="/unity animation window/settings.png" alt="">
+    <div>
+        <p>
+            The repository I forked from attached it's new playback features to
+            the bottom of the hierarchy, and it was getting a little crowded.
+        </p>
+
+        <p>
+            I knew I was going to add some new features to the window that
+            wouldn't really fit there anymore, so I created a "Settings" panel
+            for all the new settings.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-right">
+    <img src="/unity animation window/audio.gif" alt="">
+    <div>
+        <p>
+            One of the main reasons I wanted this tool was to sync animations
+            with audio playback. Some tools existed, but none of them were as
+            robust as having a waveform straight in the window.
+        </p>
+
+        <p>
+            I also added a customizable BPM guide, audio latency compensation,
+            and the ability to offset the audio on a per-object basis.
+        </p>
+    </div>
+</div>
+
+<div class="content-pair-left">
+    <img src="/unity animation window/particle playback.gif" alt="">
+    <div>
+        <p>
+            I found it impossible to make particle lightshows without particle
+            playback, so I decided to add some true particle playback which I
+            haven't really seen be done before.
+        </p>
+        <p>
+            No matter how you move the playhead (play forward or scrub timeline)
+            the playback will accurately reflect all particle systems.
+        </p>
+        <p>
+            Particles actually play from the point they were last enabled (this
+            accounts for parents, too). This is achieved by collecting particles
+            and analyzing their context within the animation clip.
+        </p>
+    </div>
+</div>
+
+<h2>
+    The result is a seamless and accurate audio and particle animation tool,
+    which accelerated my ability to create audio-visual experiences.
+</h2>

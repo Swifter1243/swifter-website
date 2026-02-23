@@ -25,6 +25,7 @@ import greenfootTetrisHTML from './pages/greenfoot_tetris.html?raw'
 import myMusicHTML from './pages/my_music.html?raw'
 import magicNetherPortalHTML from './pages/magic_nether_portal.html?raw'
 import boomboxRemasteredHTML from './pages/boombox_remastered.html?raw'
+import unityAnimationWindowHTML from './pages/unity_animation_window.html?raw'
 
 
 const projects: Project[] = [
@@ -293,7 +294,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Unity Animation Window',
         key: 'unity-animation-window',
-        html: placeHolderHTML,
+        html: unityAnimationWindowHTML,
         category: 'Tools',
         skills: ['Unity', 'C#'],
         sourceLink: 'https://github.com/Swifter1243/UnityAnimationWindow',
