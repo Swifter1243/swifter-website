@@ -1,4 +1,5 @@
 import { Invokable } from "../../utilities/invokable";
+import { getCameraScrollScalar, setCameraScrollScalar } from "./camera";
 
 export const onDragStart = new Invokable()
 export const onDragEnd = new Invokable()
@@ -41,6 +42,7 @@ export function initInput() {
     document.addEventListener('pointerup', onPointerUp, false)
     document.addEventListener('pointerdown', onPointerDown, false)
     document.addEventListener('pointercancel', onPointerCancel, false)
+    document.addEventListener('wheel', onWheel, false)
 }
 
 function onPointerMove(e: PointerEvent) {
@@ -109,6 +111,17 @@ function onPointerCancel(_: PointerEvent) {
         return
 
     endPointerDown()
+}
+
+function onWheel(e: WheelEvent) {
+    if (!inputState.enabled)
+        return
+
+    const SCROLL_SPEED = 0.001
+    const delta = e.deltaY * SCROLL_SPEED
+
+    console.log(e.deltaMode)
+    setCameraScrollScalar(getCameraScrollScalar() + delta) 
 }
 
 function endPointerDown() {
