@@ -4,11 +4,13 @@ import { PageNode } from '../model/page_node'
 import { CATEGORIES, nodeFromProject, SKILLS, type Category, type Project, type Skill } from './project/project'
 
 import aboutMeHTML from './pages/about_me.html?raw'
+import myLinksHTML from './pages/my_links.html?raw'
 
 export function createRootNode(projects: Project[]): INode {
     const rootNode = new DirectoryNode('Root')
     rootNode.addNode('skills', createSkillNodes(projects))
-    rootNode.addNode('about-me', new PageNode(1, 'About Me', aboutMeHTML))
+    rootNode.addNode('about-me', new PageNode(0.7, 'About Me', aboutMeHTML))
+    rootNode.addNode('my-links', new PageNode(0.5, 'My Links', myLinksHTML))
     rootNode.addNode('projects', createProjectNodes(projects))
 
     return rootNode
