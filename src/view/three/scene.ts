@@ -1,5 +1,6 @@
 import { THREE } from "../../deps";
 import { lerp, randomRange } from "../../utilities/math";
+import { isMobile } from "../../utilities/mobile";
 import { SmoothNumber } from "../../utilities/smooth_value";
 import { updateObliqueMatrix } from "../../utilities/three";
 import { camera, renderer, scene } from "./main";
@@ -101,8 +102,10 @@ function createMountains() {
 
 function createOcean() {
     const dpr = window.devicePixelRatio ?? 1;
-    const texWidth = window.innerWidth * dpr / 2
-    const texHeight = window.innerHeight * dpr / 2
+    const res = isMobile() ? 1/4 : 1/2
+
+    const texWidth = window.innerWidth * dpr * res
+    const texHeight = window.innerHeight * dpr * res
 
     const reflectTarget = new THREE.WebGLRenderTarget(texWidth, texHeight, {
         type: THREE.HalfFloatType,
@@ -118,8 +121,6 @@ function createOcean() {
             normalMap: { value: oceanNormalTexture },
             time: {value: 0},
             depthTexture: { value: reflectTarget.depthTexture },
-            cameraNear: { value: reflectCamera.near },
-            cameraFar: { value: reflectCamera.far }
         },
         vertexShader: `
             varying vec3 vWorldPosition;
@@ -133,24 +134,26 @@ function createOcean() {
             }
         `,
         fragmentShader: `
-            #include <packing>
-
             uniform sampler2D reflectionTexture;
             uniform sampler2D normalMap;
             uniform float time;
             varying vec3 vWorldPosition;
             varying vec4 vUvReflection;
             uniform sampler2D depthTexture;
-            uniform float cameraNear;
-            uniform float cameraFar;
 
             float getDepth(const in vec2 uv) {
                 return texture2D(depthTexture, uv).x;
             }
 
             void main() {
+                vec2 planePos = vWorldPosition.xz;
+
+                vec3 normal1 = texture2D(normalMap, planePos * 0.01 + time * 0.01).rgb;
+                vec3 normal2 = texture2D(normalMap, planePos * 0.1 + normal1.xz * 0.3 + time * 0.02).rgb;
+                vec3 normal = (normal1 + normal2) * 0.5;
+
                 // Calculate distortion from normal map
-                vec2 distortion = (texture2D(normalMap, vWorldPosition.xz * 0.01 + time * 0.01).rg * 2.0 - 1.0) * 0.02;
+                vec2 distortion = (normal.xy * 2.0 - 1.0) * 0.05;
 
                 // Projective mapping (NDC to UV)
                 vec2 uv = (vUvReflection.xy / vUvReflection.w) * 0.5 + 0.5;
