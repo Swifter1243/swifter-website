@@ -17,7 +17,6 @@ export const composer = new EffectComposer(renderer)
 export async function initThree() {
     const resourcesPromise = initResources()
     initInput()
-    initScene()
     initCamera()
     initRenderer()
     initWindow()
@@ -25,4 +24,5 @@ export async function initThree() {
     initUpdateables()
     initLeafParticleSystem()
     await resourcesPromise
+    initScene()
 }

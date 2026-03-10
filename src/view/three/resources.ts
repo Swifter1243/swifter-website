@@ -4,6 +4,8 @@ import { mergeGroupGeometries, setMaterialRecursive } from "../../utilities/thre
 
 export let leafGeometry: THREE.BufferGeometry
 export let flowerBaseGeometry: THREE.BufferGeometry
+export let mountainPieceGeometry: THREE.BufferGeometry
+export let oceanNormalTexture: THREE.Texture
 
 export type PetalAnimationNames = 
     'Close' |
@@ -21,6 +23,8 @@ export async function initResources() {
         loadFont(),
         loadLeafModel(objLoader),
         loadFlowerBaseModel(objLoader),
+        loadMountainPieceModel(objLoader),
+        loadOcean(textureLoader),
         loadPetalModel(gltfLoader, textureLoader)
     ])
 }
@@ -47,6 +51,21 @@ async function loadLeafModel(objLoader: OBJLoader) {
 async function loadFlowerBaseModel(objLoader: OBJLoader) {
     const model = await objLoader.loadAsync('/models/flower base.obj')
     flowerBaseGeometry = mergeGroupGeometries(model)
+}
+
+async function loadMountainPieceModel(objLoader: OBJLoader) {
+    const model = await objLoader.loadAsync('/models/mountain piece.obj')
+    mountainPieceGeometry = mergeGroupGeometries(model)
+}
+
+async function loadOcean(textureLoader: TextureLoader) {
+    const texture = textureLoader.load(
+        'https://threejs.org/examples/textures/waternormals.jpg',
+        function (texture) {
+            texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        }
+    );
+    oceanNormalTexture = texture
 }
 
 async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoader) {

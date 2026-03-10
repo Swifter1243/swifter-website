@@ -1,19 +1,26 @@
 import { THREE } from "../../deps";
-import { scene } from "./main";
+import { lerp, randomRange } from "../../utilities/math";
+import { camera, renderer, scene } from "./main";
+import { onRender } from "./renderer";
+import { mountainPieceGeometry, oceanNormalTexture } from "./resources";
+
+const OCEAN_Y_LEVEL = -3
 
 export async function initScene() {
     const point = new THREE.PointLight('#feffd7', 2, 0.8, 1.6)
     point.position.set(0, 0.2, 0)
-    createSky()
-
     scene.add(point)
+
+    createSky()
+    createMountains()
+    createOcean()
 }
 
 function createSky() {
     const skyMat = new THREE.ShaderMaterial({
         side: THREE.BackSide,
         uniforms: {
-            horizonColor: { value: new THREE.Color('#00060f') },
+            horizonColor: { value: new THREE.Color('#000916') },
             zenithColor: { value: new THREE.Color(0x000000) }
         },
         depthWrite: false,
@@ -31,7 +38,7 @@ function createSky() {
             uniform vec3 zenithColor;
 
             void main() {
-                float t = 1.0 - pow(1.0 - abs(vPos.y), 3.0);
+                float t = 1.0 - pow(1.0 - abs(vPos.y), 20.0);
 
                 vec3 color = mix(horizonColor, zenithColor, t);
                 gl_FragColor = vec4(color, 1.0);
@@ -40,7 +47,96 @@ function createSky() {
     });
     const skyGeo = new THREE.SphereGeometry(1, 32, 15);
     const mesh = new THREE.Mesh(skyGeo, skyMat)
-    mesh.scale.setScalar(300)
+    mesh.scale.setScalar(900)
 
     scene.add(mesh)
+}
+
+function createMountains() {
+    const count = 200;
+
+    const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+
+    const mesh = new THREE.InstancedMesh(mountainPieceGeometry, material, count);
+
+    const dummy = new THREE.Object3D();
+
+    let angle = 0
+    for (let i = 0; i < count; i++) {
+        const dist = randomRange(100, 600)
+        angle = angle + 0.2
+        const baseScale = lerp(0.4, 6, Math.pow(Math.random(), 3.0))
+
+        dummy.position.set(Math.cos(angle) * dist, OCEAN_Y_LEVEL - baseScale * 0.1, Math.sin(angle) * dist);
+        dummy.scale.set(baseScale, baseScale * randomRange(0.4, 1.6), baseScale)
+        dummy.rotation.set(randomRange(0, 0.8), randomRange(0, Math.PI * 2), 0, 'YXZ')
+
+        dummy.updateMatrix();
+        mesh.setMatrixAt(i, dummy.matrix);
+    }
+
+    scene.add(mesh)
+}
+
+function createOcean() {
+    const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(512, {
+        generateMipmaps: false,
+        type: THREE.HalfFloatType
+    })
+    const oceanCubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget)
+
+    const oceanGeometry = new THREE.PlaneGeometry(1000, 1000);
+    const oceanMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+            envMap: { value: cubeRenderTarget.texture },
+            normalMap: { value: oceanNormalTexture },
+            time: {value: 0}
+        },
+        vertexShader: `
+            varying vec3 vWorldPosition;
+            varying vec3 vWorldDirection;
+            void main() {
+                vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                vWorldPosition = worldPosition.xyz;
+                vWorldDirection = worldPosition.xyz - cameraPosition;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `,
+        fragmentShader: `
+            uniform samplerCube envMap;
+            uniform sampler2D normalMap;
+            uniform float time;
+            varying vec3 vWorldPosition;
+            varying vec3 vWorldDirection;
+            void main() {
+                vec3 normal1 = texture2D(normalMap, vWorldPosition.xz * 0.01 + time * 0.01).rgb * 2.0 - 1.0;
+                vec3 texNormal = normalize(normal1);
+                texNormal.xyz = texNormal.xzy;
+
+                vec3 normal = normalize(vec3(0, 1, 0) + texNormal * 0.04);
+
+                vec3 dir = vWorldDirection;
+                dir = reflect(vWorldDirection, normal);
+                vec3 reflection = textureCube(envMap, dir).rgb;
+                gl_FragColor = vec4(reflection, 1.0);
+            }
+        `
+    });
+    oceanCubeCamera.update(renderer, scene)
+
+    let oceanTime = 0
+    onRender.subscribe((dt: number) => {
+        const worldPosition = new THREE.Vector3()
+        camera.getWorldPosition(worldPosition)
+        worldPosition.y = (worldPosition.y - OCEAN_Y_LEVEL) * -1 + OCEAN_Y_LEVEL
+        oceanCubeCamera.position.copy(worldPosition)
+        oceanCubeCamera.update(renderer, scene)
+        oceanTime += dt
+        oceanMaterial.uniforms.time.value = oceanTime
+    })
+
+    const ocean = new THREE.Mesh(oceanGeometry, oceanMaterial)
+    ocean.rotation.x = -Math.PI / 2;
+    ocean.position.y = OCEAN_Y_LEVEL
+    scene.add(ocean)
 }
