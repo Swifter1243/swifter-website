@@ -46,7 +46,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
 
         this.cameraPivot = {
             object: this.pivotObject,
-            distance: this.contentSize * (5 - nodeCount * 0.1) * this.scalar * 1.3
+            distance: this.contentSize * (5 - nodeCount * 0.1) * this.scalar * 1.2
         }
 
         this.parent = parent
@@ -82,12 +82,12 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             this.breezeOffsets[key] = nextBreezeOffset
             nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
 
-            const importanceLengthScalar = lerp(0.6, 1, Math.pow(relativeImportance, 0.7))
-            const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
-            const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
+            const length = lerp(0.7, 1.5, relativeImportance) * this.contentSize
+            const position = new THREE.Vector3().copy(o.position).multiplyScalar( length)
+            const normal = new THREE.Vector3().copy(o.position).multiplyScalar(length)
 
             const startNormal = new SmoothVec3(0, 0.0001, 0, 5)
-            startNormal.set(0, 0.8 * this.contentSize * importanceLengthScalar, 0)
+            startNormal.set(0, length * 0.5, 0)
             this.startNormals[key] = startNormal
 
             const endPoint = new THREE.Vector3()

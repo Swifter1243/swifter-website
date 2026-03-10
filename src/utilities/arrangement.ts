@@ -1,5 +1,4 @@
 import { THREE } from "../deps"
-import { randomRange } from "./math"
 
 const goldenRatioSquared = Math.pow((1 + Math.sqrt(5)) / 2, 2)
 
@@ -25,7 +24,7 @@ export function generateSunflowerArrangement(points: number): ArrangedObject[] {
         const len = sunflowerLength(i) / maxSunflowerLength
 
         const normal = new THREE.Vector3(0, 1, 0).applyEuler(new THREE.Euler(len, angle, 0, 'YXZ'))
-        const position = new THREE.Vector3().addScaledVector(normal, randomRange(1.5, 1.9))
+        const position = new THREE.Vector3().copy(normal)
 
         resultPoints.push({
             normal,
