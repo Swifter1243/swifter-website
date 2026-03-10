@@ -82,7 +82,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             this.breezeOffsets[key] = nextBreezeOffset
             nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
 
-            const importanceLengthScalar = lerp(0.4, 1, Math.pow(relativeImportance, 0.7))
+            const importanceLengthScalar = lerp(0.6, 1, Math.pow(relativeImportance, 0.7))
             const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
             const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
 
