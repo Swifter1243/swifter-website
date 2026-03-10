@@ -82,7 +82,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             this.breezeOffsets[key] = nextBreezeOffset
             nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
 
-            const importanceLengthScalar = lerp(0.5, 1, 1 - Math.exp(-(relativeImportance * 3)))
+            const importanceLengthScalar = lerp(0.5, 1, Math.pow(relativeImportance, 1))
             const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
             const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
 
@@ -100,8 +100,8 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             this.connections[key] = connection
             this.disposables.push(connection)
 
-            const visualNodeSize = lerp(0.5, 1.5, relativeImportance) * this.contentSize
-            const visualNodeLabelSize = lerp(0.03, 0.2, relativeImportance)
+            const visualNodeSize = lerp(0.5, 2.5, relativeImportance) * this.contentSize
+            const visualNodeLabelSize = lerp(0.05, 0.2, relativeImportance)
             const visualNodePedals = Math.round(lerp(2, 4, relativeImportance))
             const visualNode = new VisualNode(node.name, this.content, position, o.normal, visualNodePedals, visualNodeSize, visualNodeLabelSize)
             visualNode.relativeImportance = relativeImportance
