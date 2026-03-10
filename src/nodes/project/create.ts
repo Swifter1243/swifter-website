@@ -21,6 +21,11 @@ import enlightenHTML from './pages/enlighten.html?raw'
 import vivifyTemplateHTML from './pages/vivify_template.html?raw'
 import sdlMinecraftHTML from './pages/sdl_minecraft.html?raw'
 import excelSoftwareRendererHTML from './pages/excel_software_renderer.html?raw'
+import greenfootTetrisHTML from './pages/greenfoot_tetris.html?raw'
+import myMusicHTML from './pages/my_music.html?raw'
+import magicNetherPortalHTML from './pages/magic_nether_portal.html?raw'
+import boomboxRemasteredHTML from './pages/boombox_remastered.html?raw'
+import unityAnimationWindowHTML from './pages/unity_animation_window.html?raw'
 
 
 const projects: Project[] = [
@@ -246,7 +251,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Magic Nether Portal',
         key: 'magic-nether-portal',
-        html: placeHolderHTML,
+        html: magicNetherPortalHTML,
         category: 'Experiments',
         skills: ['Mathematics'],
         demoLink: 'https://github.com/Swifter1243/magic-nether-portal/releases/latest',
@@ -257,9 +262,9 @@ const projects: Project[] = [
     {
         importance: 2,
         name: 'Greenfoot Tetris',
-        key: 'magic-nether-portal',
-        html: placeHolderHTML,
-        category: 'Games',
+        key: 'greenfoot-tetris',
+        html: greenfootTetrisHTML,
+        category: 'Experiments',
         skills: ['Java'],
         sourceLink: 'https://github.com/ElijahStafford/GreenFootTetris',
         startDate: dateFromMonthYear('April 2023'),
@@ -269,7 +274,7 @@ const projects: Project[] = [
         importance: 1.5,
         name: 'My Music',
         key: 'my-music',
-        html: placeHolderHTML,
+        html: myMusicHTML,
         category: 'Experiments',
         skills: ['TypeScript', 'Audio'],
         demoLink: 'https://soundcloud.com/swifter1243',
@@ -279,7 +284,7 @@ const projects: Project[] = [
         importance: 10,
         name: 'BoomBox Remastered',
         key: 'boombox-remastered',
-        html: placeHolderHTML,
+        html: boomboxRemasteredHTML,
         category: 'Games',
         skills: ['Unity', 'C#', 'Shaders', 'Teamwork'],
         demoLink: 'https://store.steampowered.com/app/4223390/BoomBox_Remastered',
@@ -289,7 +294,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Unity Animation Window',
         key: 'unity-animation-window',
-        html: placeHolderHTML,
+        html: unityAnimationWindowHTML,
         category: 'Tools',
         skills: ['Unity', 'C#'],
         sourceLink: 'https://github.com/Swifter1243/UnityAnimationWindow',

@@ -8,6 +8,10 @@ import { clamp } from "../../utilities/math";
 const cameraRotX = new SmoothNumber(0, 7)
 const cameraRotY = new SmoothNumber(0, 7)
 const cameraDistance = new SmoothNumber(3)
+const cameraScrollScalar = new SmoothNumber(1, 8)
+
+const CAMERA_SCROLL_SCALAR_MIN = 0.5
+const CAMERA_SCROLL_SCALAR_MAX = 1.4
 
 export type CameraPivot = {
     object: THREE.Object3D,
@@ -23,6 +27,15 @@ export function setCameraPivot(pivot?: CameraPivot) {
 
 export function setCameraDistance(distance: number) {
     cameraDistance.set(distance)
+}
+
+export function setCameraScrollScalar(scalar: number) {
+    const newScalar = clamp(scalar, CAMERA_SCROLL_SCALAR_MIN, CAMERA_SCROLL_SCALAR_MAX)
+    cameraScrollScalar.set(newScalar)
+}
+
+export function getCameraScrollScalar(): number {
+    return cameraScrollScalar.target
 }
 
 let downRotX = 0
@@ -46,6 +59,7 @@ export function initCamera() {
         cameraRotX.update(deltaTime)
         cameraRotY.update(deltaTime)
         cameraDistance.update(deltaTime)
+        cameraScrollScalar.update(deltaTime)
         pivotPos.update(deltaTime)
 
         if (cameraPivot) {
@@ -60,7 +74,7 @@ export function initCamera() {
         pivot.position.copy(pivotPos.current)
         pivot.rotation.x = cameraRotX.current
         pivot.rotation.y = cameraRotY.current
-        camera.position.set(0, 0, cameraDistance.current)
+        camera.position.set(0, 0, cameraDistance.current * cameraScrollScalar.current)
     })
 
     onDragStart.subscribe(() => {
