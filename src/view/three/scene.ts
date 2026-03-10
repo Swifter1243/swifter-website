@@ -286,7 +286,7 @@ function createFlowers() {
 }
 
 function createFog() {
-    const bigCount = 10;
+    const bigCount = 15;
     const smallCount = 40;
     const totalCount = bigCount + smallCount;
 
@@ -348,12 +348,12 @@ function createFog() {
         uvOffsets[i * 2 + 0] = Math.random()
         uvOffsets[i * 2 + 1] = Math.random()
 
-        const dist = randomRange(100, 200)
+        const dist = randomRange(50, 300)
         angle += moveAngle
         const arcLength = moveAngle * dist
 
         dummy.position.set(Math.cos(angle) * dist, OCEAN_Y_LEVEL, Math.sin(angle) * dist);
-        dummy.scale.set(arcLength * 0.5, randomRange(10, 20), 1.0)
+        dummy.scale.set(arcLength, randomRange(10, 20), 1.0)
         dummy.lookAt(eye)
 
         dummy.updateMatrix();
