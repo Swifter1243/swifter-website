@@ -13,6 +13,7 @@ declare module 'troika-three-text' {
     outlineWidth: number;
     outlineColor: THREE.ColorRepresentation;
     outlineBlur: number;
+    outlineOpacity: number;
     sync(): void;
     dispose():
 
