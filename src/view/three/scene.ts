@@ -4,7 +4,7 @@ import { SmoothNumber } from "../../utilities/smooth_value";
 import { updateObliqueMatrix } from "../../utilities/three";
 import { camera, renderer, scene } from "./main";
 import { onRender } from "./renderer";
-import { fogTexture, mountainPieceGeometry, oceanNormalTexture, smallFlowerGeometry } from "./resources";
+import { fogTexture, lillyPadGeometry, mountainPieceGeometry, oceanNormalTexture, smallFlowerGeometry } from "./resources";
 
 export const OCEAN_Y_LEVEL = -3
 const skyFactor = new SmoothNumber(0, 0.7)
@@ -23,6 +23,7 @@ export async function initScene() {
     createOcean()
     createFlowers()
     createFog()
+    createFoliage()
 
     onRender.subscribe(dt => {
         skyFactor.update(dt)
@@ -384,4 +385,28 @@ function createFog() {
     })
 
     scene.add(mesh)
+}
+
+function createFoliage() {
+    const dummy = new THREE.Object3D();
+    const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    
+    const lillyCount = 800;
+    const lillyPads = new THREE.InstancedMesh(lillyPadGeometry, material, lillyCount);
+
+    let angle = 0
+    for (let i = 0; i < lillyCount; i++) {
+        const dist = randomRange(10, 500)
+        angle += Math.PI * 2 / lillyCount
+        const baseScale = lerp(0.4, 2, Math.pow(Math.random(), 3.0))
+
+        dummy.position.set(Math.cos(angle) * dist, OCEAN_Y_LEVEL, Math.sin(angle) * dist);
+        dummy.scale.set(baseScale, 1, baseScale)
+        dummy.rotation.set(0, randomRange(0, Math.PI * 2), 0)
+
+        dummy.updateMatrix();
+        lillyPads.setMatrixAt(i, dummy.matrix);
+    }
+
+    scene.add(lillyPads)
 }
