@@ -4,6 +4,7 @@ import { mergeGroupGeometries, setMaterialRecursive } from "../../utilities/thre
 
 export let leafGeometry: THREE.BufferGeometry
 export let flowerBaseGeometry: THREE.BufferGeometry
+export let smallFlowerGeometry: THREE.BufferGeometry
 export let mountainPieceGeometry: THREE.BufferGeometry
 export let oceanNormalTexture: THREE.Texture
 
@@ -23,6 +24,7 @@ export async function initResources() {
         loadFont(),
         loadLeafModel(objLoader),
         loadFlowerBaseModel(objLoader),
+        loadSmallFlowerModel(objLoader),
         loadMountainPieceModel(objLoader),
         loadOcean(textureLoader),
         loadPetalModel(gltfLoader, textureLoader)
@@ -51,6 +53,11 @@ async function loadLeafModel(objLoader: OBJLoader) {
 async function loadFlowerBaseModel(objLoader: OBJLoader) {
     const model = await objLoader.loadAsync('/models/flower base.obj')
     flowerBaseGeometry = mergeGroupGeometries(model)
+}
+
+async function loadSmallFlowerModel(objLoader: OBJLoader) {
+    const model = await objLoader.loadAsync('/models/small flower.obj')
+    smallFlowerGeometry = mergeGroupGeometries(model)
 }
 
 async function loadMountainPieceModel(objLoader: OBJLoader) {

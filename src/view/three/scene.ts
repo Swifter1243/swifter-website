@@ -3,7 +3,7 @@ import { lerp, randomRange } from "../../utilities/math";
 import { updateObliqueMatrix } from "../../utilities/three";
 import { camera, renderer, scene } from "./main";
 import { onRender } from "./renderer";
-import { mountainPieceGeometry, oceanNormalTexture } from "./resources";
+import { mountainPieceGeometry, oceanNormalTexture, smallFlowerGeometry } from "./resources";
 
 export const OCEAN_Y_LEVEL = -3
 
@@ -15,6 +15,7 @@ export async function initScene() {
     createSky()
     createMountains()
     createOcean()
+    createFlowers()
 }
 
 function createSky() {
@@ -115,6 +116,7 @@ function createOcean() {
             void main() {
                 // Calculate distortion from normal map
                 vec2 distortion = (texture2D(normalMap, vWorldPosition.xz * 0.01 + time * 0.01).rg * 2.0 - 1.0) * 0.05;
+                distortion.y = 0.0;
 
                 // Projective mapping (NDC to UV)
                 vec2 uv = (vUvReflection.xy / vUvReflection.w) * 0.5 + 0.5;
@@ -126,7 +128,7 @@ function createOcean() {
         `
     });
 
-    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL + 1);
+    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL + 0.1);
 
     onRender.subscribe((dt: number) => {
         reflectCamera.copy(camera);
@@ -159,4 +161,58 @@ function createOcean() {
     ocean.rotation.x = -Math.PI / 2;
     ocean.position.y = OCEAN_Y_LEVEL
     scene.add(ocean)
+}
+
+function createFlowers() {
+    const colors = [
+        '#F98FFF', 
+        '#968FFF', 
+        '#7298CC',
+        '#1869D6',
+        '#64F5FC',
+        '#5B7DE6',
+        '#8C64B8',
+        '#FF00FD',
+        '#21D3FF',
+        '#2157FF',
+        '#4900FF',
+        '#00FFFC',
+        '#7E78C1',
+        '#DC96F1',
+        '#FA509E',
+        '#9B509E',
+        '#4DBBCB'
+    ]
+
+    const count = 800;
+
+    const material = new THREE.MeshBasicMaterial();
+
+    const mesh = new THREE.InstancedMesh(smallFlowerGeometry, material, count);
+
+    const dummy = new THREE.Object3D();
+
+    const color = new THREE.Color();
+    let angle = 0
+    for (let i = 0; i < count; i++) {
+        const dist = randomRange(20, 900)
+        angle = angle + 0.2
+        const baseScale = lerp(0.3, 0.6, Math.pow(Math.random(), 3.0))
+
+        dummy.position.set(Math.cos(angle) * dist, OCEAN_Y_LEVEL - baseScale * 0.1, Math.sin(angle) * dist);
+        dummy.scale.set(baseScale, baseScale, baseScale)
+        dummy.rotation.set(randomRange(0, 0.8), randomRange(0, Math.PI * 2), 0, 'YXZ')
+
+        const colorIndex = Math.floor(Math.random() * colors.length)
+        color.set(colors[colorIndex]); 
+        color.multiplyScalar(3)
+        mesh.setColorAt(i, color);
+
+        dummy.updateMatrix();
+        mesh.setMatrixAt(i, dummy.matrix);
+    }
+
+    mesh.instanceColor!.needsUpdate = true;
+
+    scene.add(mesh)
 }
