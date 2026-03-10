@@ -82,10 +82,14 @@ function createMountains() {
 
 function createOcean() {
     const dpr = window.devicePixelRatio ?? 1;
-    const reflectTarget = new THREE.WebGLRenderTarget(window.innerWidth * dpr / 2, window.innerHeight * dpr / 2, {
+    const texWidth = window.innerWidth * dpr / 2
+    const texHeight = window.innerHeight * dpr / 2
+
+    const reflectTarget = new THREE.WebGLRenderTarget(texWidth, texHeight, {
         type: THREE.HalfFloatType,
         generateMipmaps: false
     });
+    reflectTarget.depthTexture = new THREE.DepthTexture(texWidth, texHeight)
     const reflectCamera = new THREE.PerspectiveCamera();
 
     const oceanGeometry = new THREE.PlaneGeometry(1000, 1000);
@@ -93,7 +97,10 @@ function createOcean() {
         uniforms: {
             reflectionTexture: { value: reflectTarget.texture },
             normalMap: { value: oceanNormalTexture },
-            time: {value: 0}
+            time: {value: 0},
+            depthTexture: { value: reflectTarget.depthTexture },
+            cameraNear: { value: reflectCamera.near },
+            cameraFar: { value: reflectCamera.far }
         },
         vertexShader: `
             varying vec3 vWorldPosition;
@@ -107,20 +114,32 @@ function createOcean() {
             }
         `,
         fragmentShader: `
+            #include <packing>
+
             uniform sampler2D reflectionTexture;
             uniform sampler2D normalMap;
             uniform float time;
             varying vec3 vWorldPosition;
             varying vec4 vUvReflection;
+            uniform sampler2D depthTexture;
+            uniform float cameraNear;
+            uniform float cameraFar;
+
+            float getDepth(const in vec2 uv) {
+                return texture2D(depthTexture, uv).x;
+            }
 
             void main() {
                 // Calculate distortion from normal map
-                vec2 distortion = (texture2D(normalMap, vWorldPosition.xz * 0.01 + time * 0.01).rg * 2.0 - 1.0) * 0.05;
-                distortion.y = 0.0;
+                vec2 distortion = (texture2D(normalMap, vWorldPosition.xz * 0.01 + time * 0.01).rg * 2.0 - 1.0) * 0.02;
 
                 // Projective mapping (NDC to UV)
                 vec2 uv = (vUvReflection.xy / vUvReflection.w) * 0.5 + 0.5;
                 uv.y = 1.0 - uv.y;
+
+                float depth = getDepth(uv);
+                float mask = smoothstep(0.0, 0.1, depth); 
+                distortion *= mask;
                 
                 vec3 reflection = texture2D(reflectionTexture, uv + distortion).rgb;
                 gl_FragColor = vec4(reflection, 1.0);
@@ -128,7 +147,8 @@ function createOcean() {
         `
     });
 
-    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL + 0.1);
+    const planeMargin = 0.1
+    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL + planeMargin);
 
     onRender.subscribe((dt: number) => {
         reflectCamera.copy(camera);
