@@ -60,7 +60,8 @@ export class Connection implements IDisposable, IUpdateable {
         startNormal: THREE.Vector3,
         endPoint: THREE.Vector3, 
         endNormal: THREE.Vector3,
-        importance: number
+        importance: number,
+        length: number
     ) {
         this.parent = parent
         this.startPoint = startPoint
@@ -84,9 +85,8 @@ export class Connection implements IDisposable, IUpdateable {
         this.leafMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', side: THREE.DoubleSide })
         this.leafMaterial.color.setScalar(this.brightness)
 
-        const max = lerp(0.5, 1, importance)
-        for (let u = randomRange(0.05, 0.2); u < max; u += randomRange(0.1, 0.3)) {
-            const t = u / max
+        for (let u = randomRange(0.3, 0.7); u < length; u += randomRange(0.5, 0.6)) {
+            const t = u / length
             const mesh = new THREE.Mesh(leafGeometry, this.leafMaterial)
             this.parent.add(mesh)
 

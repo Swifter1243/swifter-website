@@ -82,7 +82,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             this.breezeOffsets[key] = nextBreezeOffset
             nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
 
-            const length = lerp(0.7, 1.5, relativeImportance) * this.contentSize
+            const length = lerp(0.9, 1.5, relativeImportance) * this.contentSize
             const position = new THREE.Vector3().copy(o.position).multiplyScalar( length)
             const normal = new THREE.Vector3().copy(o.position).multiplyScalar(length)
 
@@ -96,7 +96,7 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             endNormal.copy(new THREE.Vector3().addScaledVector(normal, -0.5))
             this.endNormals[key] = endNormal
 
-            const connection = new Connection(this.content, startPoint, startNormal.current, endPoint, endNormal.current, relativeImportance)
+            const connection = new Connection(this.content, startPoint, startNormal.current, endPoint, endNormal.current, relativeImportance, length)
             this.connections[key] = connection
             this.disposables.push(connection)
 
