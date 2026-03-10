@@ -50,7 +50,7 @@ function createSky() {
 
             void main() {
                 vPos = position.xyz;
-                gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
         `,
         fragmentShader: `
