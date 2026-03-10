@@ -10,7 +10,7 @@ const cameraRotY = new SmoothNumber(0, 7)
 const cameraDistance = new SmoothNumber(3)
 const cameraScrollScalar = new SmoothNumber(1, 8)
 
-const CAMERA_SCROLL_SCALAR_MIN = 0.5
+const CAMERA_SCROLL_SCALAR_MIN = 0.3
 const CAMERA_SCROLL_SCALAR_MAX = 1.4
 
 export type CameraPivot = {

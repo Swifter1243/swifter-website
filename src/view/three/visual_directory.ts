@@ -42,11 +42,11 @@ export class VisualDirectory implements IDisposable, IUpdateable {
         this.scalar = scale
 
         this.pivotObject = new THREE.Object3D()
-        this.pivotObject.position.set(0, this.contentSize, 0)
+        this.pivotObject.position.set(0, this.contentSize * 0.5, 0)
 
         this.cameraPivot = {
             object: this.pivotObject,
-            distance: this.contentSize * (5 - nodeCount * 0.1) * this.scalar
+            distance: this.contentSize * (5 - nodeCount * 0.1) * this.scalar * 1.4
         }
 
         this.parent = parent
@@ -77,12 +77,12 @@ export class VisualDirectory implements IDisposable, IUpdateable {
             const node = entry[1]
 
             const relativeImportance = 
-                minImportance === maxImportance ? 0.5 : inverseLerp(minImportance, maxImportance, node.getImportance())
+                minImportance === maxImportance ? 1 : inverseLerp(minImportance, maxImportance, node.getImportance())
 
             this.breezeOffsets[key] = nextBreezeOffset
             nextBreezeOffset += randomRange(0.3, 0.8) * this.contentSize
 
-            const importanceLengthScalar = lerp(0.5, 1, Math.pow(relativeImportance, 1))
+            const importanceLengthScalar = lerp(0.4, 1, Math.pow(relativeImportance, 0.6))
             const position = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
             const normal = new THREE.Vector3().copy(o.position).multiplyScalar(this.contentSize * importanceLengthScalar)
 
