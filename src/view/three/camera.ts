@@ -94,7 +94,8 @@ export function initCamera() {
 
         const aspect = window.innerWidth / window.innerHeight
 
-        cameraRotX.target = clamp(downRotX + deltaUVY * -2, -Math.PI / 6, Math.PI / 6) // vertical
+        const CAMERA_CLAMP_VERTICAL = Math.PI / 4
+        cameraRotX.target = clamp(downRotX + deltaUVY * -2, -CAMERA_CLAMP_VERTICAL, CAMERA_CLAMP_VERTICAL) // vertical
         cameraRotY.target = downRotY + deltaUVX * -2 * aspect // horizontal
     })
 }
