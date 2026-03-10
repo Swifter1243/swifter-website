@@ -14,6 +14,7 @@ import { fadeFirstChordIn } from "./sound/chord"
 import { getPathKeySequence, locationToNavigationPath } from "../navigation/utility"
 import { BUD_TUTORIAL, initTutorials, OPEN_BUD_BUFFER as DIRECTORY_NODE_TUTORIAL, ORBIT_TUTORIAL, ZOOM_TUTORIAL } from "./tutorial"
 import { onDragEnd, onZoomEnd } from "./three/input"
+import { revealScene } from "./three/scene"
 
 const title = document.getElementById("title")!
 
@@ -148,6 +149,7 @@ export class View {
             return
 
         BUD_TUTORIAL.complete()
+        revealScene()
 
         playOneShot(sounds.get(SOUNDS.INTRO)!)
         playOneShot(sounds.get(SOUNDS.LEAF_MOVE)!, {

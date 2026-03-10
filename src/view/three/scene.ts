@@ -1,11 +1,14 @@
 import { THREE } from "../../deps";
 import { lerp, randomRange } from "../../utilities/math";
+import { SmoothNumber } from "../../utilities/smooth_value";
 import { updateObliqueMatrix } from "../../utilities/three";
 import { camera, renderer, scene } from "./main";
 import { onRender } from "./renderer";
 import { mountainPieceGeometry, oceanNormalTexture, smallFlowerGeometry } from "./resources";
 
 export const OCEAN_Y_LEVEL = -3
+const skyFactor = new SmoothNumber(0, 0.7)
+const flowerViewDistance = new SmoothNumber(0, 0.3)
 
 export async function initScene() {
     const point = new THREE.PointLight('#feffd7', 2, 0.8, 1.6)
@@ -18,11 +21,19 @@ export async function initScene() {
     createFlowers()
 }
 
+export function revealScene() {
+    skyFactor.set(1)
+    flowerViewDistance.set(1500)
+}
+
 function createSky() {
+    const horizonBaseColor = new THREE.Color('#001026')
+    const currentHorizonColor = new THREE.Color(0, 0, 0)
+
     const skyMat = new THREE.ShaderMaterial({
         side: THREE.BackSide,
         uniforms: {
-            horizonColor: { value: new THREE.Color('#001026') },
+            horizonColor: { value: currentHorizonColor },
             zenithColor: { value: new THREE.Color(0x000000) }
         },
         depthWrite: false,
@@ -50,6 +61,12 @@ function createSky() {
     const skyGeo = new THREE.SphereGeometry(1, 32, 15);
     const mesh = new THREE.Mesh(skyGeo, skyMat)
     mesh.scale.setScalar(900)
+
+    onRender.subscribe(dt => {
+        skyFactor.update(dt)
+        currentHorizonColor.copy(horizonBaseColor)
+        currentHorizonColor.multiplyScalar(skyFactor.current)
+    })
 
     scene.add(mesh)
 }
@@ -206,7 +223,32 @@ function createFlowers() {
 
     const count = 800;
 
-    const material = new THREE.MeshBasicMaterial();
+    const material = new THREE.ShaderMaterial({
+        uniforms: {
+            viewDistance: { value: 0 }
+        },
+        vertexShader: `
+            varying vec3 vColor;
+            uniform float viewDistance;
+
+            void main() {
+                vec4 worldPos = modelMatrix * instanceMatrix * vec4(position, 1.0);
+                float worldLength = length(worldPos.xz);
+                const float fadeRegion = 200.0;
+                float brightness = smoothstep(viewDistance, viewDistance - fadeRegion, worldLength);
+
+                vColor = instanceColor * brightness;
+                gl_Position = projectionMatrix * viewMatrix * worldPos;
+            }
+        `,
+        fragmentShader: `
+            varying vec3 vColor;
+
+            void main() {
+                gl_FragColor = vec4(vColor, 1.0);
+            }
+        `
+    });
 
     const mesh = new THREE.InstancedMesh(smallFlowerGeometry, material, count);
 
@@ -233,6 +275,11 @@ function createFlowers() {
     }
 
     mesh.instanceColor!.needsUpdate = true;
+
+    onRender.subscribe(dt => {
+        flowerViewDistance.update(dt)
+        material.uniforms.viewDistance.value = flowerViewDistance.current
+    })
 
     scene.add(mesh)
 }
