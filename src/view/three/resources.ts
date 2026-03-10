@@ -7,6 +7,7 @@ export let flowerBaseGeometry: THREE.BufferGeometry
 export let smallFlowerGeometry: THREE.BufferGeometry
 export let mountainPieceGeometry: THREE.BufferGeometry
 export let oceanNormalTexture: THREE.Texture
+export let fogTexture: THREE.Texture
 
 export type PetalAnimationNames = 
     'Close' |
@@ -27,6 +28,7 @@ export async function initResources() {
         loadSmallFlowerModel(objLoader),
         loadMountainPieceModel(objLoader),
         loadOcean(textureLoader),
+        loadFogTexture(textureLoader),
         loadPetalModel(gltfLoader, textureLoader)
     ])
 }
@@ -73,6 +75,12 @@ async function loadOcean(textureLoader: TextureLoader) {
         }
     );
     oceanNormalTexture = texture
+}
+
+async function loadFogTexture(textureLoader: TextureLoader) {
+    const texture = textureLoader.load('/fog.png');
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    fogTexture = texture
 }
 
 async function loadPetalModel(gltfLoader: GLTFLoader, textureLoader: TextureLoader) {

@@ -4,11 +4,14 @@ import { SmoothNumber } from "../../utilities/smooth_value";
 import { updateObliqueMatrix } from "../../utilities/three";
 import { camera, renderer, scene } from "./main";
 import { onRender } from "./renderer";
-import { mountainPieceGeometry, oceanNormalTexture, smallFlowerGeometry } from "./resources";
+import { fogTexture, mountainPieceGeometry, oceanNormalTexture, smallFlowerGeometry } from "./resources";
 
 export const OCEAN_Y_LEVEL = -3
 const skyFactor = new SmoothNumber(0, 0.7)
 const flowerViewDistance = new SmoothNumber(0, 0.3)
+
+const horizonBaseColor = new THREE.Color('#001026')
+const currentHorizonColor = new THREE.Color(0, 0, 0)
 
 export async function initScene() {
     const point = new THREE.PointLight('#feffd7', 2, 0.8, 1.6)
@@ -19,6 +22,13 @@ export async function initScene() {
     createMountains()
     createOcean()
     createFlowers()
+    createFog()
+
+    onRender.subscribe(dt => {
+        skyFactor.update(dt)
+        currentHorizonColor.copy(horizonBaseColor)
+        currentHorizonColor.multiplyScalar(skyFactor.current)
+    })
 }
 
 export function revealScene() {
@@ -27,9 +37,6 @@ export function revealScene() {
 }
 
 function createSky() {
-    const horizonBaseColor = new THREE.Color('#001026')
-    const currentHorizonColor = new THREE.Color(0, 0, 0)
-
     const skyMat = new THREE.ShaderMaterial({
         side: THREE.BackSide,
         uniforms: {
@@ -61,12 +68,6 @@ function createSky() {
     const skyGeo = new THREE.SphereGeometry(1, 32, 15);
     const mesh = new THREE.Mesh(skyGeo, skyMat)
     mesh.scale.setScalar(900)
-
-    onRender.subscribe(dt => {
-        skyFactor.update(dt)
-        currentHorizonColor.copy(horizonBaseColor)
-        currentHorizonColor.multiplyScalar(skyFactor.current)
-    })
 
     scene.add(mesh)
 }
@@ -279,6 +280,107 @@ function createFlowers() {
     onRender.subscribe(dt => {
         flowerViewDistance.update(dt)
         material.uniforms.viewDistance.value = flowerViewDistance.current
+    })
+
+    scene.add(mesh)
+}
+
+function createFog() {
+    const bigCount = 10;
+    const smallCount = 40;
+    const totalCount = bigCount + smallCount;
+
+    const material = new THREE.ShaderMaterial({
+        uniforms: {
+            map: { value: fogTexture },
+            color: { value: currentHorizonColor },
+            time: { value: 0 }
+        },
+        vertexShader: `
+            attribute vec2 uvOffset;
+            varying vec2 vCenterUv;
+            varying vec2 vMapUv;
+            varying float vWorldY;
+
+            void main() {
+                vCenterUv = uv * 2.0 - 1.0;
+                vMapUv = uv + uvOffset;
+
+                vec4 worldPos = modelMatrix * instanceMatrix * vec4(position, 1.0);
+                vWorldY = worldPos.y - ${OCEAN_Y_LEVEL.toFixed(2)};
+                gl_Position = projectionMatrix * viewMatrix * worldPos;
+            }
+        `,
+        fragmentShader: `
+            varying vec2 vCenterUv;
+            varying vec2 vMapUv;
+            varying float vWorldY;
+            uniform sampler2D map;
+            uniform vec3 color;
+            uniform float time;
+
+            void main() {
+                float fog = texture2D(map, vMapUv + time * 0.01).r;
+                float vignette = smoothstep(1.0, 0.2, length(vCenterUv));
+                float value = max(pow(fog, 2.0), 0.0) * 1.0 * vignette;
+                value *= smoothstep(0.0, 1.0, vWorldY);
+
+                gl_FragColor = vec4(value * color, 1.0);
+
+                // gl_FragColor = vec4(0.5,0,0,1.0);
+            }
+        `,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+    });
+
+    const geometry = new THREE.PlaneGeometry(1, 1)
+    geometry.translate(0, 0.5, 0)
+    const mesh = new THREE.InstancedMesh(geometry, material, totalCount);
+    const uvOffsets = new Float32Array(totalCount * 2);
+
+    const dummy = new THREE.Object3D();
+    const eye = new THREE.Vector3(0, OCEAN_Y_LEVEL, 0)
+
+    let angle = 0
+    let moveAngle = Math.PI * 2 / bigCount
+    for (let i = 0; i < bigCount; i++) {
+        uvOffsets[i * 2 + 0] = Math.random()
+        uvOffsets[i * 2 + 1] = Math.random()
+
+        const dist = randomRange(100, 200)
+        angle += moveAngle
+        const arcLength = moveAngle * dist
+
+        dummy.position.set(Math.cos(angle) * dist, OCEAN_Y_LEVEL, Math.sin(angle) * dist);
+        dummy.scale.set(arcLength * 0.5, randomRange(10, 20), 1.0)
+        dummy.lookAt(eye)
+
+        dummy.updateMatrix();
+        mesh.setMatrixAt(i, dummy.matrix);
+    }
+
+    angle = 0
+    moveAngle = Math.PI * 2 / smallCount
+    for (let i = bigCount; i < totalCount; i++) {
+        uvOffsets[i * 2 + 0] = Math.random()
+        uvOffsets[i * 2 + 1] = Math.random()
+
+        const dist = randomRange(10, 100)
+        angle += moveAngle
+
+        dummy.position.set(Math.cos(angle) * dist, OCEAN_Y_LEVEL, Math.sin(angle) * dist);
+        dummy.scale.set(10, randomRange(1, 3), 1.0)
+        dummy.lookAt(eye)
+
+        dummy.updateMatrix();
+        mesh.setMatrixAt(i, dummy.matrix);
+    }
+
+    geometry.setAttribute('uvOffset', new THREE.InstancedBufferAttribute(uvOffsets, 2));
+
+    onRender.subscribe((dt) => {
+        material.uniforms.time.value += dt
     })
 
     scene.add(mesh)
