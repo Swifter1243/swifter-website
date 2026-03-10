@@ -1,5 +1,6 @@
 import { THREE } from "../../deps";
 import { lerp, randomRange } from "../../utilities/math";
+import { updateObliqueMatrix } from "../../utilities/three";
 import { camera, renderer, scene } from "./main";
 import { onRender } from "./renderer";
 import { mountainPieceGeometry, oceanNormalTexture } from "./resources";
@@ -125,6 +126,8 @@ function createOcean() {
         `
     });
 
+    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL + 1);
+
     onRender.subscribe((dt: number) => {
         reflectCamera.copy(camera);
         
@@ -136,6 +139,11 @@ function createOcean() {
         camera.getWorldDirection(target);
         target.y *= -1;
         reflectCamera.lookAt(reflectCamera.position.clone().add(target));
+
+        // oblique projection
+        reflectCamera.updateProjectionMatrix()
+        reflectCamera.updateMatrixWorld()
+        updateObliqueMatrix(reflectCamera, waterPlane);
 
         // render
         ocean.visible = false;

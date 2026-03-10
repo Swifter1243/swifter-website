@@ -68,3 +68,28 @@ export function mergeGroupGeometries(group: THREE.Group): THREE.BufferGeometry {
     // Merge all geometries into one
     return BufferGeometryUtils.mergeGeometries(geometries, true)!;
 }
+
+export function updateObliqueMatrix(camera: THREE.Camera, plane: THREE.Plane) {
+    const projectionMatrix = camera.projectionMatrix;
+    
+    // 1. Calculate the clip plane in camera space
+    const viewPlane = new THREE.Plane();
+    viewPlane.copy(plane).applyMatrix4(camera.matrixWorldInverse);
+    const clipPlane = new THREE.Vector4(viewPlane.normal.x, viewPlane.normal.y, viewPlane.normal.z, viewPlane.constant);
+
+    // 2. Calculate the "q" vector based on the projection matrix
+    const q = new THREE.Vector4();
+    q.x = (Math.sign(clipPlane.x) + projectionMatrix.elements[8]) / projectionMatrix.elements[0];
+    q.y = (Math.sign(clipPlane.y) + projectionMatrix.elements[9]) / projectionMatrix.elements[5];
+    q.z = -1.0;
+    q.w = (1.0 + projectionMatrix.elements[10]) / projectionMatrix.elements[14];
+
+    // 3. Scale the clip plane
+    const c = clipPlane.multiplyScalar(2.0 / clipPlane.dot(q));
+
+    // 4. Replace the third row of the projection matrix
+    projectionMatrix.elements[2] = c.x;
+    projectionMatrix.elements[6] = c.y;
+    projectionMatrix.elements[10] = c.z + 1.0;
+    projectionMatrix.elements[14] = c.w;
+}
