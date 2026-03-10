@@ -79,60 +79,72 @@ function createMountains() {
 }
 
 function createOcean() {
-    const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(512, {
-        generateMipmaps: false,
-        type: THREE.HalfFloatType
-    })
-    const oceanCubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget)
+    const dpr = window.devicePixelRatio ?? 1;
+    const reflectTarget = new THREE.WebGLRenderTarget(window.innerWidth * dpr / 2, window.innerHeight * dpr / 2, {
+        type: THREE.HalfFloatType,
+        generateMipmaps: false
+    });
+    const reflectCamera = new THREE.PerspectiveCamera();
 
     const oceanGeometry = new THREE.PlaneGeometry(1000, 1000);
     const oceanMaterial = new THREE.ShaderMaterial({
         uniforms: {
-            envMap: { value: cubeRenderTarget.texture },
+            reflectionTexture: { value: reflectTarget.texture },
             normalMap: { value: oceanNormalTexture },
             time: {value: 0}
         },
         vertexShader: `
             varying vec3 vWorldPosition;
-            varying vec3 vWorldDirection;
+            varying vec4 vUvReflection;
             void main() {
                 vec4 worldPosition = modelMatrix * vec4(position, 1.0);
                 vWorldPosition = worldPosition.xyz;
-                vWorldDirection = worldPosition.xyz - cameraPosition;
+
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                vUvReflection = gl_Position;
             }
         `,
         fragmentShader: `
-            uniform samplerCube envMap;
+            uniform sampler2D reflectionTexture;
             uniform sampler2D normalMap;
             uniform float time;
             varying vec3 vWorldPosition;
-            varying vec3 vWorldDirection;
+            varying vec4 vUvReflection;
+
             void main() {
-                vec3 normal1 = texture2D(normalMap, vWorldPosition.xz * 0.01 + time * 0.01).rgb * 2.0 - 1.0;
-                vec3 texNormal = normalize(normal1);
-                texNormal.xyz = texNormal.xzy;
+                // Calculate distortion from normal map
+                vec2 distortion = (texture2D(normalMap, vWorldPosition.xz * 0.01 + time * 0.01).rg * 2.0 - 1.0) * 0.05;
 
-                vec3 normal = normalize(vec3(0, 1, 0) + texNormal * 0.04);
-
-                vec3 dir = vWorldDirection;
-                dir = reflect(vWorldDirection, normal);
-                vec3 reflection = textureCube(envMap, dir).rgb;
+                // Projective mapping (NDC to UV)
+                vec2 uv = (vUvReflection.xy / vUvReflection.w) * 0.5 + 0.5;
+                uv.y = 1.0 - uv.y;
+                
+                vec3 reflection = texture2D(reflectionTexture, uv + distortion).rgb;
                 gl_FragColor = vec4(reflection, 1.0);
             }
         `
     });
-    oceanCubeCamera.update(renderer, scene)
 
-    let oceanTime = 0
     onRender.subscribe((dt: number) => {
-        const worldPosition = new THREE.Vector3()
-        camera.getWorldPosition(worldPosition)
-        worldPosition.y = (worldPosition.y - OCEAN_Y_LEVEL) * -1 + OCEAN_Y_LEVEL
-        oceanCubeCamera.position.copy(worldPosition)
-        oceanCubeCamera.update(renderer, scene)
-        oceanTime += dt
-        oceanMaterial.uniforms.time.value = oceanTime
+        reflectCamera.copy(camera);
+        
+        // position
+        camera.getWorldPosition(reflectCamera.position)
+        reflectCamera.position.y = OCEAN_Y_LEVEL - (reflectCamera.position.y - OCEAN_Y_LEVEL)
+        
+        const target = new THREE.Vector3();
+        camera.getWorldDirection(target);
+        target.y *= -1;
+        reflectCamera.lookAt(reflectCamera.position.clone().add(target));
+
+        // render
+        ocean.visible = false;
+        renderer.setRenderTarget(reflectTarget);
+        renderer.render(scene, reflectCamera);
+        renderer.setRenderTarget(null);
+        ocean.visible = true;
+
+        oceanMaterial.uniforms.time.value += dt;
     })
 
     const ocean = new THREE.Mesh(oceanGeometry, oceanMaterial)
