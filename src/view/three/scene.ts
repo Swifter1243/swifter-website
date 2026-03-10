@@ -21,7 +21,7 @@ function createSky() {
     const skyMat = new THREE.ShaderMaterial({
         side: THREE.BackSide,
         uniforms: {
-            horizonColor: { value: new THREE.Color('#000916') },
+            horizonColor: { value: new THREE.Color('#001026') },
             zenithColor: { value: new THREE.Color(0x000000) }
         },
         depthWrite: false,
