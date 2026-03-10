@@ -5,7 +5,7 @@ import { camera, renderer, scene } from "./main";
 import { onRender } from "./renderer";
 import { mountainPieceGeometry, oceanNormalTexture } from "./resources";
 
-const OCEAN_Y_LEVEL = -3
+export const OCEAN_Y_LEVEL = -3
 
 export async function initScene() {
     const point = new THREE.PointLight('#feffd7', 2, 0.8, 1.6)

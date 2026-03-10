@@ -4,6 +4,7 @@ import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";
 import { inputState, onDragMove, onDragStart } from "./input";
 import { THREE } from "../../deps";
 import { clamp } from "../../utilities/math";
+import { OCEAN_Y_LEVEL } from "./scene";
 
 const cameraRotX = new SmoothNumber(0, 7)
 const cameraRotY = new SmoothNumber(0, 7)
@@ -56,6 +57,8 @@ export function initCamera() {
     camera.far = 1000
 
     const pivotWorldPos = new THREE.Vector3()
+    const cameraWorldPos = new THREE.Vector3()
+    const cameraWorldDir = new THREE.Vector3()
     onRender.subscribe(deltaTime => {
         cameraRotY.target += deltaTime * 0.05
 
@@ -77,7 +80,17 @@ export function initCamera() {
         pivot.position.copy(pivotPos.current)
         pivot.rotation.x = cameraRotX.current
         pivot.rotation.y = cameraRotY.current
-        camera.position.set(0, 0, cameraDistance.current * cameraScrollScalar.current)
+
+        let distanceZ = cameraDistance.current * cameraScrollScalar.current
+
+        camera.getWorldDirection(cameraWorldDir)
+        if (cameraWorldDir.y > 0) {
+            pivot.getWorldPosition(cameraWorldPos)
+            const oceanDistanceZ = (cameraWorldPos.y - (OCEAN_Y_LEVEL + 0.3)) / cameraWorldDir.y
+            distanceZ = Math.min(oceanDistanceZ, distanceZ)
+        }
+
+        camera.position.set(0, 0, distanceZ)
     })
 
     onDragStart.subscribe(() => {
