@@ -10,6 +10,8 @@ export const onHoverEnd = new Invokable()
 
 export const onClick = new Invokable()
 
+export const onZoomEnd = new Invokable()
+
 export const inputState = {
     enabled: true,
 
@@ -129,6 +131,7 @@ function onWheel(e: WheelEvent) {
     const delta = e.deltaY * SCROLL_SPEED
 
     setCameraScrollScalar(getCameraScrollScalar() + delta) 
+    onZoomEnd.invoke()
 }
 
 function onTouchStart(e: TouchEvent) {
@@ -165,8 +168,9 @@ function onTouchMove(e: TouchEvent) {
 }
 
 function onTouchEnd(e: TouchEvent) {
-    if (e.touches.length === 0) {
+    if (e.touches.length === 0 && inputState.isZooming) {
         inputState.isZooming = false
+        onZoomEnd.invoke()
     }
 }
 

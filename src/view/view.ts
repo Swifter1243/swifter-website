@@ -12,8 +12,8 @@ import { playOneShot, startAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
 import { getPathKeySequence, locationToNavigationPath } from "../navigation/utility"
-import { BUD_TUTORIAL, initTutorials, ORBIT_TUTORIAL } from "./tutorial"
-import { onDragEnd } from "./three/input"
+import { BUD_TUTORIAL, initTutorials, OPEN_BUD_BUFFER as DIRECTORY_NODE_TUTORIAL, ORBIT_TUTORIAL, ZOOM_TUTORIAL } from "./tutorial"
+import { onDragEnd, onZoomEnd } from "./three/input"
 
 const title = document.getElementById("title")!
 
@@ -34,6 +34,13 @@ export class View {
         this.bigFlower.interactable.onClick.subscribe(async () => {
             await startAudioContext()
             onDragEnd.subscribe(() => ORBIT_TUTORIAL.complete())
+            navigation.onAscent.subscribe(() => {
+                const newNode = navigation.grabCurrentNode()
+                if (newNode instanceof DirectoryNode) {
+                    DIRECTORY_NODE_TUTORIAL.complete()
+                }
+            })
+            onZoomEnd.subscribe(() => ZOOM_TUTORIAL.complete())
             this.spawnRoot()
             this.bigFlower.interactable.dispose()
         })
@@ -53,7 +60,7 @@ export class View {
             navigation.goToPath(path)
             soundState.queueOpen = false
         } else {
-            initTutorials([BUD_TUTORIAL, ORBIT_TUTORIAL])
+            initTutorials([BUD_TUTORIAL, ORBIT_TUTORIAL, DIRECTORY_NODE_TUTORIAL, ZOOM_TUTORIAL])
         }
 
         window.addEventListener('popstate', _ => {
