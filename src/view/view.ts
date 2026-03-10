@@ -6,7 +6,7 @@ import { DirectoryView } from "./three/directory_view"
 import { PageView } from "./page_view"
 import { BigFlower } from "./three/big_flower"
 import { scene } from "./three/main"
-import { setCameraPivot } from "./three/camera"
+import { CAMERA_DISTANCE_RATE, setCameraPivot, setCameraScrollScalar } from "./three/camera"
 import { soundState } from "./sound/main"
 import { playOneShot, startAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
@@ -86,6 +86,7 @@ export class View {
 
         if (newNode instanceof DirectoryNode) {
             this.directoryView.onAscent(newNode, key)
+            setCameraScrollScalar(1, CAMERA_DISTANCE_RATE)
         }
         else if (newNode instanceof PageNode) {
             const currentVisualDirectory = this.directoryView.getCurrent()
@@ -106,6 +107,7 @@ export class View {
 
         if (this.currentNode instanceof DirectoryNode) {
             this.directoryView.onDescent(this.currentNode)
+            setCameraScrollScalar(1, CAMERA_DISTANCE_RATE)
             soundState.queueBreak = true
         }
         else if (this.currentNode instanceof PageNode) {

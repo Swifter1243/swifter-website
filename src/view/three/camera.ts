@@ -7,8 +7,10 @@ import { clamp } from "../../utilities/math";
 
 const cameraRotX = new SmoothNumber(0, 7)
 const cameraRotY = new SmoothNumber(0, 7)
-const cameraDistance = new SmoothNumber(3)
-const cameraScrollScalar = new SmoothNumber(1, 8)
+export const CAMERA_DISTANCE_RATE = 3
+const cameraDistance = new SmoothNumber(3, CAMERA_DISTANCE_RATE)
+export const CAMERA_SCROLL_SCALAR_RATE = 15
+const cameraScrollScalar = new SmoothNumber(1, CAMERA_SCROLL_SCALAR_RATE)
 
 const CAMERA_SCROLL_SCALAR_MIN = 0.3
 const CAMERA_SCROLL_SCALAR_MAX = 1.4
@@ -29,9 +31,10 @@ export function setCameraDistance(distance: number) {
     cameraDistance.set(distance)
 }
 
-export function setCameraScrollScalar(scalar: number) {
+export function setCameraScrollScalar(scalar: number, rate = CAMERA_SCROLL_SCALAR_RATE) {
     const newScalar = clamp(scalar, CAMERA_SCROLL_SCALAR_MIN, CAMERA_SCROLL_SCALAR_MAX)
     cameraScrollScalar.set(newScalar)
+    cameraScrollScalar.rate = rate
 }
 
 export function getCameraScrollScalar(): number {

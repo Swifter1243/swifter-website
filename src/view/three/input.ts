@@ -160,7 +160,7 @@ function onTouchMove(e: TouchEvent) {
             e.touches[0].pageY - e.touches[1].pageY
         )
 
-        const ZOOM_SPEED = 0.005
+        const ZOOM_SPEED = 0.003
         const delta = (inputState.initialZoomDistance - zoomDistance) * ZOOM_SPEED
 
         setCameraScrollScalar(inputState.initialZoomScalar + delta)
