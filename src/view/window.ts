@@ -7,7 +7,7 @@ export function initWindow() {
     window.onresize = onResize
 }
 
-const SAFE_ASPECT = 1; // 1:1 safe zone
+const SAFE_ASPECT = 0.9; // 1:1 safe zone
 const BASE_FOV = 37;
 
 function onResize() {
