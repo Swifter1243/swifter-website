@@ -8,6 +8,7 @@ import { initLeafParticleSystem } from "./leaf_particle_system";
 import { initResources } from "./resources";
 import { initUpdateables } from "./updateable";
 import { initInput } from "./input";
+import { initPools } from "./pooling";
 
 export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera();
@@ -25,4 +26,5 @@ export async function initThree() {
     initLeafParticleSystem()
     await resourcesPromise
     initScene()
+    initPools()
 }

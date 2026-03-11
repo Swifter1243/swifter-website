@@ -1,8 +1,8 @@
 import { THREE } from "../../deps";
 import { randomRange } from "../../utilities/math";
-import { cloneGltf } from "../../utilities/three";
 import type { IDisposable } from "./disposable";
-import { petalAnimations, petalModel, type PetalAnimationNames } from "./resources";
+import { petalPool } from "./pooling";
+import { petalAnimations, type PetalAnimationNames } from "./resources";
 import { addUpdateable, removeUpdateable, type IUpdateable } from "./updateable";
 
 type Petal = {
@@ -24,7 +24,7 @@ export class Flower implements IDisposable, IUpdateable {
 
         const yRot = (Math.PI * 2) / count
         for (let i = 0; i < count; i++) {
-            const model = cloneGltf(petalModel)
+            const model = petalPool.get()
             this.content.add(model)
             model.rotateY(yRot * i)
             model.rotateX(randomRange(-1, 1) * 0.01)
@@ -105,6 +105,7 @@ export class Flower implements IDisposable, IUpdateable {
     dispose(): void {
         this.petals.forEach(petal => {
             this.content.remove(petal.model)
+            petalPool.release(petal.model)
         })
         removeUpdateable(this)
         
