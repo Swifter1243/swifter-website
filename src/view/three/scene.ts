@@ -230,15 +230,22 @@ function createFlowers() {
 
     const material = new THREE.ShaderMaterial({
         uniforms: {
-            viewDistance: { value: 0 }
+            viewDistance: { value: 0 },
+            time: { value: 0}
         },
         vertexShader: `
             varying vec3 vColor;
             uniform float viewDistance;
+            uniform float time;
 
             void main() {
                 vec4 worldPos = modelMatrix * instanceMatrix * vec4(position, 1.0);
                 float worldLength = length(worldPos.xz);
+
+                float wind = smoothstep(0.0, 2.0, position.y) * 0.05;
+                worldPos.x += sin(worldPos.x * 0.1 + worldPos.y + time * 2.0) * wind;
+                worldPos.z += sin(worldPos.z * 0.1 + worldPos.y + time * 3.0) * wind;
+
                 const float fadeRegion = 200.0;
                 float brightness = smoothstep(viewDistance, viewDistance - fadeRegion, worldLength);
 
@@ -284,6 +291,7 @@ function createFlowers() {
     onRender.subscribe(dt => {
         flowerViewDistance.update(dt)
         material.uniforms.viewDistance.value = flowerViewDistance.current
+        material.uniforms.time.value += dt
     })
 
     scene.add(mesh)
