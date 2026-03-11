@@ -1,6 +1,7 @@
 import { THREE } from "../../deps";
 import { lerp, randomRange } from "../../utilities/math";
 import { isMobile } from "../../utilities/mobile";
+import Perlin from "../../utilities/perlin";
 import { SmoothNumber } from "../../utilities/smooth_value";
 import { updateObliqueMatrix } from "../../utilities/three";
 import { camera, renderer, scene } from "./main";
@@ -169,7 +170,7 @@ function createOcean() {
         `
     });
 
-    const planeMargin = 0.1
+    const planeMargin = 0.05
     const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL + planeMargin);
 
     onRender.subscribe((dt: number) => {
@@ -242,9 +243,9 @@ function createFlowers() {
                 vec4 worldPos = modelMatrix * instanceMatrix * vec4(position, 1.0);
                 float worldLength = length(worldPos.xz);
 
-                float wind = smoothstep(0.0, 2.0, position.y) * 0.05;
-                worldPos.x += sin(worldPos.x * 0.1 + worldPos.y + time * 2.0) * wind;
-                worldPos.z += sin(worldPos.z * 0.1 + worldPos.y + time * 3.0) * wind;
+                float wind = smoothstep(0.0, 0.2, worldPos.y - ${OCEAN_Y_LEVEL.toFixed(2)}) * 0.05;
+                worldPos.x += sin(worldPos.x * 0.02 + worldPos.y + time * 4.0) * wind;
+                worldPos.z += sin(worldPos.z * 0.1 + worldPos.y + time * 6.0) * wind;
 
                 const float fadeRegion = 200.0;
                 float brightness = smoothstep(viewDistance, viewDistance - fadeRegion, worldLength);
@@ -265,21 +266,29 @@ function createFlowers() {
     const mesh = new THREE.InstancedMesh(smallFlowerGeometry, material, count);
 
     const dummy = new THREE.Object3D();
+    const perlin = new Perlin()
 
     const color = new THREE.Color();
     let angle = 0
     for (let i = 0; i < count; i++) {
-        const dist = randomRange(20, 900)
+        const dist = randomRange(30, 900)
         angle = angle + 0.2
-        const baseScale = lerp(0.3, 0.6, Math.pow(Math.random(), 3.0))
 
-        dummy.position.set(Math.cos(angle) * dist, OCEAN_Y_LEVEL - baseScale * 0.1, Math.sin(angle) * dist);
+        const x = Math.cos(angle) * dist
+        const z = Math.sin(angle) * dist
+
+        const size = 20
+        const noise = perlin.perlin2(x / size, z / size) * 0.5 + 0.5
+        const baseScale = lerp(0.2, 0.6, Math.pow(noise, 3))
+        const yOffset = Math.pow(1 - noise, 1/2) * 8.5 * baseScale
+
+        dummy.position.set(x, OCEAN_Y_LEVEL - yOffset, z);
         dummy.scale.set(baseScale, baseScale, baseScale)
         dummy.rotation.set(randomRange(0, 0.8), randomRange(0, Math.PI * 2), 0, 'YXZ')
 
         const colorIndex = Math.floor(Math.random() * colors.length)
         color.set(colors[colorIndex]); 
-        color.multiplyScalar(3)
+        color.multiplyScalar(randomRange(2, 4))
         mesh.setColorAt(i, color);
 
         dummy.updateMatrix();
