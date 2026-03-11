@@ -1,24 +1,27 @@
-import type { Object3D } from "three"
 import { THREE } from "../../deps"
 import { scene } from "./main"
 import { onRender } from "./renderer"
-import { reparentKeepWorldTransform } from "../../utilities/three"
+import { leafPool, type PooledInstance } from "./pooling"
 
 export type LeafParticle = {
     lifetime: number,
     time: number,
-    mesh: THREE.Mesh,
+    instance: PooledInstance,
+    matrix: THREE.Matrix4
     velocityY: number
     velocityLocalZ: number,
     originalScale: THREE.Vector3
 }
 
 export class LeafParticleSystem {
-    parent: Object3D
+    parent: THREE.Object3D
+    dummy: THREE.Object3D
     particles: LeafParticle[] = []
 
-    constructor(parent: Object3D) {
+    constructor(parent: THREE.Object3D) {
         this.parent = parent
+        this.dummy = new THREE.Object3D()
+        this.parent.add(this.dummy)
     }
 
     update(deltaTime: number): void {
@@ -27,22 +30,27 @@ export class LeafParticleSystem {
 
     private stepParticle(deltaTime: number, particle: LeafParticle): boolean {
         particle.time += deltaTime
-        particle.mesh.scale.copy(particle.originalScale).multiplyScalar(1 - particle.time / particle.lifetime)
         particle.velocityY -= deltaTime * 2
         particle.velocityLocalZ += deltaTime * 0.4
-        particle.mesh.position.y += particle.velocityY * deltaTime
-        particle.mesh.translateZ(particle.velocityLocalZ * deltaTime)
+        
+        particle.matrix.decompose(this.dummy.position, this.dummy.quaternion, this.dummy.scale)
+        this.dummy.scale.copy(particle.originalScale).multiplyScalar(1 - particle.time / particle.lifetime)
+        this.dummy.position.y += particle.velocityY * deltaTime
+        this.dummy.translateZ(particle.velocityLocalZ * deltaTime)
+        this.dummy.updateMatrix()
+        leafPool.mesh.setMatrixAt(particle.instance.index, this.dummy.matrix)
+        leafPool.mesh.instanceMatrix.needsUpdate = true
+        particle.matrix.copy(this.dummy.matrix)
 
         if (particle.time >= particle.lifetime) {
-            this.parent.remove(particle.mesh)
+            leafPool.release(particle.instance)
             return false
         }
         return true
     }
 
-    add(particle: LeafParticle, oldParent: Object3D) {
-        reparentKeepWorldTransform(particle.mesh, this.parent)
-        oldParent.remove(particle.mesh)
+    add(particle: LeafParticle) {
+        leafPool.mesh.getMatrixAt(particle.instance.index, particle.matrix)
         this.particles.push(particle)
     }
 }
