@@ -1,6 +1,6 @@
-import { THREE } from "../deps";
-import { camera, composer, renderer } from "./three/main";
-import { unrealBloomPass } from "./three/renderer";
+import { THREE } from "../../deps.ts";
+import { camera, composer, renderer } from "./main.ts";
+import { unrealBloomPass } from "./renderer.ts";
 
 export function initWindow() {
     onResize()
