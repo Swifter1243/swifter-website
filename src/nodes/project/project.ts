@@ -1,4 +1,5 @@
 import { PageNode } from "../model/page_node"
+import type {Page} from "../page.ts";
 
 export const CATEGORIES = {
     'Tools': 'tools',
@@ -23,7 +24,7 @@ export const SKILLS = {
 export type Skill = keyof typeof SKILLS
 
 export type Project = {
-    html: string
+    page: Page,
     name: string
     key: string
     category: Category
@@ -36,7 +37,7 @@ export type Project = {
 }
 
 export function nodeFromProject(project: Project): PageNode {
-    return new PageNode(project.importance, project.name, project.html, project)
+    return new PageNode(project.importance, project.name, project.page, project)
 }
 
 export function getProjectCategoryPath(project: Project): string {

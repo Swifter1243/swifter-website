@@ -1,7 +1,7 @@
 <script lang="ts">
-    import {CATEGORIES, type Project, type Skill, SKILLS} from "../nodes/project/project.ts";
-    import {getDateMonthName} from "../utilities/date.ts";
-    import {navigation} from "../navigation/navigation.ts";
+    import {CATEGORIES, type Project, type Skill, SKILLS} from "../../nodes/project/project.ts";
+    import {getDateMonthName} from "../../utilities/date.ts";
+    import {navigation} from "../../navigation/navigation.ts";
 
     const { project } : { project?: Project } = $props();
 

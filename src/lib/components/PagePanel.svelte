@@ -1,11 +1,12 @@
 <script lang="ts">
-    import type {PageNode} from "../nodes/model/page_node.ts";
-    import {navigation} from "../navigation/navigation.ts";
-    import {activePageNode} from "../view/page_view.ts";
+    import type {PageNode} from "../../nodes/model/page_node.ts";
+    import {navigation} from "../../navigation/navigation.ts";
+    import {activePageNode} from "../../view/page_view.ts";
     import ProjectInfo from "./ProjectInfo.svelte";
     import { fade, fly } from "svelte/transition";
+    import type {Component} from "svelte";
 
-    let pageComponent: any = null;
+    let PageComponent: Component | null = $state(null);
     let pageNode: PageNode | null = $state(null);
 
     $effect(() => {
@@ -17,8 +18,7 @@
     });
 
     async function loadComponent(pageNode: PageNode) {
-        //const mod = await pageNode.component();
-        //pageComponent = mod.default;
+        PageComponent = await pageNode.page.loadMethod();
         //(window as any).twttr.widgets.load();
     }
 
@@ -116,9 +116,9 @@
 
             <div id="content-parent">
                 <ProjectInfo project={pageNode.project}></ProjectInfo>
-                {#if pageComponent}
+                {#if PageComponent}
                     <div id="content">
-                        <svelte:component this={pageComponent} />
+                        <PageComponent></PageComponent>
                     </div>
                 {/if}
             </div>

@@ -1,31 +1,6 @@
 import { type Project } from "./project";
 import { dateFromMonthYear } from "../../utilities/date";
-
-import placeHolderHTML from '../pages/placeholder.html?raw'
-import extraSensory2HTML from './pages/extra_sensory_2.html?raw'
-import derelictHTML from './pages/derelict.html?raw'
-import synergyHTML from './pages/synergy.html?raw'
-import aetherHTML from './pages/aether.html?raw'
-import graspingAtStrawsHTML from './pages/grasping_at_straws.html?raw'
-import zeroIncHTML from './pages/zero_inc.html?raw'
-import bloonManHTML from './pages/bloon_man.html?raw'
-import plasmaShiftHTML from './pages/plasmashift.html?raw'
-import beatCraftHTML from './pages/beatcraft.html?raw'
-import remapperHTML from './pages/remapper.html?raw'
-import bloodRushingHTML from './pages/blood_rushing.html?raw'
-import ricochetHTML from './pages/ricochet.html?raw'
-import shadertoyShadersHTML from './pages/shadertoy_shaders.html?raw'
-import beatSaberLevelsHTML from './pages/beat_saber_levels.html?raw'
-import beatSaberEnvironmentGrabberHTML from './pages/beat_saber_environment_grabber.html?raw'
-import enlightenHTML from './pages/enlighten.html?raw'
-import vivifyTemplateHTML from './pages/vivify_template.html?raw'
-import sdlMinecraftHTML from './pages/sdl_minecraft.html?raw'
-import excelSoftwareRendererHTML from './pages/excel_software_renderer.html?raw'
-import greenfootTetrisHTML from './pages/greenfoot_tetris.html?raw'
-import myMusicHTML from './pages/my_music.html?raw'
-import magicNetherPortalHTML from './pages/magic_nether_portal.html?raw'
-import boomboxRemasteredHTML from './pages/boombox_remastered.html?raw'
-import unityAnimationWindowHTML from './pages/unity_animation_window.html?raw'
+import {PAGES} from "../page.ts";
 
 
 const projects: Project[] = [
@@ -33,7 +8,7 @@ const projects: Project[] = [
         importance: 10,
         name: 'Extra Sensory II',
         key: 'extra-sensory-ii',
-        html: extraSensory2HTML,
+        page: PAGES.placeHolder,
         category: 'Experiences',
         skills: ['C#', 'Shaders', 'Unity', 'TypeScript', 'Teamwork', 'Audio'],
         demoLink: 'https://beatsaver.com/playlists/797071',
@@ -44,7 +19,7 @@ const projects: Project[] = [
         importance: 4,
         name: 'Derelict',
         key: 'derelict',
-        html: derelictHTML,
+        page: PAGES.placeHolder,
         category: 'Games',
         skills: ['C#', 'Unity', 'Teamwork', 'Shaders'],
         startDate: dateFromMonthYear('January 2025'),
@@ -54,7 +29,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'SYNERGY',
         key: 'synergy',
-        html: synergyHTML,
+        page: PAGES.placeHolder,
         category: 'Games',
         skills: ['C#', 'Unity', 'Shaders'],
         demoLink: 'https://github.com/Swifter1243/SYNERGY/releases/latest',
@@ -66,7 +41,7 @@ const projects: Project[] = [
         importance: 3,
         name: '743+Aether*✧ . * ¹¹¹} + , .',
         key: 'aether',
-        html: aetherHTML,
+        page: PAGES.placeHolder,
         category: 'Experiences',
         skills: ['C#', 'Shaders', 'Unity'],
         demoLink: 'https://beatsaver.com/maps/4968d',
@@ -78,7 +53,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Grasping At Straws',
         key: 'grasping-at-straws',
-        html: graspingAtStrawsHTML,
+        page: PAGES.placeHolder,
         category: 'Games',
         skills: ['C#', 'Shaders', 'Unity', 'Audio'],
         demoLink: 'https://github.com/Swifter1243/Grasping-At-Straws/releases/latest',
@@ -90,7 +65,7 @@ const projects: Project[] = [
         importance: 1,
         name: 'ZERO Inc.',
         key: 'zero-inc',
-        html: zeroIncHTML,
+        page: PAGES.placeHolder,
         category: 'Games',
         skills: ['C#', 'Shaders', 'Teamwork'],
         demoLink: 'https://drive.google.com/drive/u/0/folders/15qEAkHTWxyTDABXE9rn7VNDnCzREBMpl',
@@ -101,7 +76,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'BLOON MAN',
         key: 'bloon-man',
-        html: bloonManHTML,
+        page: PAGES.placeHolder,
         category: 'Games',
         skills: ['C#', 'Teamwork', 'Unity', 'Audio'],
         demoLink: 'https://github.com/Swifter1243/SLC_GAMEJAM_SEM3/releases/latest',
@@ -113,7 +88,7 @@ const projects: Project[] = [
         importance: 0.3,
         name: 'PlasmaShift',
         key: 'plasmashift',
-        html: plasmaShiftHTML,
+        page: PAGES.placeHolder,
         category: 'Games',
         skills: ['C#', 'Teamwork', 'Unity', 'Shaders'],
         demoLink: 'https://catsandwich1259.itch.io/plasmashift',
@@ -125,7 +100,7 @@ const projects: Project[] = [
         importance: 5,
         name: 'BeatCraft',
         key: 'beatcraft',
-        html: beatCraftHTML,
+        page: PAGES.placeHolder,
         category: 'Experiments',
         skills: ['Java', 'Teamwork', 'Mathematics'],
         demoLink: 'https://modrinth.com/mod/beatcraft',
@@ -136,7 +111,7 @@ const projects: Project[] = [
         importance: 5,
         name: 'ReMapper',
         key: 'remapper',
-        html: remapperHTML,
+        page: PAGES.placeHolder,
         category: 'Tools',
         skills: ['TypeScript', 'Python', 'Mathematics'],
         sourceLink: 'https://github.com/Swifter1243/ReMapper',
@@ -146,7 +121,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'BRLCTAP',
         key: 'blood-rushing',
-        html: bloodRushingHTML,
+        page: PAGES.placeHolder,
         category: 'Experiences',
         skills: ['TypeScript', 'Unity', 'Teamwork'],
         demoLink: 'https://beatsaver.com/playlists/8713',
@@ -158,7 +133,7 @@ const projects: Project[] = [
         importance: 3,
         name: 'ricochet',
         key: 'ricochet',
-        html: ricochetHTML,
+        page: PAGES.placeHolder,
         category: 'Experiences',
         skills: ['Shaders', 'Unity', 'Mathematics'],
         demoLink: 'https://vrchat.com/home/world/wrld_257dfd01-d3ac-45be-9a09-d7a7ef1ed68b/info',
@@ -170,7 +145,7 @@ const projects: Project[] = [
         importance: 3.5,
         name: 'Shadertoy Shaders',
         key: 'shadertoy-shaders',
-        html: shadertoyShadersHTML,
+        page: PAGES.placeHolder,
         category: 'Experiments',
         skills: ['Shaders', 'Mathematics'],
         startDate: dateFromMonthYear('January 2023')
@@ -179,7 +154,7 @@ const projects: Project[] = [
         importance: 1,
         name: 'Beat Saber Levels',
         key: 'beat-saber-levels',
-        html: beatSaberLevelsHTML,
+        page: PAGES.placeHolder,
         category: 'Experiences',
         skills: ['Unity', 'TypeScript', 'Shaders'],
         demoLink: 'https://beatsaver.com/profile/4284246',
@@ -189,7 +164,7 @@ const projects: Project[] = [
         importance: 1,
         name: 'Beat Saber Environment Grabber',
         key: 'environment-grabber',
-        html: beatSaberEnvironmentGrabberHTML,
+        page: PAGES.placeHolder,
         category: 'Tools',
         skills: ['TypeScript'],
         sourceLink: 'https://github.com/Swifter1243/EnvironmentGrabber',
@@ -200,7 +175,7 @@ const projects: Project[] = [
         importance: 1,
         name: 'Enlighten',
         key: 'enlighten',
-        html: enlightenHTML,
+        page: PAGES.placeHolder,
         category: 'Tools',
         skills: ['Unity', 'C#', 'Shaders'],
         sourceLink: 'https://github.com/Swifter1243/Enlighten',
@@ -210,7 +185,7 @@ const projects: Project[] = [
         importance: 3,
         name: 'My Website',
         key: 'my-website',
-        html: placeHolderHTML,
+        page: PAGES.placeHolder,
         category: 'Experiences',
         skills: ['TypeScript', 'Audio'],
         sourceLink: 'https://github.com/Swifter1243/swifter-website',
@@ -220,7 +195,7 @@ const projects: Project[] = [
         importance: 3.5,
         name: 'Vivify Template',
         key: 'vivify-template',
-        html: vivifyTemplateHTML,
+        page: PAGES.placeHolder,
         category: 'Tools',
         skills: ['C#', 'Unity', 'Shaders', 'Teamwork', 'TypeScript'],
         sourceLink: 'https://github.com/Swifter1243/VivifyTemplate',
@@ -230,7 +205,7 @@ const projects: Project[] = [
         importance: 1,
         name: 'SDL Minecraft',
         key: 'sdl-minecraft',
-        html: sdlMinecraftHTML,
+        page: PAGES.placeHolder,
         category: 'Games',
         skills: ['C++', 'Teamwork'],
         startDate: dateFromMonthYear('February 2024'),
@@ -240,7 +215,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Excel Software Renderer',
         key: 'excel-software-renderer',
-        html: excelSoftwareRendererHTML,
+        page: PAGES.placeHolder,
         category: 'Experiments',
         skills: ['Python', 'Mathematics'],
         demoLink: 'https://drive.google.com/file/d/1lVavDQJT7eWCB3lB4XpUlI5SrQxJMPJM/view?usp=sharing',
@@ -251,7 +226,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Magic Nether Portal',
         key: 'magic-nether-portal',
-        html: magicNetherPortalHTML,
+        page: PAGES.placeHolder,
         category: 'Experiments',
         skills: ['Mathematics'],
         demoLink: 'https://github.com/Swifter1243/magic-nether-portal/releases/latest',
@@ -263,7 +238,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Greenfoot Tetris',
         key: 'greenfoot-tetris',
-        html: greenfootTetrisHTML,
+        page: PAGES.placeHolder,
         category: 'Experiments',
         skills: ['Java'],
         sourceLink: 'https://github.com/ElijahStafford/GreenFootTetris',
@@ -274,7 +249,7 @@ const projects: Project[] = [
         importance: 1.5,
         name: 'My Music',
         key: 'my-music',
-        html: myMusicHTML,
+        page: PAGES.placeHolder,
         category: 'Experiments',
         skills: ['TypeScript', 'Audio'],
         demoLink: 'https://soundcloud.com/swifter1243',
@@ -284,7 +259,7 @@ const projects: Project[] = [
         importance: 10,
         name: 'BoomBox Remastered',
         key: 'boombox-remastered',
-        html: boomboxRemasteredHTML,
+        page: PAGES.placeHolder,
         category: 'Games',
         skills: ['Unity', 'C#', 'Shaders', 'Teamwork'],
         demoLink: 'https://store.steampowered.com/app/4223390/BoomBox_Remastered',
@@ -294,7 +269,7 @@ const projects: Project[] = [
         importance: 2,
         name: 'Unity Animation Window',
         key: 'unity-animation-window',
-        html: unityAnimationWindowHTML,
+        page: PAGES.placeHolder,
         category: 'Tools',
         skills: ['Unity', 'C#'],
         sourceLink: 'https://github.com/Swifter1243/UnityAnimationWindow',

@@ -1,15 +1,16 @@
 import type { Project } from "../project/project.ts";
 import type { INode } from "./node.ts";
+import type {Page} from "../page.ts";
 
 export class PageNode implements INode {
-    html: string
+    page: Page
     name: string
     project?: Project
     importance: number
 
-    constructor(importance: number, name: string, html: string, project?: Project) {
+    constructor(importance: number, name: string, page: Page, project?: Project) {
         this.name = name
-        this.html = html
+        this.page = page
         this.project = project
         this.importance = importance
     }

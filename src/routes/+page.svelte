@@ -6,7 +6,7 @@
     import { initThree } from "../view/three/main"
     import { initSystems } from "../initialize"
     import { fadeIn } from "../view/fade"
-    import PagePanel from "../svelte/PagePanel.svelte";
+    import PagePanel from "$lib/components/PagePanel.svelte";
 
     onMount(async () => {
         await initSound()
