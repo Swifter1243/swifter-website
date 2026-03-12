@@ -1,4 +1,4 @@
-import type { INode } from "./node";
+import type { INode } from "./node.ts";
 
 export class DirectoryNode implements INode {
     name: string

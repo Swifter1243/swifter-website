@@ -1,5 +1,5 @@
 import type { THREE } from "../../deps"
-import { DirectoryNode } from "../../model/directory_node"
+import { DirectoryNode } from "../../nodes/model/directory_node"
 import { navigation } from "../../navigation/navigation"
 import { lerp } from "../../utilities/math"
 import { setCameraPivot } from "./camera"

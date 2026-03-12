@@ -1,5 +1,5 @@
-import type { Project } from "../nodes/project/project";
-import type { INode } from "./node";
+import type { Project } from "../project/project.ts";
+import type { INode } from "./node.ts";
 
 export class PageNode implements INode {
     html: string
