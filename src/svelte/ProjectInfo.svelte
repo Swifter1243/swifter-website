@@ -42,21 +42,128 @@
     }
 </script>
 
+<style>
+    #root {
+        background: linear-gradient(
+                90deg,
+                rgba(0, 0, 0, 0.9) 0%,
+                rgb(53, 59, 35) 20%,
+                rgb(35, 43, 59) 80%,
+                rgba(0, 0, 0, 0.9) 100%
+        );
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    #timeline {
+        font-size: 16px;
+        font-style: italic;
+        color: rgba(255, 241, 241, 0.71)
+    }
+
+    #button-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    p {
+        text-align: center;
+        margin: 3px;
+    }
+
+    #tags {
+        min-height: 15px;
+        display: flex;
+        justify-content: left;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin: 3px;
+    }
+
+    #links {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    #links > a {
+        width: 30px;
+        height: 30px;
+        border-style: none;
+        background-color: rgb(115, 122, 125);
+        background-size: 80%;
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+    }
+
+    #source-link {
+        background-image: url("/github-white-icon.webp");
+    }
+
+    #demo-link {
+        background-image: url("/play-button-round-white-icon.webp");
+    }
+
+    /* tags */
+    .category-tag, .skill-tag, #links > a {
+        border-radius: 4px;
+    }
+
+    .category-tag:hover, .skill-tag:hover, #links > a:hover {
+        filter: brightness(0.7);
+    }
+
+    .category-tag:active, .skill-tag:active, #links > a:active {
+        filter: brightness(0.4);
+    }
+
+    .category-tag, .skill-tag {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+        border-style: none;
+        color: rgb(255, 255, 255);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px;
+        font-size: 16px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    .category-tag {
+        background-color: rgba(173, 164, 99);
+    }
+
+    .skill-tag {
+        background-color: rgb(99, 169, 173);
+    }
+</style>
+
 {#if project}
-<div id="page-project-info">
-    <p id="project-timeline" style="font-size: 16px; font-style: italic; color: rgba(255, 255, 255, 0.713);">{parseTimeline(project)}</p>
-    <div style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
+<div id="root">
+    <p id="timeline">{parseTimeline(project)}</p>
+    <div id="button-container">
         {#if hasLinks(project)}
-        <div id="page-project-links">
+        <div id="links">
             {#if project.sourceLink}
-                <a id="project-source-link" target="_" href={project.sourceLink} aria-label="Project Source Link"></a>
+                <a id="source-link" target="_" href={project.sourceLink} aria-label="Project Source Link"></a>
             {/if}
             {#if project.demoLink}
-                <a id="project-demo-link" target="_" href={project.demoLink} aria-label="Project Demo Link"></a>
+                <a id="demo-link" target="_" href={project.demoLink} aria-label="Project Demo Link"></a>
             {/if}
         </div>
         {/if}
-        <div id="page-project-tags">
+        <div id="tags">
             <button
                     class="category-tag"
                     onclick={goToCategory}>

@@ -27,24 +27,97 @@
     }
 </script>
 
+<style>
+    #root {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #panel {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: min(100%, 1100px);
+        box-sizing: border-box;
+        padding: 10px 0 10px 0;
+        margin: 0px;
+    }
+
+    #top-bar {
+        height: 50px;
+        min-height: 50px;
+        background: linear-gradient(
+                45deg,
+                rgba(173, 164, 99, 0.6) 20%,
+                rgba(99, 169, 173, 0.6) 80%
+        );
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    #close-parent {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    #close {
+        aspect-ratio: 1;
+        min-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-style: none;
+    }
+
+    #close:hover {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    #content-parent {
+        flex-grow: 1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        background-color: rgba(0, 0, 0, 0.9);
+        padding: 0;
+    }
+
+    #content {
+        padding: 0 15px 0 15px;
+        text-align: center;
+    }
+</style>
+
 {#if pageNode}
-    <div id="page" transition:fade={{ duration: 300 }}>
-        <div id="page-panel" transition:fly={{ y: 50, duration: 500 }}>
-            <div id="page-top-bar">
-                <h2 id="page-title">
+    <div id="root" transition:fade={{ duration: 300 }}>
+        <div id="panel" transition:fly={{ y: 50, duration: 500 }}>
+            <div id="top-bar">
+                <h2 id="title">
                     {pageNode.name}
                 </h2>
-                <div id="page-close-parent">
-                    <button id="page-close" on:click={close}>
+                <div id="close-parent">
+                    <button id="close" on:click={close}>
                         <h1>&#10094;</h1>
                     </button>
                 </div>
             </div>
 
-            <div id="page-content-parent">
+            <div id="content-parent">
                 <ProjectInfo project={pageNode.project}></ProjectInfo>
                 {#if pageComponent}
-                    <div id="page-content">
+                    <div id="content">
                         <svelte:component this={pageComponent} />
                     </div>
                 {/if}
