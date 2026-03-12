@@ -1,21 +1,25 @@
 {
-  "name": "swifter-website",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "tsc && vite build && shx cp dist/index.html dist/404.html",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@react-three/fiber": "^9.2.0",
-    "@react-three/uikit": "^0.8.21",
-    "@types/three": "^0.178.1",
-    "shx": "^0.4.0",
-    "three": "^0.178.0",
-    "troika-three-text": "^0.52.4",
-    "typescript": "~5.8.3",
-    "vite": "^7.0.4"
-  }
+	"name": "swifter-website",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev --host",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^7.0.0",
+		"@sveltejs/kit": "^2.50.2",
+		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"svelte": "^5.51.0",
+		"svelte-check": "^4.4.2",
+		"typescript": "^5.9.3",
+		"vite": "^7.3.1",
+		"three": "^0.178.0",
+		"troika-three-text": "^0.52.4"
+	}
 }
