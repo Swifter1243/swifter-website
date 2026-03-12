@@ -2,19 +2,26 @@ import type { PageNode } from "../nodes/model/page_node";
 import { attachCarousels } from "./carousel";
 import { disableInput, enableInput } from "./three/input";
 import { attachLinks, setLinksToOpenNewTab } from "./links";
-import { loadPageProjectInfo } from "./page_project_info";
+import {initializePageProjectInfo, loadPageProjectInfo} from "./page_project_info";
 import { muteChordPads, unmuteChordPads } from "./sound/chord";
 import { navigation } from "../navigation/navigation";
 
-const pageContent = document.getElementById('page-content')!
-const pagePanel = document.getElementById('page-panel')!
-const page = document.getElementById('page')!
-const pageTitle = document.getElementById('page-title')!
+let pageContent: HTMLElement
+let pagePanel: HTMLElement
+let page: HTMLElement
+let pageTitle: HTMLElement
 
 let lastTimeout: number | undefined = undefined
 
 export class PageView {
     constructor() {
+        initializePageProjectInfo()
+
+        pageContent = document.getElementById('page-content')!
+        pagePanel = document.getElementById('page-panel')!
+        page = document.getElementById('page')!
+        pageTitle = document.getElementById('page-title')!
+
         const pageClose = document.getElementById('page-close')!
         pageClose.addEventListener('click', () => navigation.descend())
         page.hidden = true

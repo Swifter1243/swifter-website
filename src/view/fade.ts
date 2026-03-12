@@ -1,4 +1,8 @@
-const fade = document.getElementById('fade')!
+let fade: HTMLElement
+
+export function initializeFade() {
+    fade = document.getElementById('fade')!
+}
 
 export function fadeIn() {
     fade.style.opacity = '0'

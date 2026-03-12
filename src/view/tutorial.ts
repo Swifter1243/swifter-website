@@ -1,8 +1,13 @@
 import { Invokable } from "../utilities/invokable"
 import { isMobile } from "../utilities/mobile"
 
-const tutorialDiv = document.getElementById('tutorial')!
-const tutorialText = document.getElementById('tutorial-text')!
+let tutorialDiv: HTMLElement
+let tutorialText: HTMLElement
+
+export function initializeTutorial() {
+    tutorialDiv = document.getElementById('tutorial')!
+    tutorialText = document.getElementById('tutorial-text')!
+}
 
 class Tutorial {
     message: string
@@ -43,7 +48,7 @@ function peek(): Tutorial | undefined {
     return tutorialQueue[tutorialQueue.length - 1]
 }
 
-export function initTutorials(tutorials: Tutorial[]) {
+export function queueTutorials(tutorials: Tutorial[]) {
     tutorialQueue = [...tutorials].reverse()
     startNextTutorial()
 }

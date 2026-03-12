@@ -1,7 +1,7 @@
 import { changeChord, changeChordPad } from "./chord"
 import { onRender } from "../three/renderer"
 import { initResources, SOUNDS, sounds } from "./resources"
-import { playOneShot } from "./context"
+import {playOneShot, startAudioContext} from "./context"
 
 export const soundState = {
     queueOpen: false,
@@ -10,6 +10,7 @@ export const soundState = {
 }
 
 export async function initSound() {
+    window.addEventListener('pointerdown', startAudioContext, { once: true })
     await initResources()
     onRender.subscribe(playQueuedSounds)
 }

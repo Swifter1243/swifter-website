@@ -1,4 +1,4 @@
-import { initCamera } from "../../view/three/camera";
+import { initCamera } from "./camera.ts";
 import { EffectComposer, THREE } from "../../deps";
 import { initRenderer } from "./renderer";
 import { initScene } from "./scene";
@@ -10,12 +10,17 @@ import { initUpdateables } from "./updateable";
 import { initInput } from "./input";
 import { initPools } from "./pooling";
 
-export const scene = new THREE.Scene();
-export const camera = new THREE.PerspectiveCamera();
-export const renderer = new THREE.WebGLRenderer();
-export const composer = new EffectComposer(renderer)
+export let scene: THREE.Scene;
+export let camera: THREE.PerspectiveCamera;
+export let renderer: THREE.WebGLRenderer;
+export let composer: EffectComposer;
 
 export async function initThree() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera();
+    renderer = new THREE.WebGLRenderer();
+    composer = new EffectComposer(renderer)
+
     const resourcesPromise = initResources()
     initInput()
     initCamera()

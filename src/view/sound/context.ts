@@ -26,8 +26,6 @@ async function initialize() {
     audioContextReady = true
 }
 
-window.addEventListener('pointerdown', startAudioContext, { once: true })
-
 export function playOneShot(
     buffer: AudioBuffer,
     {

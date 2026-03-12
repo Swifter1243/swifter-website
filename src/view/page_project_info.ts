@@ -2,12 +2,21 @@ import { navigation } from "../navigation/navigation";
 import { CATEGORIES, SKILLS, type Project } from "../nodes/project/project";
 import { getDateMonthName } from "../utilities/date";
 
-const pageProjectInfoDiv = document.getElementById('page-project-info')!
-const pageProjectTagsDiv = document.getElementById('page-project-tags')!
-const pageProjectLinksDiv = document.getElementById('page-project-links')!
-const projectSourceLink = document.getElementById('project-source-link')!
-const projectDemoLink = document.getElementById('project-demo-link')!
-const projectTimeline = document.getElementById('project-timeline')!
+let pageProjectInfoDiv: HTMLElement
+let pageProjectTagsDiv: HTMLElement
+let pageProjectLinksDiv: HTMLElement
+let projectSourceLink: HTMLElement
+let projectDemoLink: HTMLElement
+let projectTimeline: HTMLElement
+
+export function initializePageProjectInfo() {
+    pageProjectInfoDiv = document.getElementById('page-project-info')!
+    pageProjectTagsDiv = document.getElementById('page-project-tags')!
+    pageProjectLinksDiv = document.getElementById('page-project-links')!
+    projectSourceLink = document.getElementById('project-source-link')!
+    projectDemoLink = document.getElementById('project-demo-link')!
+    projectTimeline = document.getElementById('project-timeline')!
+}
 
 export function loadPageProjectInfo(project: Project | undefined) {
     if (project) {

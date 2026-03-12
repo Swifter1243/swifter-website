@@ -12,11 +12,15 @@ import { playOneShot, startAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
 import { getPathKeySequence, locationToNavigationPath } from "../navigation/utility"
-import { BUD_TUTORIAL, initTutorials, OPEN_BUD_BUFFER as DIRECTORY_NODE_TUTORIAL, ORBIT_TUTORIAL, ZOOM_TUTORIAL } from "./tutorial"
+import {
+    BUD_TUTORIAL, queueTutorials, OPEN_BUD_BUFFER as DIRECTORY_NODE_TUTORIAL, ORBIT_TUTORIAL, ZOOM_TUTORIAL,
+    initializeTutorial
+} from "./tutorial"
 import { onDragEnd, onZoomEnd } from "./three/input"
 import { revealScene } from "./three/scene"
+import {pushState} from "$app/navigation";
 
-const title = document.getElementById("title")!
+let title: HTMLElement
 
 export class View {
     directoryView: DirectoryView
@@ -28,6 +32,8 @@ export class View {
     private dontPushURLHistory = false
 
     constructor() {
+        title = document.getElementById("title")!
+
         this.currentNode = navigation.grabCurrentNode()
         this.directoryView = new DirectoryView()
         this.pageView = new PageView()
@@ -61,7 +67,7 @@ export class View {
             navigation.goToPath(path)
             soundState.queueOpen = false
         } else {
-            initTutorials([BUD_TUTORIAL, ORBIT_TUTORIAL, DIRECTORY_NODE_TUTORIAL, ZOOM_TUTORIAL])
+            queueTutorials([BUD_TUTORIAL, ORBIT_TUTORIAL, DIRECTORY_NODE_TUTORIAL, ZOOM_TUTORIAL])
         }
 
         window.addEventListener('popstate', _ => {
@@ -133,7 +139,7 @@ export class View {
 
         if (!this.dontPushURLHistory) {
             const url = headerPath === '.' ? '/' : headerPath.substring(1)
-            history.pushState(null, '', url)
+            pushState(url, '')
         } else {
             this.dontPushURLHistory = false
         }

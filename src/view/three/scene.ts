@@ -15,7 +15,7 @@ const flowerViewDistance = new SmoothNumber(0, 0.3)
 const horizonBaseColor = new THREE.Color('#001026')
 const currentHorizonColor = new THREE.Color(0, 0, 0)
 
-export async function initScene() {
+export function initScene() {
     const point = new THREE.PointLight('#feffd7', 2, 0.8, 1.6)
     point.position.set(0, 0.2, 0)
     scene.add(point)
