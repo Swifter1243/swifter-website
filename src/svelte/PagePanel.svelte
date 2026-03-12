@@ -42,7 +42,7 @@
             </div>
 
             <div id="page-content-parent">
-                <ProjectInfo></ProjectInfo>
+                <ProjectInfo project={pageNode.project}></ProjectInfo>
                 {#if pageComponent}
                     <div id="page-content">
                         <svelte:component this={pageComponent} />
