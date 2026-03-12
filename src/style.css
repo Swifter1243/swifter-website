@@ -75,12 +75,9 @@ a:visited {
 	position: fixed;
 	inset: 0;
 	background-color: rgba(0, 0, 0, 0.5);
-	transition: opacity 0.5s ease;
-	opacity: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	pointer-events: none;
 }
 
 #page-panel {
@@ -88,8 +85,6 @@ a:visited {
 	flex-direction: column;
 	height: 100%;
 	width: min(100%, 1100px);
-	transition: transform 0.5s ease; /* smooth animation */
-	transform: translateY(50px);
 	box-sizing: border-box;
 	padding: 10px 0 10px 0;
 	margin: 0px;
