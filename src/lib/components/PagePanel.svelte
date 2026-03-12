@@ -78,6 +78,7 @@
         align-items: center;
         justify-content: center;
         color: white;
+        font-size: 24px;
         border-radius: 3px;
         background-color: rgba(0, 0, 0, 0.3);
         border-style: none;
@@ -104,9 +105,7 @@
                     {pageNode.name}
                 </h2>
                 <div class="close-parent">
-                    <button class="close" on:click={close}>
-                        <h1>&#10094;</h1>
-                    </button>
+                    <button class="close" onclick={close}>&#10094;</button>
                 </div>
             </div>
 
