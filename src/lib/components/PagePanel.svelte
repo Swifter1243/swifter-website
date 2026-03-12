@@ -5,6 +5,7 @@
     import ProjectInfo from "./ProjectInfo.svelte";
     import { fade, fly } from "svelte/transition";
     import type {Component} from "svelte";
+    import PageContent from "$lib/components/PageContent.svelte";
 
     let PageComponent: Component | null = $state(null);
     let pageNode: PageNode | null = $state(null);
@@ -86,17 +87,12 @@
         background-color: rgba(0, 0, 0, 0.6);
     }
 
-    #content-parent {
+    #scrollable {
         flex-grow: 1;
         overflow-y: scroll;
         overflow-x: hidden;
         background-color: rgba(0, 0, 0, 0.9);
         padding: 0;
-    }
-
-    #content {
-        padding: 0 15px 0 15px;
-        text-align: center;
     }
 </style>
 
@@ -114,13 +110,9 @@
                 </div>
             </div>
 
-            <div id="content-parent">
+            <div id="scrollable">
                 <ProjectInfo project={pageNode.project}></ProjectInfo>
-                {#if PageComponent}
-                    <div id="content">
-                        <PageComponent></PageComponent>
-                    </div>
-                {/if}
+                <PageContent pageNode={pageNode}></PageContent>
             </div>
         </div>
     </div>
