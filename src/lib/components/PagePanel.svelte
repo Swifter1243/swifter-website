@@ -7,21 +7,11 @@
     import type {Component} from "svelte";
     import PageContent from "$lib/components/PageContent.svelte";
 
-    let PageComponent: Component | null = $state(null);
     let pageNode: PageNode | null = $state(null);
 
     $effect(() => {
         pageNode = $activePageNode;
-
-        if (pageNode) {
-            loadComponent(pageNode);
-        }
     });
-
-    async function loadComponent(pageNode: PageNode) {
-        PageComponent = await pageNode.page.loadMethod();
-        //(window as any).twttr.widgets.load();
-    }
 
     function close() {
         navigation.descend()
