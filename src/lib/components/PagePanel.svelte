@@ -29,7 +29,7 @@
 </script>
 
 <style>
-    #root {
+    .root {
         position: fixed;
         inset: 0;
         background-color: rgba(0, 0, 0, 0.5);
@@ -38,7 +38,7 @@
         align-items: center;
     }
 
-    #panel {
+    .panel {
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -48,7 +48,7 @@
         margin: 0px;
     }
 
-    #top-bar {
+    .top-bar {
         height: 50px;
         min-height: 50px;
         background: linear-gradient(
@@ -63,7 +63,7 @@
         position: relative;
     }
 
-    #close-parent {
+    .close-parent {
         height: 100%;
         width: 100%;
         position: absolute;
@@ -71,7 +71,7 @@
         justify-content: flex-start;
     }
 
-    #close {
+    .close {
         aspect-ratio: 1;
         min-height: 0;
         display: flex;
@@ -83,11 +83,11 @@
         border-style: none;
     }
 
-    #close:hover {
+    .close:hover {
         background-color: rgba(0, 0, 0, 0.6);
     }
 
-    #scrollable {
+    .scrollable {
         flex-grow: 1;
         overflow-y: scroll;
         overflow-x: hidden;
@@ -97,20 +97,20 @@
 </style>
 
 {#if pageNode}
-    <div id="root" transition:fade={{ duration: 300 }}>
-        <div id="panel" transition:fly={{ y: 50, duration: 500 }}>
-            <div id="top-bar">
-                <h2 id="title">
+    <div class="root" transition:fade={{ duration: 300 }}>
+        <div class="panel" transition:fly={{ y: 50, duration: 500 }}>
+            <div class="top-bar">
+                <h2 class="title">
                     {pageNode.name}
                 </h2>
-                <div id="close-parent">
-                    <button id="close" on:click={close}>
+                <div class="close-parent">
+                    <button class="close" on:click={close}>
                         <h1>&#10094;</h1>
                     </button>
                 </div>
             </div>
 
-            <div id="scrollable">
+            <div class="scrollable">
                 <ProjectInfo project={pageNode.project}></ProjectInfo>
                 <PageContent pageNode={pageNode}></PageContent>
             </div>

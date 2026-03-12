@@ -43,7 +43,7 @@
 </script>
 
 <style>
-    #root {
+    .root {
         background: linear-gradient(
                 90deg,
                 rgba(0, 0, 0, 0.9) 0%,
@@ -57,13 +57,13 @@
         padding: 5px 10px 5px 10px;
     }
 
-    #timeline {
+    .timeline {
         font-size: 16px;
         font-style: italic;
         color: rgba(255, 241, 241, 0.71)
     }
 
-    #button-container {
+    .button-container {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -75,7 +75,7 @@
         margin: 3px;
     }
 
-    #tags {
+    .tags {
         min-height: 15px;
         display: flex;
         justify-content: left;
@@ -84,7 +84,7 @@
         margin: 3px;
     }
 
-    #links {
+    .links {
         text-align: center;
         display: flex;
         justify-content: center;
@@ -92,7 +92,7 @@
         gap: 5px;
     }
 
-    #links > a {
+    .links > a {
         width: 30px;
         height: 30px;
         border-style: none;
@@ -103,24 +103,24 @@
         cursor: pointer;
     }
 
-    #source-link {
+    .source-link {
         background-image: url("/github-white-icon.webp");
     }
 
-    #demo-link {
+    .demo-link {
         background-image: url("/play-button-round-white-icon.webp");
     }
 
     /* tags */
-    .category-tag, .skill-tag, #links > a {
+    .category-tag, .skill-tag, .links > a {
         border-radius: 4px;
     }
 
-    .category-tag:hover, .skill-tag:hover, #links > a:hover {
+    .category-tag:hover, .skill-tag:hover, .links > a:hover {
         filter: brightness(0.7);
     }
 
-    .category-tag:active, .skill-tag:active, #links > a:active {
+    .category-tag:active, .skill-tag:active, .links > a:active {
         filter: brightness(0.4);
     }
 
@@ -150,20 +150,20 @@
 </style>
 
 {#if project}
-<div id="root">
-    <p id="timeline">{parseTimeline(project)}</p>
-    <div id="button-container">
+<div class="root">
+    <p class="timeline">{parseTimeline(project)}</p>
+    <div class="button-container">
         {#if hasLinks(project)}
-        <div id="links">
+        <div class="links">
             {#if project.sourceLink}
-                <a id="source-link" target="_" href={project.sourceLink} aria-label="Project Source Link"></a>
+                <a class="source-link" target="_" href={project.sourceLink} aria-label="Project Source Link"></a>
             {/if}
             {#if project.demoLink}
-                <a id="demo-link" target="_" href={project.demoLink} aria-label="Project Demo Link"></a>
+                <a class="demo-link" target="_" href={project.demoLink} aria-label="Project Demo Link"></a>
             {/if}
         </div>
         {/if}
-        <div id="tags">
+        <div class="tags">
             <button
                     class="category-tag"
                     onclick={goToCategory}>

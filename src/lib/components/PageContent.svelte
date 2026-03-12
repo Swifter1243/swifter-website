@@ -23,14 +23,14 @@
 </script>
 
 <style>
-    #root {
+    .root {
         padding: 0 15px 0 15px;
         text-align: center;
     }
 </style>
 
 {#if PageComponent}
-    <div id="root">
+    <div class="root">
         <PageComponent></PageComponent>
     </div>
 {/if}
