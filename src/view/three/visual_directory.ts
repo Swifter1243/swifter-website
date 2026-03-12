@@ -1,5 +1,5 @@
 import { THREE } from "../../deps";
-import type { DirectoryNode } from "../../model/directory_node";
+import type { DirectoryNode } from "../../nodes/model/directory_node";
 import { Invokable } from "../../utilities/invokable";
 import { inverseLerp, lerp, randomRange } from "../../utilities/math";
 import { SmoothNumber, SmoothVec3 } from "../../utilities/smooth_value";

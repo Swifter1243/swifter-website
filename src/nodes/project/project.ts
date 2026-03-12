@@ -1,4 +1,4 @@
-import { PageNode } from "../../model/page_node"
+import { PageNode } from "../model/page_node"
 
 export const CATEGORIES = {
     'Tools': 'tools',

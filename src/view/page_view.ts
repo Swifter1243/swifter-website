@@ -1,4 +1,4 @@
-import type { PageNode } from "../model/page_node";
+import type { PageNode } from "../nodes/model/page_node";
 import { attachCarousels } from "./carousel";
 import { disableInput, enableInput } from "./three/input";
 import { attachLinks, setLinksToOpenNewTab } from "./links";

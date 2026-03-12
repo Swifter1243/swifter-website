@@ -1,5 +1,5 @@
-import { DirectoryNode } from "../model/directory_node";
-import type { INode } from "../model/node";
+import { DirectoryNode } from "../nodes/model/directory_node";
+import type { INode } from "../nodes/model/node";
 import { getProjectCategoryPath, getProjectSkillPaths, type Project } from "../nodes/project/project";
 import { Invokable } from "../utilities/invokable";
 import { getCommonPath, getPathKeySequence } from "./utility";

@@ -1,6 +1,6 @@
-import { DirectoryNode } from '../model/directory_node'
-import { type INode } from '../model/node'
-import { PageNode } from '../model/page_node'
+import { DirectoryNode } from './model/directory_node'
+import { type INode } from './model/node'
+import { PageNode } from './model/page_node'
 import { CATEGORIES, nodeFromProject, SKILLS, type Category, type Project, type Skill } from './project/project'
 
 import aboutMeHTML from './pages/about_me.html?raw'
