@@ -2,7 +2,7 @@ import { initCamera } from "../../view/three/camera";
 import { EffectComposer, THREE } from "../../deps";
 import { initRenderer } from "./renderer";
 import { initScene } from "./scene";
-import { initWindow } from "../window";
+import { initWindow } from "./window.ts";
 import { initInteractables } from "./interactable";
 import { initLeafParticleSystem } from "./leaf_particle_system";
 import { initResources } from "./resources";
