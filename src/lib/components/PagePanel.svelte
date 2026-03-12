@@ -45,7 +45,7 @@
         width: min(100%, 1100px);
         box-sizing: border-box;
         padding: 10px 0 10px 0;
-        margin: 0px;
+        margin: 0;
     }
 
     .top-bar {

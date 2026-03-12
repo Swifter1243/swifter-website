@@ -144,7 +144,7 @@ img {
 }
 
 .video {
-	border: 0px;
+	border: 0;
 	margin: 20px 0 20px 0;
 }
 
@@ -242,7 +242,7 @@ img {
 
 /* carousel left control */
 .content-carousel > :first-child > :last-child > :first-child {
-	left: 0px;
+	left: 0;
 }
 
 /* carousel right control */
