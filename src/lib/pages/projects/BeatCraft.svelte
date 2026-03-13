@@ -1,5 +1,6 @@
 <script>
     import DemoButton from "$lib/components/DemoButton.svelte";
+    import NodeLink from "$lib/components/NodeLink.svelte";
 import RedditVideo from "$lib/components/RedditVideo.svelte";
 import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
 </script>
@@ -256,19 +257,14 @@ import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
     Flash forward many years later, I am now a fully fledged game developer with
     experience developing multiple games and am responsible for creating a
     decently influential tool in the Beat Saber community, 
-    <a
-        class="go-to-path-link"
-        href="./remapper"
-    >ReMapper</a>.
+    <NodeLink path="./remapper">ReMapper</NodeLink>.
 </p>
 
 <p>
     During this time I also have become quite a significant figure in the
-    community, pushing the envelope on visual maps and creating <a
-        class="go-to-path-link"
-        href="./blood-rushing"
-    >some of the most popular maps</a> in the community. A lot of people
-    would remember BeatCraft and later realize I'm the same person who made it,
+    community, pushing the envelope on visual maps and creating 
+    <NodeLink path="./blood-rushing">some of the most popular maps</NodeLink> in the community. 
+    A lot of people would remember BeatCraft and later realize I'm the same person who made it,
     which I find really insane and funny.
 </p>
 
@@ -372,10 +368,7 @@ import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
 
 <p>
     After this initial burst of productivity, I got a little burnt out and
-    things were ramping up with <a
-        class="go-to-path-link"
-        href="./extra-sensory-ii"
-    >Extra Sensory II</a> so my work on the project died down a lot. But
+    things were ramping up with <NodeLink path="./extra-sensory-ii">Extra Sensory II</NodeLink> so my work on the project died down a lot. But
     shortly after the new year, I got a message from someone explaining that
     they have been creating their own Beat Saber in Minecraft mod and were
     interested in working together with mine instead.

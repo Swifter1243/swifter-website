@@ -23,5 +23,5 @@
         >collection of my own environments</a
     >, taken from <NodeLink path="./beat-saber/levels"
         >all of the levels I have made</NodeLink
-    >
+    >.
 </p>

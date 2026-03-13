@@ -1,3 +1,7 @@
+<script>
+    import NodeLink from "$lib/components/NodeLink.svelte";
+
+</script>
 <h2>
     ReMapper is my proprietary TypeScript library used to create levels in Beat
     Games' critically acclaimed rhythm game Beat Saber
@@ -123,10 +127,8 @@
         <p>
             ReMapper 4 introduced support for multiple JSON versions, massive
             speed & memory improvements, better async support, and extensive
-            support for the tech from <a
-                class="go-to-path-link"
-                href="./extra-sensory-ii"
-            >Extra Sensory II</a>.
+            support for the tech from 
+            <NodeLink path="./extra-sensory-ii">Extra Sensory II</NodeLink>.
         </p>
     </div>
 </div>

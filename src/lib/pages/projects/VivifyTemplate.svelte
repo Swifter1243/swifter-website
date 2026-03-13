@@ -62,7 +62,7 @@
             Vivify maps. It handles exporting the asset bundle(s) to your map,
             as well as writing the <a
                 href="https://github.com/Swifter1243/VivifyTemplate?tab=readme-ov-file#exporter-module"
-            >JSON</a> which is parsed by <NodeLink path="./remapper">ReMapper</NodeLink>
+            >JSON</a> which is parsed by <NodeLink path="./remapper">ReMapper</NodeLink>.
         </p>
 
         <p>

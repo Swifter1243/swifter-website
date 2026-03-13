@@ -1,5 +1,6 @@
 <script>
-    import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
+    import NodeLink from "$lib/components/NodeLink.svelte";
+import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
 </script>
 
 <h2>
@@ -74,7 +75,7 @@
 
 <div class="content-pair-right">
     <div class="descripted-item">
-        <img src="/extra%20sensory%202/menu_takeover.png" , style="width: 100%">
+        <img src="/extra%20sensory%202/menu_takeover.png" style="width: 100%">
         <p>The menu takeover in a player's game</p>
     </div>
 
@@ -135,11 +136,8 @@
     <div>
         <p>
             In order for the team and future mappers to easily create custom
-            levels with Vivify, I created a Unity tool called <a
-                class="go-to-path-link"
-                href="./vivify-template"
-            >Vivify Template
-            </a>
+            levels with Vivify, I created a Unity tool called 
+            <NodeLink path="./vivify-template">Vivify Template</NodeLink>.
         </p>
 
         <p>

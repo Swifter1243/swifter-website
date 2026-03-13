@@ -33,8 +33,8 @@
 </h2>
 
 <p>
-    In order to create these levels, I had to create my proprietary tool
-    <a class="go-to-path-link" href="./remapper">ReMapper</a>. Additionally, I
+    In order to create these levels, I had to create my proprietary tool 
+    <NodeLink path="./remapper">ReMapper</NodeLink>. Additionally, I
     had to invest hundreds and hundreds of hours into learning new concepts as
     well as spend loads of time iterating and polishing from feedback.
 </p>
@@ -42,8 +42,8 @@
 <p>
     We're looking at multiple years of a major learning curve here, so I won't
     cover each map and all it's challenges, but there's some writeups on the
-    most significant moments like
-    <NodeLink path="./blood-rushing">BRLCTAP</NodeLink> and <NodeLink path="./extra-sensory-ii">Extra Sensory II</NodeLink>
+    most significant moments like 
+    <NodeLink path="./blood-rushing">BRLCTAP</NodeLink> and <NodeLink path="./extra-sensory-ii">Extra Sensory II</NodeLink>.
 </p>
 
 <div class="spacer"></div>

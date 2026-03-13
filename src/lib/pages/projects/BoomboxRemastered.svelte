@@ -1,6 +1,7 @@
 <script>
     import DemoButton from "$lib/components/DemoButton.svelte";
 import ImageCarousel from "$lib/components/ImageCarousel.svelte";
+    import NodeLink from "$lib/components/NodeLink.svelte";
 import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
 </script>
 
@@ -148,11 +149,8 @@ import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
             During this project, I learned how to use <a
                 href="https://docs.unity3d.com/6000.3/Documentation/Manual/UIElements.html"
             >UI Toolkit</a> to create functional UI views. Since I was also
-            creating <a
-                class="go-to-path-link"
-                href="./my-website"
-            >this website</a> at the time, I was able to easily understand how
-            to create dynamic layouts and styles.
+            creating <NodeLink path="./my-website">this website</NodeLink> at the time, 
+            I was able to easily understand how to create dynamic layouts and styles.
         </p>
 
         <p>

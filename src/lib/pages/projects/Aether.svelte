@@ -1,5 +1,6 @@
 <script>
     import ImageCarousel from "$lib/components/ImageCarousel.svelte";
+    import NodeLink from "$lib/components/NodeLink.svelte";
 import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
 </script>
 
@@ -59,10 +60,8 @@ import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
 
         <p>
             Not many good tools existed that allowed me to work like this, so I
-            created a <a
-                class="go-to-path-link"
-                href="./unity-animation-window"
-            >tool to do this myself</a>.
+            created a 
+            <NodeLink path="./unity-animation-window">tool to do this myself</NodeLink>.
         </p>
 
         <p>
