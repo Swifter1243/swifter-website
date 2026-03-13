@@ -249,7 +249,7 @@ const projects: Project[] = [
         importance: 1.5,
         name: 'My Music',
         key: 'my-music',
-        page: PAGES.placeHolder,
+        page: PAGES.myMusic,
         category: 'Experiments',
         skills: ['TypeScript', 'Audio'],
         demoLink: 'https://soundcloud.com/swifter1243',

@@ -29,4 +29,5 @@ export const PAGES = {
     graspingAtStraws: makePage("/src/lib/pages/projects/GraspingAtStraws.svelte"),
     greenfootTetris: makePage("/src/lib/pages/projects/GreenfootTetris.svelte"),
     magicNetherPortal: makePage("/src/lib/pages/projects/MagicNetherPortal.svelte"),
+    myMusic: makePage("/src/lib/pages/projects/MyMusic.svelte"),
 } satisfies Record<string, Page>
