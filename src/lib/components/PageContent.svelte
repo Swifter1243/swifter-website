@@ -13,7 +13,6 @@
 
     async function loadComponent(pageNode: PageNode) {
         PageComponent = await pageNode.page.loadMethod();
-        //(window as any).twttr.widgets.load();
     }
 </script>
 

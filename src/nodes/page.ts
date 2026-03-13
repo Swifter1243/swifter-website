@@ -26,4 +26,7 @@ export const PAGES = {
     enlighten: makePage("/src/lib/pages/projects/Enlighten.svelte"),
     excelSoftwareRenderer: makePage("/src/lib/pages/projects/ExcelSoftwareRenderer.svelte"),
     extraSensory2: makePage("/src/lib/pages/projects/ExtraSensory2.svelte"),
+    graspingAtStraws: makePage("/src/lib/pages/projects/GraspingAtStraws.svelte"),
+    greenfootTetris: makePage("/src/lib/pages/projects/GreenfootTetris.svelte"),
+    magicNetherPortal: makePage("/src/lib/pages/projects/MagicNetherPortal.svelte"),
 } satisfies Record<string, Page>
