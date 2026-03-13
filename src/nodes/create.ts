@@ -7,7 +7,7 @@ import {PAGES} from "./page.ts";
 export function createRootNode(projects: Project[]): INode {
     const rootNode = new DirectoryNode('Root')
     rootNode.addNode('skills', createSkillNodes(projects))
-    rootNode.addNode('about-me', new PageNode(0.7, 'About Me', PAGES.placeHolder))
+    rootNode.addNode('about-me', new PageNode(0.7, 'About Me', PAGES.aboutMe))
     rootNode.addNode('my-links', new PageNode(0.5, 'My Links', PAGES.placeHolder))
     rootNode.addNode('projects', createProjectNodes(projects))
 

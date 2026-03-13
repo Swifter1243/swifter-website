@@ -299,22 +299,6 @@ img {
 	font-style: italic;
 }
 
-/* go to path links */
-.go-to-path-link {
-	text-shadow: #51fff1 0 0 20px, #fcffbd 0 0 8px;
-	text-decoration: underline;
-	color: white;
-	cursor: pointer;
-}
-
-.go-to-path-link:hover {
-	filter: brightness(0.7);
-}
-
-.go-to-path-link:active {
-	filter: brightness(0.4);
-}
-
 /* tutorial */
 #tutorial {
 	position: absolute;

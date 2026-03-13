@@ -12,5 +12,6 @@ function makePage(url: string): Page {
 }
 
 export const PAGES = {
-    placeHolder: makePage("/src/lib/pages/PlaceHolder.svelte")
+    placeHolder: makePage("/src/lib/pages/PlaceHolder.svelte"),
+    aboutMe: makePage("/src/lib/pages/AboutMe.svelte")
 } satisfies Record<string, Page>
