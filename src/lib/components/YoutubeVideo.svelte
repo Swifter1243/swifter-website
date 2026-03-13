@@ -52,7 +52,7 @@
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div onclick={loadVideo}>
-            <img class="thumbnail" src={thumbnailUrl} alt="Video thumbnail" />
+            <img class="thumbnail" src={thumbnailUrl} alt="Video thumbnail" loading="lazy"/>
             <div class="play-button"></div>
         </div>
     {:else}
