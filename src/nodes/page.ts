@@ -30,4 +30,8 @@ export const PAGES = {
     greenfootTetris: makePage("/src/lib/pages/projects/GreenfootTetris.svelte"),
     magicNetherPortal: makePage("/src/lib/pages/projects/MagicNetherPortal.svelte"),
     myMusic: makePage("/src/lib/pages/projects/MyMusic.svelte"),
+    plasmaShift: makePage("/src/lib/pages/projects/PlasmaShift.svelte"),
+    remapper: makePage("/src/lib/pages/projects/ReMapper.svelte"),
+    ricochet: makePage("/src/lib/pages/projects/Ricochet.svelte"),
+    sdlMinecraft: makePage("/src/lib/pages/projects/SDLMinecraft.svelte"),
 } satisfies Record<string, Page>
