@@ -100,7 +100,7 @@ const projects: Project[] = [
         importance: 5,
         name: 'BeatCraft',
         key: 'beatcraft',
-        page: PAGES.placeHolder,
+        page: PAGES.beatCraft,
         category: 'Experiments',
         skills: ['Java', 'Teamwork', 'Mathematics'],
         demoLink: 'https://modrinth.com/mod/beatcraft',
