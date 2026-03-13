@@ -1,17 +1,36 @@
 <script lang="ts">
     import { fade } from "svelte/transition";
 
-    const { images } = $props<{
-        images: string[]
+    type Image = {
+        src: string,
+        caption?: string
+    }
+    type UnparsedImage = Image | string
+
+    const { images, aspectRatio = 16/9 } = $props<{
+        images: UnparsedImage[],
+        aspectRatio?: number
     }>()
 
-    let currentIndex = $state(0);
+    function parseImage(unparsed: UnparsedImage): Image {
+        if (typeof unparsed === 'string') {
+            return {
+                src: unparsed
+            }
+        } else {
+            return unparsed
+        }
+    }
 
-    function previous() {
+    let parsedImages: Image[] = $derived(images.map(parseImage))
+    let currentIndex = $state(0);
+    let currentImage: Image = $derived(parsedImages[currentIndex])
+
+    function next() {
         currentIndex = (currentIndex + 1) % images.length;
     }
 
-    function next() {
+    function previous() {
         currentIndex = (currentIndex - 1 + images.length) % images.length;
     }
 </script>
@@ -32,6 +51,7 @@
         width: 100%;
         margin: 0;
         padding: 0;
+	    object-fit: cover;
     }
 
     .control-row {
@@ -68,6 +88,11 @@
         right: -1px;
     }
 
+    .caption {
+        text-align: center;
+        margin: 10px;
+    }
+
     .dot-row {
         height: 30px;
         display: flex;
@@ -93,12 +118,13 @@
 
 <div class="root">
     <div class="viewport" style="aspect-ratio: 16/9">
-        {#each [images[currentIndex]] as src (currentIndex)}
+        {#each [parsedImages[currentIndex]] as image (currentIndex)}
             <img
-                {src}
-                alt="carousel slide"
+                src={image.src}
+                alt={image.caption ?? "carousel slide"}
                 transition:fade="{{ duration: 300 }}"
                 class="slide"
+                style="aspect-ratio: {aspectRatio};"
             />
         {/each}
         <div class="control-row">
@@ -106,8 +132,11 @@
             <button onclick={next} class="control next">&#10095;</button>
         </div>
     </div>
+    {#if (currentImage.caption !== undefined)}
+        <p class="caption">{currentImage.caption}</p>
+    {/if}
     <div class="dot-row">
-        {#each images as _, i}
+        {#each parsedImages as _, i}
             <div
                 class="dot"
                 class:active={i === currentIndex}
