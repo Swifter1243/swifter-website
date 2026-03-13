@@ -354,18 +354,3 @@ img {
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 }
-
-.my-link {
-	text-decoration: none;
-	color: rgb(255, 255, 255) !important;
-	font-size: 30px;
-	border-radius: 5px;
-}
-
-.my-link:hover {
-	filter: brightness(0.7);
-}
-
-.my-link:active {
-	filter: brightness(0.4);
-}
