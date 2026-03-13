@@ -22,4 +22,8 @@ export const PAGES = {
     bloodRushing: makePage("/src/lib/pages/projects/BloodRushing.svelte"),
     bloonMan: makePage("/src/lib/pages/projects/BloonMan.svelte"),
     boomboxRemastered: makePage("/src/lib/pages/projects/BoomboxRemastered.svelte"),
+    derelict: makePage("/src/lib/pages/projects/Derelict.svelte"),
+    enlighten: makePage("/src/lib/pages/projects/Enlighten.svelte"),
+    excelSoftwareRenderer: makePage("/src/lib/pages/projects/ExcelSoftwareRenderer.svelte"),
+    extraSensory2: makePage("/src/lib/pages/projects/ExtraSensory2.svelte"),
 } satisfies Record<string, Page>
