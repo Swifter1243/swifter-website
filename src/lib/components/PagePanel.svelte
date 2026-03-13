@@ -88,7 +88,7 @@
 </style>
 
 {#if pageNode}
-    <div class="root" transition:fade={{ duration: 300 }}>
+    <div class="root" transition:fade={{ duration: 500 }}>
         <div class="panel" transition:fly={{ y: 50, duration: 500 }}>
             <div class="top-bar">
                 <h2 class="title">
