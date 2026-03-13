@@ -1,8 +1,10 @@
 <script lang="ts">
+    import type { Snippet } from "svelte";
     import {navigation} from "../../navigation/navigation.ts";
 
-    let { path } = $props<{
+    let { path, children } = $props<{
         path: string
+        children: Snippet
     }>();
 
     function goToPath(_: Event) {
@@ -27,4 +29,9 @@
     }
 </style>
 
-<a class="link" onclick={goToPath}><slot></slot></a>
+<!-- svelte-ignore a11y_interactive_supports_focus -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_missing_attribute -->
+<a class="link" role="button" onclick={goToPath}>
+    {@render children()}
+</a>

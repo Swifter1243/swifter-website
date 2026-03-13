@@ -1,8 +1,11 @@
 <script lang="ts">
-    let { background, shadowColor, href } = $props<{
+    import type { Snippet } from "svelte";
+
+    let { background, shadowColor, href, children } = $props<{
         background: string,
         shadowColor: string
         href: string,
+        children: Snippet
     }>();
 </script>
 
@@ -28,5 +31,5 @@
         {href}
         style="background: {background}; box-shadow: 5px 5px 0 {shadowColor}"
 >
-    <slot></slot>
+    {@render children()}
 </a>
