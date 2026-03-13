@@ -34,4 +34,9 @@ export const PAGES = {
     remapper: makePage("/src/lib/pages/projects/ReMapper.svelte"),
     ricochet: makePage("/src/lib/pages/projects/Ricochet.svelte"),
     sdlMinecraft: makePage("/src/lib/pages/projects/SDLMinecraft.svelte"),
+    shadertoyShaders: makePage("/src/lib/pages/projects/ShadertoyShaders.svelte"),
+    synergy: makePage("/src/lib/pages/projects/Synergy.svelte"),
+    unityAnimationWindow: makePage("/src/lib/pages/projects/UnityAnimationWindow.svelte"),
+    vivifyTemplate: makePage("/src/lib/pages/projects/VivifyTemplate.svelte"),
+    zeroInc: makePage("/src/lib/pages/projects/ZeroInc.svelte"),
 } satisfies Record<string, Page>

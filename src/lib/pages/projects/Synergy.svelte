@@ -1,0 +1,64 @@
+<script>
+    import DemoButton from "$lib/components/DemoButton.svelte";
+import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
+
+</script>
+<h2>
+    SYNERGY is a rhythm game developed solely by me. I created all of the
+    assets, and wrote all of the code.
+</h2>
+
+
+<div class="descripted-item">
+    <div class="horizontal-center">
+        <YoutubeVideo videoId="Fd0vXJZ2NaA" width="80%" />
+    </div>
+    <p>A recording of SYNERGY gameplay.</p>
+</div>
+
+<br>
+
+<p>
+    The premise is that you slice discs to the beat, and occassionally a second
+    cursor will appear that you also need to use.
+</p>
+
+<div class="spacer"></div>
+
+<p>
+    During the process of developing this game, I created a plan, prototyped,
+    and logged my progress every day.
+</p>
+
+<p>
+    The game includes one built-in level called "influx". The song was created
+    by my friend <a href="https://soundcloud.com/kitefield">Kitefield</a>, and the visuals and level were created by me.
+</p>
+
+<div class="descripted-item">
+    <div class="horizontal-center">
+        <YoutubeVideo videoId="1ytJws7_EGQ" width="80%" />
+    </div>
+    <p>The visuals I created for 'influx'.</p>
+</div>
+
+<br>
+
+<p>
+    The game also has a fully functioning feature-rich level editor which lets
+    you share and edit levels with other users.
+</p>
+
+<div class="content-row">
+    <img src="/synergy/editor.gif">
+    <div class="descripted-item">
+        <img src="/synergy/custom levels.png" class="landscape-media">
+        <p>A handful of people have already made custom levels!</p>
+    </div>
+</div>
+
+<div class="spacer"></div>
+
+<DemoButton>DEMO</DemoButton>
+
+<p>Feel free to try SYNERGY out!</p>
