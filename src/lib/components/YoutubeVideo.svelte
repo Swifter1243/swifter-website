@@ -1,19 +1,69 @@
 <script lang="ts">
-    const { link, width = "100%", aspectRatio = 16/9 } = $props<{
-        link: string,
+    const { videoId, width = "100%", aspectRatio = 16/9 } = $props<{
+        videoId: string,
         width?: string,
         aspectRatio?: number,
     }>();
+
+    let thumbnailUrl: string = $state('')
+    let iframeVisible = $state(false)
+
+    function loadVideo() {
+        iframeVisible = true
+    }
+
+    $effect(() => {
+        thumbnailUrl = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+    })
 </script>
 
+<style>
+    .root {
+        position: relative;
+        cursor: pointer;
+        background-color: #000;
+    }
 
-<iframe
-    title="Youtube Video"
-    class="video"
-    src={link}
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-    allowfullscreen
-    style="width: {width}; aspect-ratio: {aspectRatio}"
-    loading="lazy"
->
-</iframe>
+    .thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        margin: 0;
+    }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 64px;
+        height: 64px;
+        background-size: 80%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url("/play-button-round-white-icon.webp");
+        pointer-events: none;
+    }
+</style>
+
+<div class="root" style="width: {width}; aspect-ratio: {aspectRatio}">
+    {#if !iframeVisible}
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div onclick={loadVideo}>
+            <img class="thumbnail" src={thumbnailUrl} alt="Video thumbnail" />
+            <div class="play-button"></div>
+        </div>
+    {:else}
+        <iframe
+            title="Youtube Video"
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/{videoId}?autoplay=1&mute=1"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+        ></iframe>
+    {/if}
+</div>
