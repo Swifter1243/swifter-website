@@ -41,7 +41,7 @@ const projects: Project[] = [
         importance: 3,
         name: '743+Aether*✧ . * ¹¹¹} + , .',
         key: 'aether',
-        page: PAGES.placeHolder,
+        page: PAGES.aether,
         category: 'Experiences',
         skills: ['C#', 'Shaders', 'Unity'],
         demoLink: 'https://beatsaver.com/maps/4968d',

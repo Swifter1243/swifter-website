@@ -15,5 +15,6 @@ export const PAGES = {
     placeHolder: makePage("/src/lib/pages/PlaceHolder.svelte"),
     aboutMe: makePage("/src/lib/pages/AboutMe.svelte"),
     myLinks: makePage("/src/lib/pages/MyLinks.svelte"),
+    aether: makePage("/src/lib/pages/projects/Aether.svelte"),
     beatSaberLevels: makePage("/src/lib/pages/projects/BeatSaberLevels.svelte"),
 } satisfies Record<string, Page>
