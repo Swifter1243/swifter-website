@@ -37,12 +37,13 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 64px;
-        height: 64px;
+        width: 100px;
+        height: 100px;
         background-size: 80%;
         background-repeat: no-repeat;
         background-position: center;
-        background-image: url("/play-button-round-white-icon.webp");
+        /* Original: YouTube Vector: Jarould, Public domain, via Wikimedia Commons */
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg');
         pointer-events: none;
     }
 </style>
