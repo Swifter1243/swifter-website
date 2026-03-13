@@ -22,6 +22,7 @@
         position: relative;
         cursor: pointer;
         background-color: #000;
+        overflow: hidden;
     }
 
     .thumbnail {
