@@ -154,7 +154,7 @@ const projects: Project[] = [
         importance: 1,
         name: 'Beat Saber Levels',
         key: 'beat-saber-levels',
-        page: PAGES.placeHolder,
+        page: PAGES.beatSaberLevels,
         category: 'Experiences',
         skills: ['Unity', 'TypeScript', 'Shaders'],
         demoLink: 'https://beatsaver.com/profile/4284246',

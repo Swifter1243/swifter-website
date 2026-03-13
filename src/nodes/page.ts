@@ -14,5 +14,6 @@ function makePage(url: string): Page {
 export const PAGES = {
     placeHolder: makePage("/src/lib/pages/PlaceHolder.svelte"),
     aboutMe: makePage("/src/lib/pages/AboutMe.svelte"),
-    myLinks: makePage("/src/lib/pages/MyLinks.svelte")
+    myLinks: makePage("/src/lib/pages/MyLinks.svelte"),
+    beatSaberLevels: makePage("/src/lib/pages/projects/BeatSaberLevels.svelte"),
 } satisfies Record<string, Page>
