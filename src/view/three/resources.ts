@@ -4,6 +4,7 @@ import { mergeGroupGeometries, setMaterialRecursive } from "../../utilities/thre
 
 export let leafGeometry: THREE.BufferGeometry
 export let flowerBaseGeometry: THREE.BufferGeometry
+export let rootsGeometry: THREE.BufferGeometry
 export let smallFlowerGeometry: THREE.BufferGeometry
 export let lillyPadGeometry: THREE.BufferGeometry
 export let mountainPieceGeometry: THREE.BufferGeometry
@@ -25,8 +26,7 @@ export async function initResources() {
     await Promise.all([
         loadFont(),
         loadLeafModel(objLoader),
-        loadFlowerBaseModel(objLoader),
-        loadSmallFlowerModel(objLoader),
+        loadFlowerModels(objLoader),
         loadFoliage(objLoader),
         loadMountainPieceModel(objLoader),
         loadOcean(textureLoader),
@@ -54,14 +54,14 @@ async function loadLeafModel(objLoader: OBJLoader) {
     })
 }
 
-async function loadFlowerBaseModel(objLoader: OBJLoader) {
-    const model = await objLoader.loadAsync('/models/flower base.obj')
-    flowerBaseGeometry = mergeGroupGeometries(model)
-}
-
-async function loadSmallFlowerModel(objLoader: OBJLoader) {
-    const model = await objLoader.loadAsync('/models/small flower.obj')
-    smallFlowerGeometry = mergeGroupGeometries(model)
+async function loadFlowerModels(objLoader: OBJLoader) {
+    const flowerBase = objLoader.loadAsync('/models/flower base.obj')
+    const smallFlower = objLoader.loadAsync('/models/small flower.obj')
+    const roots = objLoader.loadAsync('/models/roots.obj')
+    
+    flowerBaseGeometry = mergeGroupGeometries(await flowerBase)
+    smallFlowerGeometry = mergeGroupGeometries(await smallFlower)
+    rootsGeometry = mergeGroupGeometries(await roots)
 }
 
 async function loadFoliage(objLoader: OBJLoader) {

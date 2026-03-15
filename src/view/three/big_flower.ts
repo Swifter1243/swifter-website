@@ -3,7 +3,7 @@ import { setCameraDistance } from "./camera";
 import type { IDisposable } from "./disposable";
 import { Flower } from "./flower";
 import { Interactable } from "./interactable";
-import { flowerBaseGeometry } from "./resources";
+import { flowerBaseGeometry, rootsGeometry } from "./resources";
 
 export class BigFlower implements IDisposable {
     interactable: Interactable
@@ -11,6 +11,7 @@ export class BigFlower implements IDisposable {
     outerFlower: Flower
     innerFlower: Flower
     base: THREE.Mesh
+    roots: THREE.Mesh
 
     constructor(parent: THREE.Object3D) {
         this.parent = parent
@@ -34,6 +35,9 @@ export class BigFlower implements IDisposable {
         this.base.translateY(-0.01)
         this.base.scale.setScalar(0.3)
         this.parent.add(this.base)
+
+        this.roots = new THREE.Mesh(rootsGeometry, new THREE.MeshBasicMaterial({ color: '#46969f' }))
+        this.parent.add(this.roots)
     }
 
     bloom() {
@@ -46,6 +50,7 @@ export class BigFlower implements IDisposable {
         this.interactable.dispose()
         this.outerFlower.dispose()
         this.parent.remove(this.base)
-        this.innerFlower.dispose
+        this.parent.remove(this.roots)
+        this.innerFlower.dispose()
     }
 }
