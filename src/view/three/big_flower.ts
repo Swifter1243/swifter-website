@@ -3,6 +3,7 @@ import { setCameraDistance } from "./camera";
 import type { IDisposable } from "./disposable";
 import { Flower } from "./flower";
 import { Interactable } from "./interactable";
+import { onRender } from "./renderer";
 import { flowerBaseGeometry, rootsGeometry } from "./resources";
 
 export class BigFlower implements IDisposable {
@@ -12,6 +13,7 @@ export class BigFlower implements IDisposable {
     innerFlower: Flower
     base: THREE.Mesh
     roots: THREE.Mesh
+    rootsMaterial: THREE.ShaderMaterial
 
     constructor(parent: THREE.Object3D) {
         this.parent = parent
@@ -36,7 +38,30 @@ export class BigFlower implements IDisposable {
         this.base.scale.setScalar(0.3)
         this.parent.add(this.base)
 
-        this.roots = new THREE.Mesh(rootsGeometry, new THREE.MeshBasicMaterial({ color: '#46969f' }))
+        this.rootsMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                time: { value: 0}
+            },
+            vertexShader: `
+                varying vec2 vUV;
+
+                void main() {
+                    vUV = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                varying vec2 vUV;
+                uniform float time;
+
+                void main() {
+                    float v = smoothstep(0.0, 0.5, pow(time, 2.0) * 4.0 - vUV.y);
+
+                    gl_FragColor = vec4(v);
+                }
+            `
+        });
+        this.roots = new THREE.Mesh(rootsGeometry, this.rootsMaterial)
         this.parent.add(this.roots)
     }
 
@@ -44,6 +69,10 @@ export class BigFlower implements IDisposable {
         this.outerFlower.open()
         this.innerFlower.open()
         setCameraDistance(5)
+
+        onRender.subscribe((dt) => {
+            this.rootsMaterial.uniforms.time.value += dt
+        })
     }
 
     dispose() {
