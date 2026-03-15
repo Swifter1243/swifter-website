@@ -1,17 +1,9 @@
 <script lang="ts">
-    import type {PageNode} from "../../nodes/model/page_node.ts";
     import {navigation} from "../../navigation/navigation.ts";
     import {activePageNode} from "../../view/page_view.ts";
     import ProjectInfo from "./ProjectInfo.svelte";
     import { fade, fly } from "svelte/transition";
-    import type {Component} from "svelte";
     import PageContent from "$lib/components/PageContent.svelte";
-
-    let pageNode: PageNode | null = $state(null);
-
-    $effect(() => {
-        pageNode = $activePageNode;
-    });
 
     function close() {
         navigation.descend()
@@ -87,12 +79,12 @@
     }
 </style>
 
-{#if pageNode}
+{#if $activePageNode}
     <div class="root" transition:fade={{ duration: 500 }}>
         <div class="panel" transition:fly={{ y: 50, duration: 500 }}>
             <div class="top-bar">
                 <h2 class="title">
-                    {pageNode.name}
+                    {$activePageNode.name}
                 </h2>
                 <div class="close-parent">
                     <button class="close" onclick={close}>&#10094;</button>
@@ -100,8 +92,8 @@
             </div>
 
             <div class="scrollable">
-                <ProjectInfo project={pageNode.project}></ProjectInfo>
-                <PageContent pageNode={pageNode}></PageContent>
+                <ProjectInfo project={$activePageNode.project}></ProjectInfo>
+                <PageContent pageNode={$activePageNode}></PageContent>
             </div>
         </div>
     </div>

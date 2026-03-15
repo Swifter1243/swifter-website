@@ -3,11 +3,7 @@
     import type { Project } from "../../nodes/project/project";
     import { activePageNode } from "../../view/page_view";
 
-    let project: Project | undefined = $state(undefined)
-    
-    $effect(() => {
-        project = $activePageNode?.project
-    })
+    let project: Project | undefined = $derived($activePageNode?.project)
 
     const { children } = $props<{
         children: Snippet

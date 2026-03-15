@@ -5,16 +5,12 @@
         aspectRatio?: number,
     }>();
 
-    let thumbnailUrl: string = $state('')
+    let thumbnailUrl: string = $derived(`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`)
     let iframeVisible = $state(false)
 
     function loadVideo() {
         iframeVisible = true
     }
-
-    $effect(() => {
-        thumbnailUrl = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
-    })
 </script>
 
 <style>
