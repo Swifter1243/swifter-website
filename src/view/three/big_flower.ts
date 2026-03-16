@@ -69,7 +69,7 @@ export class BigFlower implements IDisposable {
                     float disappearDepth = -1.5;
                     v *= smoothstep(disappearDepth, 0.0, oceanDelta);
 
-                    v *= mix(0.2, 1.0, smoothstep(20.0, 10.0, vUV.y));
+                    v *= mix(0.2, 1.0, smoothstep(3.0, 0.0, vUV.y));
 
                     gl_FragColor = vec4(v);
                 }
