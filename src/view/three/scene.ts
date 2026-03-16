@@ -14,6 +14,7 @@ const flowerViewDistance = new SmoothNumber(0, 0.3)
 
 const horizonBaseColor = new THREE.Color('#001026')
 const currentHorizonColor = new THREE.Color(0, 0, 0)
+const waveColor = new THREE.Color(0, 0, 0)
 
 export function initScene() {
     const point = new THREE.PointLight('#feffd7', 2, 0.8, 1.6)
@@ -31,6 +32,8 @@ export function initScene() {
         skyFactor.update(dt)
         currentHorizonColor.copy(horizonBaseColor)
         currentHorizonColor.multiplyScalar(skyFactor.current)
+        waveColor.copy(currentHorizonColor)
+        waveColor.multiplyScalar(0.65)
     })
 }
 
@@ -127,6 +130,7 @@ function createOcean() {
             reflectionTexture: { value: reflectTarget.texture },
             refractionTexture: { value: refractTarget.texture },
             normalMap: { value: oceanNormalTexture },
+            waveColor: { value: waveColor  },
             time: {value: 0}
         },
         vertexShader: `
@@ -145,6 +149,7 @@ function createOcean() {
             uniform sampler2D refractionTexture;
             uniform sampler2D normalMap;
             uniform float time;
+            uniform vec3 waveColor;
             varying vec3 vWorldPosition;
             varying vec4 vUvReflection;
 
@@ -168,7 +173,13 @@ function createOcean() {
                 vec3 reflection = texture2D(reflectionTexture, reflectedScreenUV + distortion).rgb;
                 vec3 refraction = texture2D(refractionTexture, screenUV + distortion).rgb;
 
-                gl_FragColor = vec4(mix(reflection, refraction, 0.04), 1.0);
+                const float absorption = 0.8;
+                vec3 col = mix(reflection * absorption, refraction, 0.04);
+                float alignment = dot(normal, vec3(0, 1, 0));
+
+                col += pow(alignment, 2.0) * waveColor;
+
+                gl_FragColor = vec4(col, 1.0);
             }
         `
     });
