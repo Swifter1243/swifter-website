@@ -112,16 +112,22 @@ function createOcean() {
         type: THREE.HalfFloatType,
         generateMipmaps: false
     });
-    reflectTarget.depthTexture = new THREE.DepthTexture(texWidth, texHeight)
     const reflectCamera = new THREE.PerspectiveCamera();
+
+    const refractTarget = new THREE.WebGLRenderTarget(texWidth, texHeight, {
+        type: THREE.HalfFloatType,
+        minFilter: THREE.LinearFilter,
+        generateMipmaps: false
+    })
+    const refractCamera = new THREE.PerspectiveCamera();
 
     const oceanGeometry = new THREE.PlaneGeometry(1000, 1000);
     const oceanMaterial = new THREE.ShaderMaterial({
         uniforms: {
             reflectionTexture: { value: reflectTarget.texture },
+            refractionTexture: { value: refractTarget.texture },
             normalMap: { value: oceanNormalTexture },
-            time: {value: 0},
-            depthTexture: { value: reflectTarget.depthTexture },
+            time: {value: 0}
         },
         vertexShader: `
             varying vec3 vWorldPosition;
@@ -136,15 +142,11 @@ function createOcean() {
         `,
         fragmentShader: `
             uniform sampler2D reflectionTexture;
+            uniform sampler2D refractionTexture;
             uniform sampler2D normalMap;
             uniform float time;
             varying vec3 vWorldPosition;
             varying vec4 vUvReflection;
-            uniform sampler2D depthTexture;
-
-            float getDepth(const in vec2 uv) {
-                return texture2D(depthTexture, uv).x;
-            }
 
             void main() {
                 vec2 planePos = vWorldPosition.xz;
@@ -154,26 +156,36 @@ function createOcean() {
                 vec3 normal = (normal1 + normal2) * 0.5;
 
                 // Calculate distortion from normal map
-                vec2 distortion = (normal.xy * 2.0 - 1.0) * 0.05;
+                vec2 distortion = (normal.xy * 2.0 - 1.0) * 0.03;
+                distortion.y = 0.0;
 
                 // Projective mapping (NDC to UV)
-                vec2 uv = (vUvReflection.xy / vUvReflection.w) * 0.5 + 0.5;
-                uv.y = 1.0 - uv.y;
+                vec2 screenUV = (vUvReflection.xy / vUvReflection.w) * 0.5 + 0.5;
 
-                float depth = getDepth(uv);
-                float mask = smoothstep(0.0, 0.1, depth); 
-                distortion *= mask;
+                vec2 reflectedScreenUV = screenUV;
+                reflectedScreenUV.y = 1.0 - reflectedScreenUV.y;
                 
-                vec3 reflection = texture2D(reflectionTexture, uv + distortion).rgb;
-                gl_FragColor = vec4(reflection, 1.0);
+                vec3 reflection = texture2D(reflectionTexture, reflectedScreenUV + distortion).rgb;
+                vec3 refraction = texture2D(refractionTexture, screenUV + distortion).rgb;
+
+                gl_FragColor = vec4(mix(reflection, refraction, 0.3), 1.0);
             }
         `
     });
 
-    const planeMargin = 0.05
-    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL + planeMargin);
+    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL);
+    const waterOppositePlane = new THREE.Plane();
+    waterOppositePlane.copy(waterPlane)
+    waterOppositePlane.negate()
 
     onRender.subscribe((dt: number) => {
+        reflectionPass()
+        refractionPass()
+
+        oceanMaterial.uniforms.time.value += dt;
+    })
+
+    function reflectionPass() {
         reflectCamera.copy(camera);
         
         // position
@@ -196,9 +208,26 @@ function createOcean() {
         renderer.render(scene, reflectCamera);
         renderer.setRenderTarget(null);
         ocean.visible = true;
+    }
 
-        oceanMaterial.uniforms.time.value += dt;
-    })
+    function refractionPass() {
+        refractCamera.copy(camera);
+        camera.getWorldPosition(refractCamera.position)
+        camera.getWorldQuaternion(refractCamera.quaternion)
+
+
+        // oblique projection
+        refractCamera.updateProjectionMatrix()
+        refractCamera.updateMatrixWorld()
+        updateObliqueMatrix(refractCamera, waterOppositePlane);
+
+        // render
+        ocean.visible = false;
+        renderer.setRenderTarget(refractTarget);
+        renderer.render(scene, refractCamera);
+        renderer.setRenderTarget(null);
+        ocean.visible = true;
+    }
 
     const ocean = new THREE.Mesh(oceanGeometry, oceanMaterial)
     ocean.rotation.x = -Math.PI / 2;

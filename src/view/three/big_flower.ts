@@ -62,6 +62,7 @@ export class BigFlower implements IDisposable {
             `
         });
         this.roots = new THREE.Mesh(rootsGeometry, this.rootsMaterial)
+        this.roots.position.set(0, -0.3, 0)
         this.parent.add(this.roots)
     }
 
