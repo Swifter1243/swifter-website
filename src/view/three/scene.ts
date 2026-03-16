@@ -168,7 +168,7 @@ function createOcean() {
                 vec3 reflection = texture2D(reflectionTexture, reflectedScreenUV + distortion).rgb;
                 vec3 refraction = texture2D(refractionTexture, screenUV + distortion).rgb;
 
-                gl_FragColor = vec4(mix(reflection, refraction, 0.3), 1.0);
+                gl_FragColor = vec4(mix(reflection, refraction, 0.04), 1.0);
             }
         `
     });

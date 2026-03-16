@@ -5,6 +5,7 @@ import { Flower } from "./flower";
 import { Interactable } from "./interactable";
 import { onRender } from "./renderer";
 import { flowerBaseGeometry, rootsGeometry } from "./resources";
+import { OCEAN_Y_LEVEL } from "./scene";
 
 export class BigFlower implements IDisposable {
     interactable: Interactable
@@ -43,26 +44,38 @@ export class BigFlower implements IDisposable {
                 time: { value: 0}
             },
             vertexShader: `
+                varying vec3 vWorldPosition;
                 varying vec2 vUV;
 
                 void main() {
+                    vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                    vWorldPosition = worldPosition.xyz;
+
                     vUV = uv;
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    gl_Position = projectionMatrix * viewMatrix * worldPosition;
                 }
             `,
             fragmentShader: `
                 varying vec2 vUV;
+                varying vec3 vWorldPosition;
                 uniform float time;
 
                 void main() {
-                    float v = smoothstep(0.0, 0.5, pow(time, 2.0) * 4.0 - vUV.y);
+                    float timeSpeedup = smoothstep(1.0, 8.0, time);
+
+                    float v = smoothstep(0.0, mix(0.5, 40.0, timeSpeedup), pow(time, 2.0) * 4.0 - vUV.y);
+
+                    float oceanDelta = vWorldPosition.y - ${OCEAN_Y_LEVEL.toFixed(2)};
+                    float disappearDepth = -1.5;
+                    v *= smoothstep(disappearDepth, 0.0, oceanDelta);
+
+                    v *= mix(0.2, 1.0, smoothstep(20.0, 10.0, vUV.y));
 
                     gl_FragColor = vec4(v);
                 }
             `
         });
         this.roots = new THREE.Mesh(rootsGeometry, this.rootsMaterial)
-        this.roots.position.set(0, -0.3, 0)
         this.parent.add(this.roots)
     }
 
