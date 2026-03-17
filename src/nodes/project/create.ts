@@ -187,7 +187,7 @@ const projects: Project[] = [
         key: 'my-website',
         page: PAGES.myWebsite,
         category: 'Experiences',
-        skills: ['TypeScript', 'Audio'],
+        skills: ['TypeScript', 'Audio', 'Shaders'],
         sourceLink: 'https://github.com/Swifter1243/swifter-website',
         startDate: dateFromMonthYear('November 2025')
     },
