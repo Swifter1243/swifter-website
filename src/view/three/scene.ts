@@ -212,10 +212,9 @@ function createOcean() {
         oceanMaterial.uniforms.refractionTexture = { value: refractTarget.texture }
     }
 
-    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL);
-    const waterOppositePlane = new THREE.Plane();
-    waterOppositePlane.copy(waterPlane)
-    waterOppositePlane.negate()
+    const reflectionMargin = 0.05
+    const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL + reflectionMargin);
+    const waterOppositePlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), OCEAN_Y_LEVEL);
 
     onRender.subscribe((dt: number) => {
         reflectionPass()
