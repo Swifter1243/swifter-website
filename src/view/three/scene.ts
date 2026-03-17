@@ -113,6 +113,7 @@ function createOcean() {
 
     const texWidth = window.innerWidth * dpr * res
     const texHeight = window.innerHeight * dpr * res
+    let aspect = texWidth / texHeight
 
     const reflectTarget = new THREE.WebGLRenderTarget(texWidth, texHeight, {
         type: THREE.HalfFloatType,
@@ -129,7 +130,8 @@ function createOcean() {
             reflectionTexture: { value: reflectTarget.texture },
             normalMap: { value: oceanNormalTexture },
             waveColor: { value: waveColor  },
-            time: {value: 0}
+            time: {value: 0},
+            invAspect: { value: 1 / aspect }
         },
         transparent: true,
         vertexShader: `
@@ -150,6 +152,7 @@ function createOcean() {
             #endif
             uniform sampler2D normalMap;
             uniform float time;
+            uniform float invAspect;
             uniform vec3 waveColor;
             varying vec3 vWorldPosition;
             varying vec4 vUvReflection;
@@ -162,8 +165,9 @@ function createOcean() {
                 vec3 normal = (normal1 + normal2) * 0.5;
 
                 // Calculate distortion from normal map
-                vec2 distortion = (normal.xy * 2.0 - 1.0) * 0.03;
-                distortion.y = 0.0;
+                vec2 distortion = (normal.xy * 2.0 - 1.0) * 0.07;
+                distortion.x *= invAspect;
+                distortion.y *= smoothstep(80.0, 20.0, length(planePos));
 
                 // Projective mapping (NDC to UV)
                 vec2 screenUV = (vUvReflection.xy / vUvReflection.w) * 0.5 + 0.5;
@@ -229,6 +233,9 @@ function createOcean() {
         reflectTarget.setSize(texWidth, texHeight)
         if (!mobile) 
             refractTarget.setSize(texWidth, texHeight)
+
+        aspect = texWidth / texHeight
+        oceanMaterial.uniforms.invAspect.value = 1 / aspect
     })
 
     function reflectionPass() {
