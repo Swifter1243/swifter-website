@@ -71,7 +71,7 @@ import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
             <br>
             <div style="text-align: left">
                 <code>
-                    console.log(`Sum: ${2 + 4}`)
+                    console.log('Sum:', 2 + 4)
                 </code>
             </div>
         </div>
@@ -94,7 +94,7 @@ import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
                     variables
                     <br>
                     tellraw @a
-                    [&#123"text":"Sum:"&#125,&#123"score":&#123"name":"x","objective":"variables"&#125&#125]
+                    [&#123"text":"Sum: "&#125,&#123"score":&#123"name":"x","objective":"variables"&#125&#125]
                 </code>
             </div>
         </div>
