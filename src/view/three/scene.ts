@@ -7,6 +7,7 @@ import { updateObliqueMatrix } from "../../utilities/three";
 import { camera, renderer, scene } from "./main";
 import { onRender } from "./renderer";
 import { fogTexture, lillyPadGeometry, mountainPieceGeometry, oceanNormalTexture, smallFlowerGeometry } from "./resources";
+import { onWindowResize } from "./window";
 
 export const OCEAN_Y_LEVEL = -3
 const skyFactor = new SmoothNumber(0, 0.7)
@@ -219,6 +220,15 @@ function createOcean() {
             refractionPass()
 
         oceanMaterial.uniforms.time.value += dt;
+    })
+
+    onWindowResize.subscribe((w, h) => {
+        const texWidth = w * dpr * res
+        const texHeight = h * dpr * res
+
+        reflectTarget.setSize(texWidth, texHeight)
+        if (!mobile) 
+            refractTarget.setSize(texWidth, texHeight)
     })
 
     function reflectionPass() {

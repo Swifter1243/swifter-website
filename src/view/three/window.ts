@@ -1,11 +1,12 @@
 import { THREE } from "../../deps.ts";
-import { camera, composer, renderer } from "./main.ts";
-import { unrealBloomPass } from "./renderer.ts";
+import { Invokable } from "../../utilities/invokable.ts";
+import { camera } from "./main.ts";
 
 export function initWindow() {
     onResize()
     window.onresize = onResize
 }
+export const onWindowResize = new Invokable<[number, number]>()
 
 const SAFE_ASPECT = 0.9; // 1:1 safe zone
 const BASE_FOV = 37;
@@ -35,9 +36,5 @@ function onResize() {
     }
 
     camera.updateProjectionMatrix();
-    unrealBloomPass.setSize(w, h)
-    renderer.setSize(w, h);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    composer.setSize(w, h)
-    composer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    onWindowResize.invoke(w, h)
 }

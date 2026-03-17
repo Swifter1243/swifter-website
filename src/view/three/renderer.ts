@@ -1,14 +1,13 @@
 import { OutputPass, RenderPass, THREE, UnrealBloomPass } from "../../deps";
 import {camera, composer, renderer, scene} from "./main";
 import { Invokable } from "../../utilities/invokable";
+import { onWindowResize } from "./window";
 
 export const onRender = new Invokable<[number]>();
 
 export let unrealBloomPass: UnrealBloomPass
 
 export function initRenderer() {
-    renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setAnimationLoop(render);
 
     document.getElementById('three')!.appendChild(renderer.domElement);
@@ -24,6 +23,19 @@ export function initRenderer() {
     document.addEventListener('visibilitychange', () => {
         clock.running = document.visibilityState === 'visible'
     })
+
+    updateSize()
+    onWindowResize.subscribe(updateSize)
+
+    function updateSize() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        unrealBloomPass.setSize(w, h)
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        composer.setSize(w, h)
+        composer.setPixelRatio(window.devicePixelRatio)
+    }
     
     function render() {
         composer.render()
