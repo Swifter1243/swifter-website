@@ -185,7 +185,7 @@ const projects: Project[] = [
         importance: 3,
         name: 'My Website',
         key: 'my-website',
-        page: PAGES.placeHolder,
+        page: PAGES.myWebsite,
         category: 'Experiences',
         skills: ['TypeScript', 'Audio'],
         sourceLink: 'https://github.com/Swifter1243/swifter-website',

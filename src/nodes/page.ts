@@ -31,6 +31,7 @@ export const PAGES = {
     greenfootTetris: makePage(() => import("$lib/pages/projects/GreenfootTetris.svelte")),
     magicNetherPortal: makePage(() => import("$lib/pages/projects/MagicNetherPortal.svelte")),
     myMusic: makePage(() => import("$lib/pages/projects/MyMusic.svelte")),
+    myWebsite: makePage(() => import("$lib/pages/projects/MyWebsite.svelte")),
     plasmaShift: makePage(() => import("$lib/pages/projects/PlasmaShift.svelte")),
     remapper: makePage(() => import("$lib/pages/projects/ReMapper.svelte")),
     ricochet: makePage(() => import("$lib/pages/projects/Ricochet.svelte")),
