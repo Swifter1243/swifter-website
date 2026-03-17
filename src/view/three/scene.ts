@@ -105,8 +105,10 @@ function createMountains() {
 }
 
 function createOcean() {
+    const mobile = isMobile()
+
     const dpr = window.devicePixelRatio ?? 1;
-    const res = isMobile() ? 1/4 : 1/2
+    const res = mobile ? 1/4 : 1/2
 
     const texWidth = window.innerWidth * dpr * res
     const texHeight = window.innerHeight * dpr * res
@@ -117,22 +119,18 @@ function createOcean() {
     });
     const reflectCamera = new THREE.PerspectiveCamera();
 
-    const refractTarget = new THREE.WebGLRenderTarget(texWidth, texHeight, {
-        type: THREE.HalfFloatType,
-        minFilter: THREE.LinearFilter,
-        generateMipmaps: false
-    })
-    const refractCamera = new THREE.PerspectiveCamera();
+    let refractTarget: THREE.WebGLRenderTarget
+    let refractCamera: THREE.PerspectiveCamera
 
     const oceanGeometry = new THREE.PlaneGeometry(1000, 1000);
     const oceanMaterial = new THREE.ShaderMaterial({
         uniforms: {
             reflectionTexture: { value: reflectTarget.texture },
-            refractionTexture: { value: refractTarget.texture },
             normalMap: { value: oceanNormalTexture },
             waveColor: { value: waveColor  },
             time: {value: 0}
         },
+        transparent: true,
         vertexShader: `
             varying vec3 vWorldPosition;
             varying vec4 vUvReflection;
@@ -146,7 +144,9 @@ function createOcean() {
         `,
         fragmentShader: `
             uniform sampler2D reflectionTexture;
+            #ifndef IS_MOBILE
             uniform sampler2D refractionTexture;
+            #endif
             uniform sampler2D normalMap;
             uniform float time;
             uniform vec3 waveColor;
@@ -171,18 +171,41 @@ function createOcean() {
                 reflectedScreenUV.y = 1.0 - reflectedScreenUV.y;
                 
                 vec3 reflection = texture2D(reflectionTexture, reflectedScreenUV + distortion).rgb;
+
+                #ifdef IS_MOBILE
+                vec3 refraction = vec3(0);
+                #else
                 vec3 refraction = texture2D(refractionTexture, screenUV + distortion).rgb;
+                #endif
 
                 const float absorption = 0.8;
-                vec3 col = mix(reflection * absorption, refraction, 0.04);
+                const float transmittance = 0.04;
+                vec3 col = mix(reflection * absorption, refraction, transmittance);
                 float alignment = dot(normal, vec3(0, 1, 0));
 
                 col += pow(alignment, 2.0) * waveColor;
 
+                #ifdef IS_MOBILE
+                gl_FragColor = vec4(col, 1.0 - transmittance);
+                #else
                 gl_FragColor = vec4(col, 1.0);
+                #endif
             }
         `
     });
+
+    if (mobile) {
+        oceanMaterial.defines.IS_MOBILE = true
+        oceanMaterial.blending = THREE.NormalBlending
+    } else {
+        refractTarget = new THREE.WebGLRenderTarget(texWidth, texHeight, {
+            type: THREE.HalfFloatType,
+            minFilter: THREE.LinearFilter,
+            generateMipmaps: false
+        })
+        refractCamera = new THREE.PerspectiveCamera();
+        oceanMaterial.uniforms.refractionTexture = { value: refractTarget.texture }
+    }
 
     const waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -OCEAN_Y_LEVEL);
     const waterOppositePlane = new THREE.Plane();
@@ -191,7 +214,9 @@ function createOcean() {
 
     onRender.subscribe((dt: number) => {
         reflectionPass()
-        refractionPass()
+        
+        if (!mobile)
+            refractionPass()
 
         oceanMaterial.uniforms.time.value += dt;
     })
