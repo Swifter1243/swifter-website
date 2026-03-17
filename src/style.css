@@ -96,7 +96,7 @@ img {
 /* content pairs */
 .content-pair-left, .content-pair-right {
 	width: 100%;
-	margin: 20px 0 20px 0;
+	margin: 40px 0 40px 0;
 	display: flex;
 	align-items: center;
 	gap: 20px;
@@ -139,7 +139,6 @@ img {
 
 	.content-pair-left > :last-child, .content-pair-right > :last-child {
 		order: 1;
-		margin-bottom: 40px;
 	}
 }
 
@@ -197,6 +196,7 @@ img {
 
 /* content row */
 .content-row, .content-row-small {
+	margin: 40px 0 40px 0;
 	position: relative;
 	display: flex;
 	flex-direction: row;

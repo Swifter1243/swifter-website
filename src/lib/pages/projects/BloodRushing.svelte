@@ -71,8 +71,6 @@
     forward.
 </p>
 
-<br />
-
 <div class="content-pair-right">
     <div class="descripted-item">
         <YoutubeVideo videoId="H1w482lswVA" />
