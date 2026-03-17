@@ -198,6 +198,14 @@
 </p>
 
 <p>
+    When you first open the website, you're greeted with this Zelda inspired
+    piano melody. I wanted it to feel like a special moment when everything
+    unfolded in front of you, and I think this sound completes that moment.
+</p>
+
+<AudioPlayer src={SOUNDS.INTRO} />
+
+<p>
     When opening a node, one of 4 chords will play, with an accompanying pad
     that drones on until the node is left. It kind of feels like you're making
     music when you're exploring the site.
