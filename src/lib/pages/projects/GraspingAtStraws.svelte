@@ -1,4 +1,5 @@
 <script>
+    import AudioPlayer from "$lib/components/AudioPlayer.svelte";
     import DemoButton from "$lib/components/DemoButton.svelte";
 import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
 
@@ -47,10 +48,7 @@ import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
 </div>
 
 <div class="content-pair-left">
-    <audio controls>
-        <source src="/grasping%20at%20straws/song.wav" type="audio/wav">
-        Your browser does not support the audio element.
-    </audio>
+    <AudioPlayer src="/grasping%20at%20straws/song.wav"/>
 
     <div>
         <p>I also created original music for the game.</p>
