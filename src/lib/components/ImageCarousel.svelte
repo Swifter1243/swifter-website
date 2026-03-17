@@ -68,7 +68,7 @@
         position: absolute;
         width: auto;
         border-style: none;
-        color: black;
+        color: rgb(255, 255, 255);
         padding: 10px;
         font-size: 18px;
         font-weight: bold;
