@@ -32,9 +32,9 @@ export function initRenderer() {
         const h = window.innerHeight;
         unrealBloomPass.setSize(w, h)
         renderer.setSize(w, h);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         composer.setSize(w, h)
-        composer.setPixelRatio(window.devicePixelRatio)
+        composer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     }
     
     function render() {
