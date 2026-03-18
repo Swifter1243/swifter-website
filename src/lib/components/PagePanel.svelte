@@ -5,6 +5,7 @@
     import { fade, fly } from "svelte/transition";
     import PageContent from "$lib/components/PageContent.svelte";
     import type { PageNode } from "../../nodes/model/page_node.ts";
+    import { startAudioContext } from "../../view/sound/context.ts";
 
     let scrollable: HTMLElement | undefined = $state(undefined)
     let lastPageNode: PageNode | null = null
@@ -21,7 +22,8 @@
         scrollable!.scrollTop = 0
     }
 
-    function close() {
+    async function close() {
+        await startAudioContext()
         navigation.descend()
     }
 </script>
