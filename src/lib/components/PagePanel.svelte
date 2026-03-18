@@ -4,6 +4,22 @@
     import ProjectInfo from "./ProjectInfo.svelte";
     import { fade, fly } from "svelte/transition";
     import PageContent from "$lib/components/PageContent.svelte";
+    import type { PageNode } from "../../nodes/model/page_node.ts";
+
+    let scrollable: HTMLElement | undefined = $state(undefined)
+    let lastPageNode: PageNode | null = null
+
+    $effect(() => {
+        if ($activePageNode !== lastPageNode) {
+            resetScroll()
+        }
+
+        lastPageNode = $activePageNode
+    })
+
+    function resetScroll() {
+        scrollable!.scrollTop = 0
+    }
 
     function close() {
         navigation.descend()
@@ -91,7 +107,7 @@
                 </div>
             </div>
 
-            <div class="scrollable">
+            <div class="scrollable" bind:this={scrollable}>
                 <ProjectInfo project={$activePageNode.project}></ProjectInfo>
                 <PageContent pageNode={$activePageNode}></PageContent>
             </div>
