@@ -8,7 +8,7 @@ import { BigFlower } from "./three/big_flower"
 import { scene } from "./three/main"
 import { CAMERA_DISTANCE_RATE, setCameraPivot, setCameraScrollScalar } from "./three/camera"
 import { soundState } from "./sound/main"
-import { playOneShot, startAudioContext } from "./sound/context"
+import { unfocusAudioContext, playOneShot, startAudioContext, focusAudioContext } from "./sound/context"
 import { SOUNDS, sounds } from "./sound/resources"
 import { fadeFirstChordIn } from "./sound/chord"
 import { getPathKeySequence, locationToNavigationPath } from "../navigation/utility"
@@ -78,6 +78,22 @@ export class View {
                 this.spawnRoot()
             }
             navigation.goToPath(path)
+        })
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                unfocusAudioContext()
+            } else {
+                focusAudioContext()
+            }
+        })
+
+        window.addEventListener('blur', () => {
+            unfocusAudioContext()
+        })
+
+        window.addEventListener('focus', () => {
+            focusAudioContext()
         })
     }
 
