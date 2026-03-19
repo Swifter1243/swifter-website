@@ -124,16 +124,14 @@ import YoutubeVideo from "$lib/components/YoutubeVideo.svelte";
     </div>
     <div>
         <p>
-            I did a lot of polishing and bug fixing on the game in order to make
-            it feel good to play.
+            I was responsible for creating the interactive UI for onboarding new players at the start of the game.
         </p>
-
         <p>
-            One of the biggest things for polish were the various particle
-            effects (shooting, enemy death, special modifier actions... etc.)
-            which I set up using a singleton that manages pooled particle
-            systems for each effect type.
+            Internally, it acts as a checklist of tasks that will seamlessly transition to the next available task when one has been completed.
         </p>
+        <p>
+            Designing this interface required paying close attention to how players reacted to the games' systems.
+        </p>    
     </div>
 </div>
 
