@@ -11,7 +11,7 @@
     let lastPageNode: PageNode | null = null
 
     $effect(() => {
-        if ($activePageNode !== lastPageNode) {
+        if ($activePageNode && $activePageNode !== lastPageNode) {
             resetScroll()
         }
 
