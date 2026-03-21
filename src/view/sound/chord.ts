@@ -3,6 +3,7 @@ import { audioContextReady, audioCtx, masterGain, playOneShot } from "./context"
 import { SOUNDS, sounds } from "./resources";
 
 const PAD_DEFAULT_GAIN = 0.8
+const CHORD_MIN_VOLUME = 0.1
 
 class Chord {
     oneShotName: string
@@ -113,7 +114,7 @@ export function muteChordPads(fadeTime = 1) {
         return
     }
 
-    rampAudioParam(audioCtx, padGain.gain, 0, fadeTime)
+    rampAudioParam(audioCtx, padGain.gain, CHORD_MIN_VOLUME, fadeTime)
 }
 
 export function unmuteChordPads(fadeTime = 1) {
