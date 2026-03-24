@@ -881,6 +881,7 @@
     }
 
     .bts-row > img {
+        min-width: 0;
         margin: 0;
         flex: 1;
         aspect-ratio: 16/9;
