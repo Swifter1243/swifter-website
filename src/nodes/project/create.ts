@@ -38,12 +38,12 @@ const projects: Project[] = [
         endDate: dateFromMonthYear('January 2023')
     },
     {
-        importance: 3,
+        importance: 10,
         name: '743+Aether*✧ . * ¹¹¹} + , .',
         key: 'aether',
         page: PAGES.aether,
         category: 'Experiences',
-        skills: ['C#', 'Shaders', 'Unity'],
+        skills: ['C#', 'Shaders', 'Unity', 'Mathematics'],
         demoLink: 'https://beatsaver.com/maps/4968d',
         sourceLink: 'https://github.com/Swifter1243/aether_map',
         startDate: dateFromMonthYear('May 2025'),
