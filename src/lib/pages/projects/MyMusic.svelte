@@ -7,6 +7,7 @@
         "/swifter1243/pathfinder",
         "/artbyform/swifter-jaron-lighthouse",
         "/swifter1243/tessellate",
+        "/swifter1243/marrow",
         "/swifter1243/slip",
         "/swifter1243/glasswork",
         "/swifter1243/sink",
