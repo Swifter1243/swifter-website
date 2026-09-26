@@ -5,14 +5,27 @@
     import { initSound } from "../view/sound/main"
     import { initThree } from "../view/three/main"
     import { initSystems } from "../initialize"
-    import { fadeIn } from "../view/fade"
+    import LoadingScreen, { type LoadingError } from "$lib/components/LoadingScreen.svelte";
     import PagePanel from "$lib/components/PagePanel.svelte";
 
+    let loading = $state(true)
+    let error: LoadingError | null = $state(null)
+
     onMount(async () => {
-        await initSound()
-        await initThree()
-        initSystems()
-        fadeIn()
+        let stage = 'sound'
+        try {
+            await initSound()
+            stage = 'graphics'
+            await initThree()
+            stage = 'systems'
+            initSystems()
+            loading = false
+        } catch (cause) {
+            let message = 'Unknown error'
+            if (stage === 'sound') message = "Sound resources couldn't be loaded"
+            if (stage === 'graphics') message = "Graphics environment couldn't be started"
+            error = { message, cause }
+        }
     })
 </script>
 
@@ -24,4 +37,6 @@
 
 <PagePanel></PagePanel>
 
-<div id="fade"></div>
+{#if loading}
+    <LoadingScreen {error}></LoadingScreen>
+{/if}
