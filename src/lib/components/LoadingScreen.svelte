@@ -76,6 +76,10 @@
         to { opacity: 1; }
     }
 
+    .loading-flower {
+        overflow: visible;
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .content, .ellipsis::after {
             animation: none;
@@ -84,9 +88,13 @@
         .ellipsis::after {
             content: '...';
         }
+
+        .loading-flower image {
+            filter: none;
+        }
     }
 
-    img {
+    img, .loading-flower {
         display: block;
         width: var(--flower-size);
         height: var(--flower-size);
@@ -113,7 +121,18 @@
                 <h1 aria-label="loading">loading<span class="ellipsis" aria-hidden="true"></span></h1>
             </div>
 
-            <img src="/loading.png" alt="" width="512" height="512" />
+            <svg class="loading-flower" viewBox="0 0 512 512" width="512" height="512" aria-hidden="true" focusable="false">
+                <defs>
+                    <filter id="loading-boil" filterUnits="userSpaceOnUse" x="-32" y="-32" width="576" height="576" color-interpolation-filters="sRGB">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="1" seed="1" stitchTiles="stitch" result="noise">
+                            <animate attributeName="seed" values="1;4;2;5;3;6" begin="-0.0625s" dur="1.5s" calcMode="discrete" repeatCount="indefinite" />
+                        </feTurbulence>
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+                        <feGaussianBlur stdDeviation="0.5" />
+                    </filter>
+                </defs>
+                <image href="/loading.png" width="512" height="512" filter="url(#loading-boil)" />
+            </svg>
         {/if}
     </div>
 </div>
